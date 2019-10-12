@@ -1,0 +1,16 @@
+{
+  "name": "tails",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "GPL-3.0",
+  "scripts": {
+    "dev": "nodemon -r esm index.js",
+    "start": "nodemon -r esm index.js"
+  },
+  "dependencies": {
+    "esm": "^3.2.25"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.3"
+  }
+}
