@@ -1,5 +1,7 @@
 # tails
 
+blabbering / brainstorm
+
 ## to implement
 
 - folder structure

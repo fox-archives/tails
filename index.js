@@ -1,24 +1,28 @@
-import http from "http";
-import fs from "fs";
-import net from "net";
+import path from 'path';
+import express from 'express';
+import { getProjects, validateProjectNames } from './util/getProjects';
 
-let httpAgent = new http.Agent({
-  keepAlive: false,
-  keepAliveMsecs: 1000,
-  maxSockets: Infinity,
-  maxFreeSockets: 256, // only relevent if keepAlive = true
-  // timeout
-});
-let defaultAgent = http.globalAgent;
+const app = express();
+const projects = getProjects();
+validateProjectNames(projects);
 
+console.log(projects);
 
-const server = http.createServer({
-  IncomingMessage: http.IncomingMessage,
-  ServerResponse: http.ServerResponse
-});
-server.on("request", (req, res) => {
-
+projects.forEach(project => {
+  app.use(`/projects/${project}`, express.static(path.join(__dirname, 'projects', project)));
 });
 
-server.listen();
-console.log(server.listening);
+let projectsFormatted = projects.map(project => {
+  return `<li><a href='/projects/${project}'>${project}</a></li>`;
+});
+
+app.get('/', (req, res) => {
+  res.send(`
+    <ul>
+    ${projectsFormatted}
+    </ul>
+  `);
+});
+
+app.on('listening', () => console.log('server restarted'));
+app.listen(3000);
