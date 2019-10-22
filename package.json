@@ -4,12 +4,14 @@
   "main": "index.js",
   "license": "GPL-3.0",
   "scripts": {
-    "start": "nodemon -r esm index.js"
+    "start": "node -r esm app.js",
+    "dev": "nodemon -r esm app.js"
   },
   "dependencies": {
+    "ejs": "^2.7.1",
     "esm": "^3.2.25",
     "express": "^4.17.1",
-    "lodash": "^4.17.15",
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "spectre.css": "^0.5.8"
   }
 }
