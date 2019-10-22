@@ -1,6 +1,7 @@
 import path from 'path';
 import express from 'express';
 import ejs from 'ejs';
+import cssRoute from './routes/css';
 import { projects } from './controller/projects';
 
 const app = express();
@@ -16,6 +17,8 @@ app.engine('html', ejs.renderFile);
 
 app.use('/', express.json());
 app.use('/', express.urlencoded({ extended: true }));
+
+app.use('/css', cssRoute);
 app.use('/', express.static(path.join(__dirname, 'public')));
 
 const packagesDir = path.join(__dirname, 'projects');
@@ -25,21 +28,11 @@ const packagesDir = path.join(__dirname, 'projects');
   p.forEach(project => {
     app.use(`/projects/${project}`, express.static(path.join(__dirname, 'projects', project)));
   });
+
+  app.get('/', (req, res) => {
+    res.render('index', { projects: p });
+  });
 })();
 
-app.get('/', (req, res) => {
-  projects(packagesDir)
-    .then(projects => {
-      let projectsFormatted = projects.map(project => {
-        return `<li><a href='/projects/${project}'>${project}</a></li>`;
-      });
-
-      res.send(`
-        <ul>
-          ${projectsFormatted}
-        </ul>
-      `);
-    })
-});
 app.on('listening', () => console.log('server restarted'));
 app.listen(3000);
