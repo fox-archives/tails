@@ -9,9 +9,9 @@
 <body>
   <main>
     <ul>
-      <% for(let i = 0; i < projects.length; i++) { %>
-        <li><a href="/projects/<%= projects[i] %>"><%= projects[i] %></a></li>
-      <% } %>
+      {{#each projects}}
+        <li><a href="/projects/{{ this }}">{{ this }}</a></li>
+      {{/each}}
     </ul>
   </main>
 </body>

@@ -1,6 +1,6 @@
 import path from 'path';
 import express from 'express';
-import ejs from 'ejs';
+import hbs from 'hbs';
 import cssRoute from './routes/css';
 import { projects } from './controller/projects';
 
@@ -10,10 +10,10 @@ app.enable('case sensitive routing');
 app.set('json spaces', 2);
 app.disable('strict routing');
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'hbs');
 app.disable('x-powered-by');
 
-app.engine('html', ejs.renderFile);
+app.engine('hbs', hbs.__express);
 
 app.use('/', express.json());
 app.use('/', express.urlencoded({ extended: true }));
