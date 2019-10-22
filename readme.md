@@ -1,37 +1,45 @@
 # tails
 
-blabbering / brainstorm
+## summary
 
-## to implement
+`tails` enables you to view, edit, and organize all your JavaScript projects in one place
 
-- folder structure
-- web (no bundler) and web (parcel)
-- basic ui
-- clicking on project in ui actually launches it (no containerization for now)
+if you're like me, you are tired of repeating the same boilerplate when creating frontend web applications, node backends, and so on. it also gets annoying going in each project subdirectory, opening the command line, starting the app, checking the port, and navigating to it via the browser. stuff like hot reload, auto-reload on file watches do not come out of the box and have to be set up _every single time_. websites such as jsfiddle and codesandbox solve some of the issue, but the main problem is that you cannot typically edit the source code with your normal tools. (you must use the web editor, rather than your ide of choice). also, your projects are not tracked by any vcs and they are not stored on your computer. tails allieviates all those problems
 
-## .tails.yml
+### goals
 
-name: whatever
-description: whatever
-type: web (no bundler) || web (parcel bundler, webpack) || node || complex (parcel bundler, or webpck and node server)
-tags: [a, b, c]
-category: whatever
-image: whatever
+in short, you can do the following with tails
 
-## notes
+- place any javascript project in a _single_ directory (symlinked or git submodule, etc.)
+- use your standard ide tools to edit these projects
+- view all projects in said directory in a web interface
+- control properties of projects in said web interface
+- deploy any of all of said projects at once, locally, or for production
+  - locally: nice urls during deveopment
+  - production: deploy containerized apps with orchestration software
 
-- can graduate 'web' project to 'node', or 'deno'
-- make it easy to transfer 'complex' projects out of this structure
-- lerna implementation or just encourage symlinks?
-- need some way of showing console for the web w/ bundlers and node!
-  - do we need to show console?
-  - definitely for web w/ bundler, can just do it for no bundler for consistency
-what do we need 'complex' for?
-- server for development and actual backend server
-  - use parcel instead?
-    - have option to use manual webpack dev server
+## details
 
-## types
+- proposed project types
+  - web (just serving static files)
+  - web (w/ parcel bundler) or (custom bundler (webpack, rollup))
+  - web (w/ any bundler) + node
+  - web (w/ any bundler) + deno
+  - node
+  - deno
+  - electron
+- ability to 'upgrade' web projects
+  - ex. 'upgrade' web (static files) to node (importing `express` or `server-static`, etc.)
+  - ex. 'upgrade' (we w/ webpack bundler) + node to out of project
+- the `projects` directory
+  - contains folders, each of which have separate vcs and / or repos
+  - contains project metadata in `.tails.y(a)ml`
+  - symlinks to actual projects or git submodules
+- showing stdout / stderr
+  - maybe have cli so we can just output crap in an existing pty
+  - if not, need alt method
+
+## project types
 
 ### web (no bundler)
 

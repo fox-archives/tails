@@ -1,0 +1,9 @@
+name: css-test
+slug: my-css-test
+description: my description of css-test
+type: web # default
+category: this-category 
+tags:
+  - css
+  - html
+  - test

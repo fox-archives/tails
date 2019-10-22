@@ -1,0 +1,9 @@
+name: html-test
+slug: html-test-slug
+description: my description of html-test
+type: web # default
+category: this-category 
+tags:
+  - html
+  - test
+  - html5
