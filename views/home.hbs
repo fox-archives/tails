@@ -1,6 +1,30 @@
 {{> header }}
 {{> hero }}
 <main>
-  
+  {{#if project}}
+  <div>
+    <h1>recommended projects to work on</h1>
+    <div class="column col-3">
+      <div class="card">
+        <div class="card-image"><img class="img-responsive" src="fox10.jpg" alt="OS X El Capitan"></div>
+        <div class="card-header">
+          <div class="card-title h5">{{ project }}</div>
+          <div class="card-subtitle text-gray">subtitle about {{ project }}</div>
+        </div>
+        <div class="card-body">
+          <p>body about {{ project }}</p>
+
+          <span class="label label-rounded">tag</span>
+          <span class="label label-rounded">tag 1</span>
+      </div>
+        <div class="card-footer">
+          <a class="btn btn-primary" href="/projects/{{ project }}">go to project</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  {{> create_project_empty_state }}
+  {{/if}}
 </main>
 {{> footer }}

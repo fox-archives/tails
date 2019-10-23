@@ -5,7 +5,7 @@
   <div class="container mt-2">
     <div class="columns">
       {{#each projects}}
-      <div class="column col-4">
+      <div class="column col-3">
         <div class="card">
           <div class="card-image"><img class="img-responsive" src="fox10.jpg" alt="OS X El Capitan"></div>
           <div class="card-header">
@@ -26,6 +26,8 @@
       {{/each}}
     </div>
   </div>
+  {{else}}
+  {{> create_project_empty_state }}
   {{/if}}
 </main>
 {{> footer }}

@@ -6,7 +6,12 @@ function Project(projectsDir) {
 };
 
 Project.prototype.get = function(projectName) {
+  const projectDir = path.resolve(this.projectsDir, projectName);
 
+  return fs.promises.stat(projectDir)
+    .catch(err => {
+      console.log(err);
+    });
 };
 
 Project.prototype.getAll = function() {
