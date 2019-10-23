@@ -6,6 +6,7 @@ import { projects } from './controller/projects';
 
 const app = express();
 
+// config
 app.enable('case sensitive routing');
 app.set('json spaces', 2);
 app.disable('strict routing');
@@ -14,10 +15,14 @@ app.set('view engine', 'hbs');
 app.disable('x-powered-by');
 
 app.engine('hbs', hbs.__express);
+hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
+hbs.localsAsTemplateData(app); // access .locals
 
+// base middleware
 app.use('/', express.json());
 app.use('/', express.urlencoded({ extended: true }));
 
+// css, js, misc assets
 app.use('/css', cssRoute);
 app.use('/', express.static(path.join(__dirname, 'public')));
 

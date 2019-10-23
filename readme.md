@@ -38,6 +38,11 @@ in short, you can do the following with tails
 - showing stdout / stderr
   - maybe have cli so we can just output crap in an existing pty
   - if not, need alt method
+- web interface
+  - home tab
+    - displays recent activity, starred items, stats, and quick actions for creating projects
+  - projects tab
+    - displays all projects in grid fashion
 
 ## project types
 
