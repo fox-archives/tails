@@ -1,8 +1,9 @@
 import path from 'path';
 import express from 'express';
 import hbs from 'hbs';
-import cssRoute from './routes/css';
-import { projects } from './controller/projects';
+import assetsRouter from './routes/assets';
+import homeRouter from './routes/home';
+import projectsRouter from './routes/projects';
 
 const app = express();
 
@@ -16,28 +17,20 @@ app.disable('x-powered-by');
 
 app.engine('hbs', hbs.__express);
 hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
-hbs.localsAsTemplateData(app); // access .locals
+hbs.localsAsTemplateData(app);
 
-// base middleware
+// middleware
 app.use('/', express.json());
 app.use('/', express.urlencoded({ extended: true }));
 
-// css, js, misc assets
-app.use('/css', cssRoute);
+// assets
+app.use('/css', assetsRouter.cssRouter);
 app.use('/', express.static(path.join(__dirname, 'public')));
 
-const packagesDir = path.join(__dirname, 'projects');
-
-(async () => {
-  let p = await projects(packagesDir);
-  p.forEach(project => {
-    app.use(`/projects/${project}`, express.static(path.join(__dirname, 'projects', project)));
-  });
-
-  app.get('/', (req, res) => {
-    res.render('index', { projects: p });
-  });
-})();
+// routes
+app.get('/', (req, res) => res.redirect('/home'));
+app.use('/home', homeRouter);
+app.use('/projects', projectsRouter);
 
 app.on('listening', () => console.log('server restarted'));
 app.listen(3000);
