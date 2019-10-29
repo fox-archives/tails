@@ -8,10 +8,12 @@
     "dev": "nodemon -e js,css,html,hbs -r esm app.js"
   },
   "dependencies": {
+    "dockerode": "^3.0.2",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "hbs": "^4.0.6",
     "nodemon": "^1.19.4",
-    "spectre.css": "^0.5.8"
+    "spectre.css": "^0.5.8",
+    "tar-fs": "^2.0.0"
   }
 }
