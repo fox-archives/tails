@@ -2,9 +2,11 @@
 
 ## summary
 
-`tails` enables you to view, edit, and organize all your JavaScript projects in one place
+`tails` enables you to view, edit, and organize all your javascript projects in one place
 
 if you're like me, you are tired of repeating the same boilerplate when creating frontend web applications, node backends, and so on. it also gets annoying going in each project subdirectory, opening the command line, starting the app, checking the port, and navigating to it via the browser. stuff like hot reload, auto-reload on file watches do not come out of the box and have to be set up _every single time_. websites such as jsfiddle and codesandbox solve some of the issue, but the main problem is that you cannot typically edit the source code with your normal tools. (you must use the web editor, rather than your ide of choice). also, your projects are not tracked by any vcs and they are not stored on your computer. tails allieviates all those problems
+
+![tails preview](./tails.png)
 
 ### goals
 
@@ -24,10 +26,8 @@ in short, you can do the following with tails
   - web (just serving static files)
   - web (w/ parcel bundler) or (custom bundler (webpack, rollup))
   - web (w/ any bundler) + node
-  - web (w/ any bundler) + deno
   - node
   - deno
-  - electron
 - ability to 'upgrade' web projects
   - ex. 'upgrade' web (static files) to node (importing `express` or `server-static`, etc.)
   - ex. 'upgrade' (we w/ webpack bundler) + node to out of project
@@ -44,37 +44,20 @@ in short, you can do the following with tails
   - projects tab
     - displays all projects in grid fashion
 
-## project types
-
-### web (no bundler)
-
-- just staticaly serving content in directory
-  - why chose over web w/ bundler?
-- standalone (cannot be converted to web w/ bundler or to complex)
-
-### web (bundler)
-
-- literally just parcel serving crap
-- add parcel proxying when converting to 'complex'
-
-### node
-
-- literally just node / nodemon
-  - have options for
-
 ## development
 
 - open any subprojects whenever, any at the same time
 - containerization optional
-  - like if im working on sockets, i dont want to have containers to mess up connection?
+  - like if im working on sockets, i dont want to have worry about sockets bouncing around
 - nice domains during development
   - remember web, node, and deno stuff probably wont go to prod
 - start from web interface or via the cli
 
 ## production
 
+- choose which projects to deploy
 - web page accessable to anyone
   - public or local server
 - web page lists projects
   - click on project, start pods, services, and ingresses
-- pods die down after closing project
+- pods die down after closing project (with delay)

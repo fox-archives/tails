@@ -1,20 +1,35 @@
 import fs from 'fs';
 import path from 'path';
+import yaml from 'js-yaml';
 
 function Project(projectsDir) {
   this.projectsDir = projectsDir;
 };
 
-Project.prototype.get = function(projectName) {
-  const projectDir = path.resolve(this.projectsDir, projectName);
+/* given an array of project names, extract the yaml */
+Project.prototype.getProjectMetaData = function(projectNames) {
+  if (!Array.isArray(projectNames)) projectNames = [ projectNames ];
 
-  return fs.promises.stat(projectDir)
-    .catch(err => {
-      console.log(err);
+  let yamlData = [];
+  projectNames.forEach(project => {
+    const projectDir = path.resolve(this.projectsDir, project, '.tails.yml');
+    
+    let promise = new Promise((resolve, reject) => {
+      fs.promises.readFile(projectDir, 'utf8')
+        .then(data => {
+          resolve(yaml.safeLoad(data));
+        })
+        .catch(err => {
+          reject(err);
+        });
     });
+    yamlData.push(promise);
+  });
+  
+  return Promise.all(yamlData);
 };
 
-Project.prototype.getAll = function() {
+Project.prototype.getProjectNames = function() {
   return new Promise((resolve, reject) => {
     fs.promises.readdir(this.projectsDir)
       .then(projects => {

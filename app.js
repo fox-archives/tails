@@ -2,7 +2,6 @@ import path from 'path';
 import express from 'express';
 import hbs from 'hbs';
 import assetsRouter from './routes/assets';
-import homeRouter from './routes/home';
 import projectsRouter from './routes/projects';
 
 const app = express();
@@ -28,8 +27,7 @@ app.use('/css', assetsRouter.cssRouter);
 app.use('/', express.static(path.join(__dirname, 'public')));
 
 // routes
-app.get('/', (req, res) => res.redirect('/home'));
-app.use('/home', homeRouter);
+app.get('/', (req, res) => res.redirect('/projects'));
 app.use('/projects', projectsRouter);
 
 app.on('listening', () => console.log('server restarted'));

@@ -1,7 +1,7 @@
 type: web
 name: css-test
-body: my description of css-test
 slug: my-css-test
+desc: my description of css-test
 tags:
   - css
   - html

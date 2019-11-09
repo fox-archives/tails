@@ -1,8 +1,7 @@
+type: web
 name: html-test
-slug: html-test-slug
-description: my description of html-test
-type: web # default
-category: this-category 
+slug: my-html-test
+desc: my description of html-test
 tags:
   - html
   - test

@@ -1,7 +1,7 @@
 {{> header }}
 {{> hero }}
 <main>
-  {{#if projects }}
+  {{#if projects}}
   <div class="container mt-2">
     <div class="columns">
       {{#each projects}}
@@ -9,17 +9,16 @@
         <div class="card">
           <div class="card-image"><img class="img-responsive" src="fox10.jpg" alt="OS X El Capitan"></div>
           <div class="card-header">
-            <div class="card-title h5">{{ this }}</div>
-            <div class="card-subtitle text-gray">subtitle about {{ this }}</div>
+            <div class="card-title h5">{{ this.name }}</div>
+            <div class="card-subtitle text-gray">{{ this.desc }}</div>
           </div>
           <div class="card-body">
-            <p>body about {{ this }}</p>
-
-            <span class="label label-rounded">tag</span>
-            <span class="label label-rounded">tag 1</span>
+            {{#each this.tags }}
+              <span class="label label-rounded">{{ this }}</span>
+            {{/each}}
         </div>
           <div class="card-footer">
-            <a class="btn btn-primary" href="/projects/{{ this }}">go to project</a>
+            <a class="btn btn-primary" href="/projects/{{ this.slug }}">go to project</a>
           </div>
         </div>
       </div>
