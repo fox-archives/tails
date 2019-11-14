@@ -1,8 +1,0 @@
-type: web
-name: html-test
-slug: my-html-test
-desc: my description of html-test
-tags:
-  - html
-  - test
-  - html5

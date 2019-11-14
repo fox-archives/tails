@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "GPL-3.0",
   "scripts": {
-    "start": "node -e js,css,html,hbs -r esm app.js",
-    "dev": "nodemon -e js,css,html,hbs -r esm app.js"
+    "serve": "nodemon -e js,css,html,hbs -r esm app.js",
+    "start": "node -e js,css,html,hbs -r esm app.js"
   },
   "dependencies": {
     "dockerode": "^3.0.2",

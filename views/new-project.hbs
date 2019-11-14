@@ -1,0 +1,39 @@
+{{> header }}
+{{> hero }}
+<main>
+  <div class="container mt-2">
+    <div class="columns">
+      <div class="column col-3"></div>
+      <div class="column col-6">
+        <form method="post" action="/project/create/action">
+          <div class="form-group">
+            <label class="form-label" for="project-name">project name</label>
+            <div class="has-icon-right">
+              <input class="form-input" type="text" id="project-name" name="projectName" placeholder="Name">
+              <i class="form-icon icon icon-edit"></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="project-type">project name</label>
+            <select class="form-select" id="project-type" name="projectType">
+              <option>web</option>
+              <option>web w/ parcel bundler</option>
+              <option>node</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="input-example-3">project description</label>
+            <textarea class="form-input" id="input-example-3" placeholder="project description" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn mt-1">create</button>
+          </div>
+      </div>
+      </form>
+
+      <div class="column col-3"></div>
+    </div>
+  </div>
+</main>
+{{> footer }}
