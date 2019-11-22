@@ -1,12 +1,12 @@
 import path from 'path';
-import express from 'express';
+import { Router } from 'express';
 import {
   projectsController,
   newProjectController,
   projectCreateController
 } from '../controllers/projectsController';
 
-const router = express.Router();
+const router = Router();
 
 router.get('/', projectsController);
 router.get('/create', newProjectController);

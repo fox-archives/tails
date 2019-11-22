@@ -1,5 +1,13 @@
-import { Router } from "express";
+import { Router } from 'express';
+import {
+  projectController,
+  projectCheckIfShouldBeShown,
+  showProject
+} from '../controllers/projectController';
 
-const projectRoute = new Router();
+const router = Router();
 
-export default projectRoute;
+router.get('/', projectController);
+router.use('/', projectCheckIfShouldBeShown, showProject);
+
+export default router;
