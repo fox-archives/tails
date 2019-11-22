@@ -3,13 +3,15 @@ import { Router } from 'express';
 import {
   projectsController,
   newProjectController,
-  projectCreateController
+  projectCreateController,
+  openController
 } from '../controllers/projectsController';
 
 const router = Router();
 
 router.get('/', projectsController);
 router.get('/create', newProjectController);
-router.get('/create/action', projectCreateController);
+router.post('/create/action', projectCreateController);
+router.get('/open/:project', openController);
 
 export default router;

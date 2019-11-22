@@ -1,5 +1,6 @@
 import path from 'path';
 import Project from '../models/projectModel';
+import { launchCode } from '../services/fetchProjects';
 
 export function projectsController(req, res) {
   Project.getProjects().then(projects => {
@@ -24,4 +25,11 @@ export function newProjectController(req, res) {
 export function projectCreateController(req, res) {
   console.log(req.body);
   res.send(req.body);
+}
+
+export function openController(req, res) {
+  const pathToProject = path.join(__dirname, '../projects', req.params.project);
+  launchCode(pathToProject);
+  console.log(req.params.project);
+  res.redirect(req.get('referer'));
 }

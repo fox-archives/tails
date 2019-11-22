@@ -7,7 +7,7 @@
       {{#each projects}}
       <div class="column col-2">
         <div class="card mb-2">
-          <div class="card-image"><img class="img-responsive" src="fox10.jpg" alt="OS X El Capitan"></div>
+          <div class="card-image"><img class="img-responsive" src="fox10.jpg" alt="osx el capitan"></div>
           <div class="card-header">
             <div class="card-title h5">{{ this.name }}</div>
             <div class="card-subtitle text-gray">{{ this.desc }}</div>
@@ -19,6 +19,7 @@
         </div>
           <div class="card-footer">
             <a class="btn btn-primary" href="/project/{{ this.slug }}">go to project</a>
+            <a class="btn" href="projects/open/{{ this.slug }}">open in code</a>
           </div>
         </div>
       </div>

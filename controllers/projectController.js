@@ -15,7 +15,7 @@ export function projectCheckIfShouldBeShown(req, res, next) {
       if(particularProjectIsNotPrivate) {
         next();
       }
-    })
+    });
 }
 
 export function showProject(req, res, next) {
