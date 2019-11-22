@@ -1,0 +1,34 @@
+{
+  "projects": [
+    {
+      "name": "Battery Status Api",
+      "slug": "battery-status-api",
+      "type": "web"
+    },
+    {
+      "name": "Css Test",
+      "slug": "css-test",
+      "type": "web"
+    },
+    {
+      "name": "Drag And Drop Api",
+      "slug": "drag-and-drop-api",
+      "type": "web"
+    },
+    {
+      "name": "Html Test",
+      "slug": "html-test",
+      "type": "web"
+    },
+    {
+      "name": "Node Hello World",
+      "slug": "node-hello-world",
+      "type": "node"
+    },
+    {
+      "name": "Pointer Lock Api",
+      "slug": "pointer-lock-api",
+      "type": "web"
+    }
+  ]
+}

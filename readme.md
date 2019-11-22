@@ -1,14 +1,12 @@
 # tails
 
-## summary
-
 `tails` enables you to view, edit, and organize all your javascript projects in one place
 
 if you're like me, you are tired of repeating the same boilerplate when creating frontend web applications, node backends, and so on. it also gets annoying going in each project subdirectory, opening the command line, starting the app, checking the port, and navigating to it via the browser. stuff like hot reload, auto-reload on file watches do not come out of the box and have to be set up _every single time_. websites such as jsfiddle and codesandbox solve some of the issue, but the main problem is that you cannot typically edit the source code with your normal tools. (you must use the web editor, rather than your ide of choice). also, your projects are not tracked by any vcs and they are not stored on your computer. tails allieviates all these problems
 
 ![tails preview](./tails.png)
 
-### goals
+## goals
 
 in short, you can do the following with tails
 
@@ -48,7 +46,7 @@ in short, you can do the following with tails
   - or option to have prettier, eslint configs symlinked to project directory and have watch optiosn for auto update
   - or have combo wombo or something
 
-## development
+### development
 
 - open any subprojects whenever, any at the same time
 - containerization optional
@@ -57,7 +55,7 @@ in short, you can do the following with tails
   - remember web, node, and deno stuff probably wont go to prod
 - start from web interface or via the cli
 
-## production
+### production
 
 - choose which projects to deploy
 - web page accessable to anyone
