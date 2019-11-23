@@ -5,7 +5,7 @@
   <div class="container mt-2">
     <div class="columns">
       {{#each projects}}
-      <div class="column col-2">
+      <div class="column col-xs-12 col-sm-6 col-md-4 col-xl-3 col-2">
         <div class="card mb-2">
           <div class="card-image"><img class="img-responsive" src="fox10.jpg" alt="osx el capitan"></div>
           <div class="card-header">
@@ -18,8 +18,8 @@
             {{/each}}
         </div>
           <div class="card-footer">
-            <a class="btn btn-primary" href="/project/{{ this.slug }}">go to project</a>
-            <a class="btn" href="projects/open/{{ this.slug }}">open in code</a>
+            <a class="btn btn-primary m-1" target="_blank" href="/project/{{ this.slug }}">view</a>
+            <a class="btn m-1" href="projects/open/{{ this.slug }}">code</a>
           </div>
         </div>
       </div>
