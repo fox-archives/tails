@@ -3,32 +3,50 @@
     {
       "name": "Battery Status Api",
       "slug": "battery-status-api",
-      "type": "web"
+      "type": "web",
+      "tags": [
+        "old"
+      ]
     },
     {
       "name": "Css Test",
       "slug": "css-test",
-      "type": "web"
+      "type": "web",
+      "tags": [
+        "hello"
+      ]
     },
     {
       "name": "Drag And Drop Api",
       "slug": "drag-and-drop-api",
-      "type": "web"
+      "type": "web",
+      "tags": [
+        "old"
+      ]
     },
     {
       "name": "Html Test",
       "slug": "html-test",
-      "type": "web"
+      "type": "web",
+      "tags": [
+        "html"
+      ]
     },
     {
       "name": "Node Hello World",
       "slug": "node-hello-world",
-      "type": "node"
+      "type": "node",
+      "tags": [
+        "hello"
+      ]
     },
     {
       "name": "Pointer Lock Api",
       "slug": "pointer-lock-api",
-      "type": "web"
+      "type": "web",
+      "tags": [
+        "old"
+      ]
     }
   ]
 }

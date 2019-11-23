@@ -8,7 +8,7 @@ export function launchCode(projectPath) {
   //   console.log(data);
   // }
   console.log(projectPath);
-  const p = spawn('code', [projectPath], {
+  const p = spawn('code', ['-n', '-g', 'index.html:1:1', projectPath], {
     cwd: process.cwd(),
     env: process.env
   });
