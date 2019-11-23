@@ -40,6 +40,9 @@ if you're like me, you're tired of repeating the same boilerplate when creating 
   - should we make it easy to lint whole project and change linting of all projects, or just on single project basis? both?
     - reverting should be easy
   - or have combo wombo or something
+- show generated metadata
+  - how much browser support your website has
+  - size of codebase gzipped, minified, etc.
 
 ### development
 

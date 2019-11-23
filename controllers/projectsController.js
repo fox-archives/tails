@@ -3,6 +3,7 @@ import puppeteer from 'puppeteer';
 
 import Project from '../models/projectModel';
 import { launchCode } from '../services/fetchProjects';
+import { updateDatabase, actuallCreateProjectInProjectsFolder } from '../services/newProject';
 
 export function projectsController(req, res) {
   Project.getProjects().then(projects => {
@@ -24,9 +25,16 @@ export function newProjectController(req, res) {
   });
 }
 
-export function projectCreateController(req, res) {
-  console.log(req.body);
-  res.send(req.body);
+export async function projectCreateController(req, res) {
+  const { projectName, projectType, projectDesc, projectSlug } = req.body;
+
+  await updateDatabase({ projectName, projectType, projectDesc, projectSlug });
+  await actuallCreateProjectInProjectsFolder({
+    projectType,
+    projectSlug
+  });
+
+  res.redirect('/projects');
 }
 
 export function openController(req, res) {

@@ -8,7 +8,7 @@
           <div class="form-group">
             <label class="form-label" for="project-name">project name</label>
             <div class="has-icon-right">
-              <input class="form-input" type="text" id="project-name" name="projectName" placeholder="Name">
+              <input class="form-input" type="text" id="project-name" name="projectName" placeholder="name">
               <i class="form-icon icon icon-edit"></i>
             </div>
           </div>
@@ -20,9 +20,17 @@
               <option>node</option>
             </select>
           </div>
+
+          <div class="form-group">
+            <label class="form-label" for="project-type">project slug</label>
+            <div class="has-icon-right">
+              <input class="form-input" type="text" id="project-slug" name="projectSlug" placeholder="slug">
+              <i class="form-icon icon icon-edit"></i>
+          </div>
+
           <div class="form-group">
             <label class="form-label" for="input-example-3">project description</label>
-            <textarea class="form-input" id="input-example-3" placeholder="project description" rows="3"></textarea>
+            <textarea class="form-input" id="input-example-3" name="projectDesc" placeholder="project description" rows="3"></textarea>
           </div>
           <div class="form-group">
             <button type="submit" class="btn mt-1">create</button>

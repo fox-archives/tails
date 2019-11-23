@@ -1,2 +1,9 @@
+# node
 node_modules/
+
+# app
+public/generated-project-pictures/*
+!public/generated-project-pictures/.gitkeep
+
+# misc
 *.log
