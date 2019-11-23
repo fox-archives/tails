@@ -1,0 +1,19 @@
+{{> header }}
+{{> hero }}
+<main>
+  <div class="container mt-2 pt-2">
+    <div class="columns p-2">
+      <div class="column p-2">
+        <h4>thumbnails</h4>
+        <p class="mb-2">this app creates thumbnails of each project you have. regenerate all of them here. the code is pretty inefficient so make sure you don't have many projects and it might take a few seconds</p>
+        <form method="post" action="/projects/photograph">
+          <button name="main-button" class="btn btn-primary">
+            <i class="icon icon-photo"></i>
+            generate
+          </button>
+        </form> 
+      </div>
+    </div>
+  </div>
+</main>
+{{> footer}}

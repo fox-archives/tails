@@ -1,4 +1,3 @@
-import express from 'express';
 import serveStatic from 'serve-static';
 import Project from '../models/projectModel';
 
