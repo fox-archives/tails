@@ -6,7 +6,6 @@ import {
   updateDatabase,
   actuallCreateProjectInProjectsFolder
 } from '../services/newProject'
-import { takeProjectScreenshots } from '../services/screenshots'
 
 export function projectsController(req, res) {
   Project.getProjects().then(projects => {
@@ -45,9 +44,4 @@ export function openController(req, res) {
   launchCode(pathToProject)
   console.log(req.params.project)
   res.redirect(req.get('referer'))
-}
-
-export async function photographController(req, res) {
-  takeProjectScreenshots()
-    .then(() => res.redirect(req.get('referer')))
 }

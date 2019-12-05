@@ -1,10 +1,10 @@
 import path from "path";
 import express from "express";
 import hbs from "hbs";
-import assetsRouter from "./routes/assets";
-import projectsRouter from "./routes/projects";
-import settingsRouter from './routes/settings';
-import projectRouter from "./routes/project";
+import assetsRouter from "./routes/assetsRouter";
+import projectsRouter from "./routes/projectsRouter";
+import settingsRouter from './routes/settingsRouter';
+import projectRouter from "./routes/projectRouter";
 
 const app = express();
 
@@ -29,11 +29,12 @@ app.use("/css", assetsRouter.cssRouter);
 app.use("/", express.static(path.join(__dirname, "public")));
 
 // routes:app
+// setup a home page with 'reccomendations' and actions later
 app.get("/", (req, res) => res.redirect("/projects"));
 app.use("/projects", projectsRouter);
 app.use('/settings', settingsRouter)
 
-// routes:hosted
+// routes:hosted (replace this with a different microservice later)
 app.use("/project", projectRouter);
 
 app.on("listening", () => console.log("server restarted"));
