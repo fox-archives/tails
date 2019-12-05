@@ -1,5 +1,8 @@
 import path from 'path';
 import fs from 'fs';
+
+import Project from '../models/projectModel'
+
 export async function updateDatabase(newEntry) {
   return new Promise((resolve, reject) => {
   const p = path.join(__dirname, '../data/projects.json');
@@ -56,4 +59,8 @@ export async function actuallCreateProjectInProjectsFolder({
 </body>
 </html>
 `);
+}
+
+export async function deleteProject(projectname) {
+  return Project.deleteProject(projectName);
 }

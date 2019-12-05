@@ -1,24 +1,58 @@
 {{> header }}
 <main>
+  <div class="modal" id="modal-id">
+    <a class="modal-overlay"></a>
+    <div class="modal-container">
+      <div class="modal-header">
+        <a class="btn btn-clear float-right" aria-label="close"></a>
+        <div class="modal-title h5">confirm</div>
+      </div>
+      <div class="modal-body">
+        <div class="content">
+          <p>are you sure you want to delete the project?</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-error" aria-label="no">no</a>
+        <a class="btn btn-primary" aria-label="yes">yes</a>
+      </div>
+    </div>
+  </div>
   {{#if projects}}
   <div class="container mt-2">
-    <div class="columns">
+    <div id="delete-master" class="columns">
       {{#each projects}}
       <div class="column col-xs-12 col-sm-6 col-md-4 col-xl-3 col-2">
         <div class="card mb-2">
-          <div class="card-image"><img class="img-responsive" src="/generated-project-pictures/{{ this.slug }}.png" alt"image of {{ this.name }} tails project"></div>
+          <div class="card-image">
+            <img class="img-responsive" src="/generated-project-pictures/{{
+              this.slug
+            }}.png" alt"image of {{ this.name }} tails project">
+          </div>
           <div class="card-header">
             <div class="card-title h5">{{ this.name }}</div>
             <div class="card-subtitle text-gray">{{ this.type }}</div>
           </div>
           <div class="card-body">
             {{#each this.tags }}
-              <span class="label label-rounded">{{ this }}</span>
+            <span class="label label-rounded">{{ this }}</span>
             {{/each}}
-        </div>
+          </div>
           <div class="card-footer">
-            <a class="btn btn-primary m-1" target="_blank" href="/project/{{ this.slug }}">view</a>
-            <a class="btn m-1" href="projects/open/{{ this.slug }}">code</a>
+            <div class="colums">
+              <a
+                class="btn btn-primary m-1"
+                target="_blank"
+                href="/project/{{ this.slug }}"
+                >view</a
+              >
+              <a class="btn m-1" href="projects/open/{{ this.slug }}">code</a>
+              <a
+                class="btn btn-link m-1 delete-button float-right"
+                data-project="{{ this.slug }}"
+                >delete</a
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -29,4 +63,32 @@
   {{> create_project_empty_state }}
   {{/if}}
 </main>
+<script>
+  let project
+
+  document.getElementById('delete-master').addEventListener('click', e => {
+    let a = e.target.classList.contains('delete-button')
+    console.log(a)
+    if (!a) return
+    document.querySelector('.modal').classList.toggle('active')
+    console.log(document.querySelector('.modal'))
+    project = e.target.getAttribute('data-project')
+    console.log(project)
+  })
+
+  document.getElementById('modal-id').addEventListener('click', e => {
+    let type = e.target.getAttribute('aria-label')
+    console.log(type)
+    if (type === null) return
+
+    if (type === 'no' || type === 'close') {
+      document.querySelector('.modal').classList.toggle('active')
+    } else if (type === 'yes') {
+      window.fetch('/projects/delete/?project=' + project, {
+        method: 'POST'
+      })
+    }
+  })
+</script>
+
 {{> footer }}
