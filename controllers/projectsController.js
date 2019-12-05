@@ -3,9 +3,7 @@ import path from 'path'
 import Project from '../models/projectModel'
 import { launchCode } from '../services/vscode'
 import {
-  updateDatabase,
-  actuallCreateProjectInProjectsFolder,
-  deleteProject
+  deleteProjectService
 } from '../services/projectServices'
 
 export function projectsController(req, res) {
@@ -28,27 +26,10 @@ export function newProjectController(req, res) {
   })
 }
 
-export async function projectCreateController(req, res) {
-  const { projectName, projectType, projectDesc, projectSlug } = req.body
-
-  await updateDatabase({ projectName, projectType, projectDesc, projectSlug })
-  await actuallCreateProjectInProjectsFolder({
-    projectType,
-    projectSlug
-  })
-
-  res.redirect('/projects')
-}
 
 export function openController(req, res) {
   const pathToProject = path.join(__dirname, '../projects', req.params.project)
   launchCode(pathToProject)
   console.log(req.params.project)
-  res.redirect(req.get('referer'))
-}
-
-export async function deleteTheProject(req, res) {
-  console.log(req.query)
-  await deleteProject(req.query.project)
   res.redirect(req.get('referer'))
 }

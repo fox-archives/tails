@@ -5,6 +5,7 @@ import assetsRouter from "./routes/assetsRouter";
 import projectsRouter from "./routes/projectsRouter";
 import settingsRouter from './routes/settingsRouter';
 import projectRouter from "./routes/projectRouter";
+import actionsRouter from './routes/actionRouter';
 
 const app = express();
 
@@ -33,6 +34,8 @@ app.use("/", express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => res.redirect("/projects"));
 app.use("/projects", projectsRouter);
 app.use('/settings', settingsRouter)
+
+app.use('/action', actionsRouter)
 
 // routes:hosted (replace this with a different microservice later)
 app.use("/project", projectRouter);
