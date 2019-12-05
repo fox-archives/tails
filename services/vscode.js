@@ -1,5 +1,3 @@
-import path from 'path';
-import fs from 'fs';
 import { spawn } from 'child_process';
 
 export function launchCode(projectPath) {
