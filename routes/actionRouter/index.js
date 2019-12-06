@@ -2,8 +2,8 @@ import { Router } from 'express';
 
 import actionProjectRouter from './actionProjectRouter'
 
-const actionRouter = Router()
+const router = Router()
 
-actionRouter.use('/project', actionProjectRouter)
+router.use('/project', actionProjectRouter)
 
-export default actionRouter
+export default router

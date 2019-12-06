@@ -64,7 +64,6 @@ async function writeProjects(data) {
   })
 }
 
-// TODO: cleanup
 export async function updateDatabase(newEntry) {
   return new Promise((resolve, reject) => {
     const p = path.join(__dirname, '../data/projects.json')

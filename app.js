@@ -1,7 +1,7 @@
 import path from 'path'
 import express from 'express'
 import hbs from 'hbs'
-import assetsRouter from './routes/assetsRouter'
+import { cssRouter } from './routes/assetsRouter'
 import projectsRouter from './routes/projectsRouter'
 import settingsRouter from './routes/settingsRouter'
 import projectRouter from './routes/projectRouter'
@@ -28,7 +28,7 @@ app.use('/', express.json())
 app.use('/', express.urlencoded({ extended: true }))
 
 // assets
-app.use('/css', assetsRouter.cssRouter)
+app.use('/css', cssRouter)
 app.use('/', express.static(path.join(__dirname, 'public')))
 
 // routes:app

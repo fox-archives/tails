@@ -9,4 +9,5 @@ const router = Router()
 
 router.get('/', settingsController)
 router.post('/generate-screenshots', generateScreenshots)
+
 export default router

@@ -1,8 +1,6 @@
-import path from 'path'
-
 import Project from '../models/projectModel'
 
-export function projectsController(req, res) {
+export function projectController(req, res) {
   Project.getProjects().then(projects => {
     res.render('pages/projects', {
       hero: {
@@ -14,7 +12,7 @@ export function projectsController(req, res) {
   })
 }
 
-export function newProjectController(req, res) {
+export function createProjectController(req, res) {
   res.render('forms/createProjectForm', {
     hero: {
       header: 'create new project'

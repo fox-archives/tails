@@ -1,4 +1,5 @@
 import serveStatic from 'serve-static';
+
 import Project from '../models/projectModel';
 
 export function projectController(req, res) {

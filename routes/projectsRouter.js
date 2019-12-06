@@ -1,14 +1,15 @@
 import { Router } from 'express'
+
 import {
   projectsController,
-  newProjectController,
+  createProjectController,
   editProjectController
 } from '../controllers/projectsController'
 
 const router = Router()
 
 router.get('/', projectsController)
-router.get('/create', newProjectController) // TODO cleanup name
+router.get('/create', createProjectController) 
 router.get('/edit', editProjectController)
 
 export default router
