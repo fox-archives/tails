@@ -17,6 +17,7 @@ export async function createProjectController(req, res) {
 
   res.redirect('/projects')
 }
+
 export async function deleteProjectController(req, res) {
   await deleteProjectService();
 

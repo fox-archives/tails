@@ -1,0 +1,46 @@
+{{> header }}
+<main>
+  <div class="container mt-2">
+    <div class="columns">
+      <div class="column col-3"></div>
+      
+      <div class="column col-6">
+        <form method="post" action="/action/project/create">
+          <div class="form-group">
+            <label class="form-label" for="project-name">project name</label>
+            <div class="has-icon-right">
+              <input class="form-input" type="text" id="project-name" name="projectName" placeholder="name">
+              <i class="form-icon icon icon-edit"></i>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="project-type">project type</label>
+            <select class="form-select" id="project-type" name="projectType">
+              <option>web</option>
+              <option>node</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="project-type">project slug</label>
+            <div class="has-icon-right">
+              <input class="form-input" type="text" id="project-slug" name="projectSlug" placeholder="slug">
+              <i class="form-icon icon icon-edit"></i>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="input-example-3">project description</label>
+            <textarea class="form-input" id="input-example-3" name="projectDesc" placeholder="project description" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">create</button>
+          </div>
+      </div>
+      </form>
+
+      <div class="column col-3"></div>
+    </div>
+  </div>
+</main>
+{{> footer }}

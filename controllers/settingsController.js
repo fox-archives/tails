@@ -1,7 +1,7 @@
 import { takeProjectScreenshots } from '../services/screenshots'
 
 export function settingsController(req, res) {
-  res.render('settings', {
+  res.render('pages/settings', {
     hero: {
       header: 'settings',
       body: 'fine tune app behavior'
