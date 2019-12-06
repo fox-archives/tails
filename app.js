@@ -30,14 +30,15 @@ app.use('/css', assetsRouter.cssRouter)
 app.use('/', express.static(path.join(__dirname, 'public')))
 
 // routes:app
-// setup a home page with 'reccomendations' and actions later
+// setup a home page with 'recommendations' and actions later
 app.get('/', (req, res) => res.redirect('/projects'))
 app.use('/projects', projectsRouter)
 app.use('/settings', settingsRouter)
 
+// like-api (to-be microservice)
 app.use('/action', actionsRouter)
 
-// routes:hosted (replace this with a different microservice later)
+// routes:hosted (to-be microservice)
 app.use('/project', projectRouter)
 
 app.on('listening', () => console.log('server restarted'))
