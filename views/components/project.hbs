@@ -1,0 +1,34 @@
+<div class="column col-xs-12 col-sm-6 col-md-4 col-xl-3 col-2">
+  <div class="card mb-2">
+    <div class="card-image">
+      <img class="img-responsive" src="/generated-project-pictures/{{
+        this.slug
+      }}.png" alt"image of {{ this.name }} tails project">
+    </div>
+    <div class="card-header">
+      <div class="card-title h5">{{ this.name }}</div>
+      <div class="card-subtitle text-gray">{{ this.type }}</div>
+    </div>
+    <div class="card-body">
+      {{#each this.tags }}
+      <span class="label label-rounded">{{ this }}</span>
+      {{/each}}
+    </div>
+    <div class="card-footer">
+      <a
+        class="btn btn-primary m-1"
+        target="_blank"
+        href="/project/{{ this.slug }}"
+        >view</a
+      >
+      <a class="btn m-1" href="/action/project/open?project={{ this.slug }}"
+        >code</a
+      >
+      <a
+        class="btn btn-link m-1 delete-button float-right"
+        data-project="{{ this.slug }}"
+        >delete</a
+      >
+    </div>
+  </div>
+</div>

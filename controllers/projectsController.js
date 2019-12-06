@@ -15,7 +15,7 @@ export function projectsController(req, res) {
 }
 
 export function newProjectController(req, res) {
-  res.render('forms/createProject', {
+  res.render('createProject', {
     hero: {
       header: 'create new project'
     }

@@ -19,6 +19,8 @@ app.disable('x-powered-by')
 
 app.engine('hbs', hbs.__express)
 hbs.registerPartials(path.join(__dirname, 'views', 'partials'))
+hbs.registerPartials(path.join(__dirname, 'views', 'forms'))
+hbs.registerPartials(path.join(__dirname, 'views', 'components'))
 hbs.localsAsTemplateData(app)
 
 // middleware
