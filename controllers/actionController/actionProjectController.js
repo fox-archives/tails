@@ -4,7 +4,6 @@ import {
 } from '../../services/projectServices'
 
 
-// TODO: move logic to the service, which would be in the Project model
 export async function createProjectController(req, res) {
   const { projectName, projectType, projectDesc, projectSlug } = req.body
 

@@ -2,7 +2,7 @@ import path from 'path'
 
 import puppeteer from 'puppeteer'
 
-import Project from '../models/projectModel';
+import Project from '../models/projectModel'
 
 export async function takeProjectScreenshots() {
   const p = path.join(__dirname, '../public/generated-project-pictures')

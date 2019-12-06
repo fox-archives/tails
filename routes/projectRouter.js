@@ -1,13 +1,13 @@
-import { Router } from 'express';
+import { Router } from 'express'
 import {
   projectController,
   projectCheckIfShouldBeShown,
   showProject
-} from '../controllers/projectController';
+} from '../controllers/projectController'
 
-const router = Router();
+const router = Router()
 
-router.get('/', projectController);
-router.use('/', projectCheckIfShouldBeShown, showProject);
+router.get('/', projectController)
+router.use('/', projectCheckIfShouldBeShown, showProject)
 
-export default router;
+export default router

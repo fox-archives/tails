@@ -1,9 +1,7 @@
-import fs from 'fs';
-import path from 'path';
+import fs from 'fs'
+import path from 'path'
 
-function Project() {
-
-};
+function Project() {}
 
 Project.getProjects = function() {
   return readProjects()
@@ -15,11 +13,11 @@ Project.createProject = async function({
   projectDesc,
   projectSlug
 }) {
-    await updateDatabase({ projectName, projectType, projectDesc, projectSlug })
-    await actuallyCreateProjectInProjectsFolder({
-      projectType,
-      projectSlug
-    })
+  await updateDatabase({ projectName, projectType, projectDesc, projectSlug })
+  await actuallyCreateProjectInProjectsFolder({
+    projectType,
+    projectSlug
+  })
 }
 
 Project.deleteProject = async function(projectName) {
@@ -33,14 +31,14 @@ Project.deleteProject = async function(projectName) {
 }
 
 Project.prototype.ensureExists = function(projectName) {
-  console.log(projectName);
+  console.log(projectName)
 }
 
 Project.create = function() {
-  return new Project();
-};
+  return new Project()
+}
 
-export default Project;
+export default Project
 
 async function readProjects() {
   return new Promise((resolve, reject) => {
@@ -65,7 +63,6 @@ async function writeProjects(data) {
     })
   })
 }
-
 
 // TODO: cleanup
 export async function updateDatabase(newEntry) {
