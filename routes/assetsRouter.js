@@ -25,4 +25,4 @@ cssRouter.get('/spectre-icons.min.css', (req, res) => {
   )
 })
 
-export default { cssRouter }
+export { cssRouter }

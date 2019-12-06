@@ -1,6 +1,6 @@
 import Project from '../models/projectModel'
 
-export function projectController(req, res) {
+export function projectsController(req, res) {
   Project.getProjects().then(projects => {
     res.render('pages/projects', {
       hero: {
