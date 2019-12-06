@@ -1,10 +1,6 @@
 import path from 'path'
 
 import Project from '../models/projectModel'
-import { launchCode } from '../services/vscode'
-import {
-  deleteProjectService
-} from '../services/projectServices'
 
 export function projectsController(req, res) {
   Project.getProjects().then(projects => {
@@ -24,12 +20,4 @@ export function newProjectController(req, res) {
       header: 'create new project'
     }
   })
-}
-
-
-export function openController(req, res) {
-  const pathToProject = path.join(__dirname, '../projects', req.params.project)
-  launchCode(pathToProject)
-  console.log(req.params.project)
-  res.redirect(req.get('referer'))
 }

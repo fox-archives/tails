@@ -49,59 +49,8 @@
       ]
     },
     {
-      "name": "fff",
-      "slug": "my-slugfff",
-      "type": "web",
-      "tags": []
-    },
-    {
-      "name": "test",
-      "slug": "test-slug",
-      "type": "web",
-      "tags": []
-    },
-    {
-      "name": "test-2",
-      "slug": "test-slug-2",
-      "type": "web",
-      "tags": []
-    },
-    {
-      "name": "test-3",
-      "slug": "test-slug-3",
-      "type": "web",
-      "tags": []
-    },
-    {
-      "name": "fff",
-      "slug": "adsfaf",
-      "type": "web",
-      "tags": []
-    },
-    {
-      "name": "",
-      "slug": "",
-      "type": "web",
-      "tags": []
-    },
-    {
-      "name": "adsdfe",
-      "slug": "rrr",
-      "type": "web",
-      "tags": []
-    },
-    {
-      "name": "qwert",
-      "slug": "qwett",
-      "type": "web",
-      "tags": []
-    },
-    {
-      "tags": []
-    },
-    {
-      "name": "uuuu",
-      "slug": "uu",
+      "name": "foo",
+      "slug": "bar",
       "type": "web",
       "tags": []
     }
