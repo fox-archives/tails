@@ -53,6 +53,18 @@
       "slug": "bar",
       "type": "web",
       "tags": []
+    },
+    {
+      "name": "",
+      "slug": "",
+      "type": "web",
+      "tags": []
+    },
+    {
+      "name": "",
+      "slug": "",
+      "type": "web",
+      "tags": []
     }
   ]
 }

@@ -5,15 +5,29 @@
   "license": "GPL-3.0",
   "scripts": {
     "serve": "nodemon -e js,css,html,hbs -r esm app.js",
-    "start": "node -r esm app.js"
+    "start": "node -r esm app.js",
+    "test": "ava tests/**/*.test.js -w"
+  },
+  "ava": {
+    "require": [
+      "esm"
+    ],
+    "babel": false,
+    "compileEnhancements": false
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
+    "dotenv-expand": "^5.1.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "hbs": "^4.0.6",
-    "nodemon": "^1.19.4",
     "puppeteer": "^2.0.0",
     "serve-static": "^1.14.1",
     "spectre.css": "^0.5.8"
+  },
+  "devDependencies": {
+    "ava": "^2.4.0",
+    "mongoose": "^5.7.14",
+    "nodemon": "^2.0.1"
   }
 }

@@ -1,5 +1,6 @@
 import {
   createProjectService,
+  editProjectService,
   deleteProjectService,
   openProjectService
 } from '../../services/projectServices'
@@ -18,15 +19,21 @@ export async function createProjectController(req, res) {
   res.redirect('/projects')
 }
 
-export async function deleteProjectController(req, res) {
-  await deleteProjectService();
+export async function editProjectController(req, res) {
+  await editProjectService()
 
-  res.redirect('/deleting-done');
+  res.redirect()
+}
+
+export async function deleteProjectController(req, res) {
+  await deleteProjectService()
+
+  res.redirect('/deleting-done')
 }
 
 export async function openProjectController(req, res) {
   let projectName = req.query.project
-  await openProjectService(projectName);
+  await openProjectService(projectName)
 
   res.redirect(req.get('referer'))
 }

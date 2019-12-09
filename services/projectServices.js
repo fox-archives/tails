@@ -16,6 +16,10 @@ export async function createProjectService({
     projectSlug
   })
 }
+
+export async function editProjectService() {
+
+}
 export async function deleteProjectService(projectName) {
   return Project.deleteProject(projectName)
 }

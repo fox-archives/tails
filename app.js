@@ -1,11 +1,18 @@
 import path from 'path'
 import express from 'express'
 import hbs from 'hbs'
+
+import { initEnv } from './core/env'
+import { initMongo } from './core/mongo'
 import { cssRouter } from './routes/assetsRouter'
 import projectsRouter from './routes/projectsRouter'
 import settingsRouter from './routes/settingsRouter'
 import projectRouter from './routes/projectRouter'
 import actionsRouter from './routes/actionRouter'
+
+// core
+initEnv()
+initMongo()
 
 const app = express()
 
