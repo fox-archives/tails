@@ -1,22 +1,22 @@
 import path from 'path'
 
-import express from 'express'
+import { Router } from 'express'
 
-const cssRouter = express.Router()
+const router = Router()
 
-cssRouter.get('/spectre.min.css', (req, res) => {
+router.get('/css/spectre.min.css', (req, res) => {
   res.sendFile(
     path.join(__dirname, '../node_modules/spectre.css/dist/spectre.min.css')
   )
 })
 
-cssRouter.get('/spectre-exp.min.css', (req, res) => {
+router.get('/css/spectre-exp.min.css', (req, res) => {
   res.sendFile(
     path.join(__dirname, '../node_modules/spectre.css/dist/spectre-exp.min.css')
   )
 })
 
-cssRouter.get('/spectre-icons.min.css', (req, res) => {
+router.get('/css/spectre-icons.min.css', (req, res) => {
   res.sendFile(
     path.join(
       __dirname,
@@ -25,4 +25,4 @@ cssRouter.get('/spectre-icons.min.css', (req, res) => {
   )
 })
 
-export { cssRouter }
+export default router

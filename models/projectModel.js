@@ -40,11 +40,7 @@ Project.prototype.add = async function() {
   const projects = await readProjects()
 
   // if project does not already exist
-  if (true) {
-    projects
-  } else {
 
-  }
 }
 
 Project.prototype.remove = async function() {
