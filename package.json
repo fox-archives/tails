@@ -26,6 +26,8 @@
     "spectre.css": "^0.5.8"
   },
   "devDependencies": {
+    "@types/mongoose": "^5.5.32",
+    "@types/node": "^12.12.14",
     "ava": "^2.4.0",
     "mongoose": "^5.7.14",
     "nodemon": "^2.0.1"

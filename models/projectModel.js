@@ -1,72 +1,32 @@
-import fs from 'fs'
-import path from 'path'
+import mongoose from '../core/mongoose'
 
-function Project(
-  name,
-  type,
-  desc,
-  slug 
-) {
-  this.name = name,
-  this.type = type,
-  this.desc = desc,
-  this.slug = slug 
-}
-
-Project.create = function({
-  name,
-  type,
-  desc,
-  slug 
-}) {
-  return new Project({
-    name,
-    type,
-    desc,
-    slug 
-  })
-}
-
-Project.lookupProject = async function({ projectName }) {
-  const projects = await readProjects()
-
-  if(Project.alreadyExists(projectName)) {
-
-  } else {
-    return new Error('project does not exist')
+const projectSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    minLength: 2
+  },
+  type: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    minLength: 2
+  },
+  desc: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    minLength: 2
+  },
+  slug: {
+    type: String,
+    trim: true,
+    lowercase: true,
+    minLength: 2
   }
-}
-Project.prototype.add = async function() {
-  const projects = await readProjects()
+})
 
-  // if project does not already exist
-
-}
-
-Project.prototype.remove = async function() {
-  const projects = await readProjects()
-}
-
-Project.getProjects = async function() {
-  await readProjects()
-}
-
-Project.alreadyExists = async function(projectName) {
-  const projects = await readProjects()
-  for(let i = 0; i < projects.length; ++i) {
-    const existingProject = projects[i]
-    if(existingProject.name === projectName) {
-      return true
-    }
-  }
-  return false
-}
+const Project = mongoose.model('Project', projectSchema)
 
 export default Project
-
-
-async function readProjects() {
-  const dir = path.join(__dirname, '../data/projects.json')
-  const data = await fs.promises.readFile(dir)
-  return JSON.parse(data).projects
-}
