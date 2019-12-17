@@ -1,9 +1,12 @@
-# node
-node_modules/
-
 # app
 public/generated-project-pictures/*
 !public/generated-project-pictures/.gitkeep
+
+# node
+node_modules/
+
+# ide
+.vscode/
 
 # misc
 *.log
