@@ -49,17 +49,24 @@ const projectSchema = new mongoose.Schema({
 //   return this.name.first + ' ' + this.name.last
 // })
 
-projectSchema.methods.print = function() {
-  console.log(this.name ? this.name : 'name not found')
+projectSchema.statics.createProject = function(newProject) {
+  return new Promise((resolve, reject) => {
+    const Project = mongoose.model('Project')
+    const project = new Project(newProject)
+    
+    project.save((err, project) => {
+      if (err) reject(err)
+
+      resolve(project)
+    })
+  })
 }
 
-// projectSchema.static('getProjects', () => {})
 projectSchema.statics.getProjects = function() {
   return new Promise((resolve, reject) => {
-    this.find({
-      name: /^project/
-    }, (err, projects) => {
+    this.find((err, projects) => {
       if (err) reject(err)
+
       resolve(projects)
     })
   })

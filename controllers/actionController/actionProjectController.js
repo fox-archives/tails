@@ -1,20 +1,14 @@
-import {
-  createProjectService,
-  editProjectService,
-  deleteProjectService,
-  openProjectService
-} from '../../services/projectServices'
-
+import Project from '../../models/projectModel'
 
 export async function createProjectController(req, res) {
   const { projectName, projectType, projectDesc, projectSlug } = req.body
 
-  await createProjectService({
-    projectName,
-    projectType,
-    projectDesc,
-    projectSlug
-  });
+  await Project.createProject({
+    name: projectName,
+    type: projectType,
+    desc: projectDesc,
+    slug: projectSlug
+  })
 
   res.redirect('/projects')
 }

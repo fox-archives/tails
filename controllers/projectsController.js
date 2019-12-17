@@ -1,24 +1,23 @@
 import Project from '../models/projectModel'
-export function projectsController(req, res) {
-  Project.getProjects()
-    .then(projects => {
-      console.log('test')
-      res.send('bar')
-    })
-    .catch(err => {
-      console.error(err)
-    })
+export async function projectsController(req, res) {
+  try {
+    const projects = await Project.getProjects()
 
-  // Project.getProjects().then(projects => {
-  //   res.render('pages/projects', {
-  //     hero: {
-  //       header: 'welcome to tails',
-  //       body: "let's get started"
-  //     },
-  //     projects: projects
-  //   })
-  // })
-  res.send('foo')
+    res.render('pages/projects', {
+      hero: {
+        header: 'welcome to tails',
+        body: "let's get started"
+      },
+      projects
+    })
+  } catch {
+    res.render('pages/error', {
+      error: {
+        header: 'there was an error',
+        body: 'thing'
+      }
+    })
+  }
 }
 
 export function createProjectController(req, res) {
@@ -30,7 +29,7 @@ export function createProjectController(req, res) {
 }
 
 export function editProjectController(req, res) {
-  const { project } = req.query;
+  const { project } = req.query
 
   res.render('forms/editProjectForm', {
     hero: {
