@@ -1,0 +1,14 @@
+{
+  "name": "tails-manager",
+  "private": true,
+  "version": "0.1.0",
+  "main": "app.js",
+  "scripts": {
+    "serve": "nodemon -r esm app"
+  },
+  "dependencies": {
+    "@koa/router": "^8.0.5",
+    "esm": "^3.2.25",
+    "koa": "^2.11.0"
+  }
+}
