@@ -2,7 +2,7 @@
 
 `tails` enables you to view, edit, and organize all your javascript projects in one place
 
-if you're like me, you're tired of repeating the same boilerplate when creating frontend web applications, node backends, and so on. it also gets annoying going in each project subdirectory, opening the command line, starting the app, checking the port, and navigating to it via the browser. stuff like hot reload, auto-reload on file watches do not come out of the box and have to be set up _every single time_, especially if you wish to experiement with something not setup by create-react-app, vue-cli, etc. websites such as jsfiddle and codesandbox solve some of the issue, but the main problem is that you cannot typically edit the source code with your normal tools. (you must use the web editor, rather than your ide of choice). also, your projects are not tracked by any vcs and they are not stored on your computer. tails allieviates all these problems
+if you're like me, you're tired of repeating the same boilerplate when creating spas, mpas, or just regular js apps. it also gets quite repetitive just to start an app: cd in a project subdirectory, lookup the start command, start the app, find the port, open the browser, and navigate to it. stuff like hot and auto reload don't come out of the box and have to be set up _every single time_. even if its just a few steps, it's quite monotonous. create-react-app, vue-cli, and the similar help out with *some* boilerplate, but the issue still persists. websites such as jsfiddle and codesandbox solve some issues, but the main drawback is that you must use the website code editor, rather than a normal one. also, your code is in a little iframe in the corner of the screen. inspecting element with iframes doesn't really work consistently. also, your projects are not tracked by any vcs and they are not stored on your computer. tails alleviates all these problems by allowing you to create, view, edit, and launch, your projects all in one place. creating projects via managed presets removes nearly all boilerplate code so you can just experiment with what you want to.
 
 ![tails preview](./tails.png)
 
@@ -43,6 +43,21 @@ if you're like me, you're tired of repeating the same boilerplate when creating 
 - show generated metadata
   - how much browser support your website has
   - size of codebase gzipped, minified, etc.
+
+### codebase
+
+want the codebase to be as modular as possible, so we can just plug in different parts as needed. working towards a microservice-oriented architecture
+
+want the following chunks
+
+- frontend frontend
+  - actual svelte frontend
+- backend frontend
+  - frontend to the actual backend server
+- backend backend
+  - actual package that performs project ops
+- hosted backend
+  - backend that only hosts the simple html,css,js projects
 
 ### development
 

@@ -10,15 +10,16 @@ import { errorController } from '../controllers/errorController'
 
 const router = Router()
 
+// backend frontend
 router.use('/', rootRouter)
 router.use('/assets', assetsRouter)
 router.use('/projects', projectsRouter)
 router.use('/settings', settingsRouter)
 
-// like-api (to-be microservice)
+// backend backend
 router.use('/action', actionsRouter)
 
-// routes:hosted (to-be microservice)
+// hosted backend
 router.use('/project', projectRouter)
 
 router.use('/', errorController)
