@@ -1,6 +1,6 @@
-export function validateProjectForm({
+export function validateProjectForm(
   projectName, projectType, projectDesc, projectSlug
-}) {
+) {
   if(projectName && projectType && projectDesc && projectSlug) {
     return
   }
