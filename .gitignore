@@ -7,3 +7,4 @@ public/generated-project-pictures/*
 
 # misc
 *.log
+.env

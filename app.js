@@ -3,12 +3,12 @@ import { join } from 'path';
 import express from 'express';
 
 import { initEnv } from './core/env'
-import { initMongo } from './core/mongo'
+import { initDb } from './core/db'
 import { initExpress } from './core/express'
 import routes from './routes'
 
 initEnv()
-initMongo()
+initDb()
 
 const app = initExpress()
 app.use(express.json())
