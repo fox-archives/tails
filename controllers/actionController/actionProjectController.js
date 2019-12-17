@@ -1,5 +1,9 @@
+import path from 'path'
+
 import Project from '../../models/projectModel'
 import { validateProjectForm } from '../../validation/validateProjectForm'
+import { launchCode } from '../../services/vscode'
+import { validateProjectPath } from '../../validation/validateProject'
 
 export async function createProjectController(req, res) {
   const { projectName, projectType, projectDesc, projectSlug } = req.body
@@ -38,14 +42,24 @@ export async function editProjectController(req, res) {
 }
 
 export async function deleteProjectController(req, res) {
-  await deleteProjectService()
 
-  res.redirect('/deleting-done')
 }
 
 export async function openProjectController(req, res) {
   let projectName = req.query.project
-  await openProjectService(projectName)
-
-  res.redirect(req.get('referer'))
+  projectName = path.join(__dirname, '../thing', projectName)
+  try {
+    validateProjectPath(projectName)
+    await launchCode(projectName)
+    res.redirect(req.get('referer'))
+  }
+  catch {
+    res.render('pages/projects', {
+      err: 'project does not exist',
+      hero: {
+        header: 'welcome to tails',
+        body: 'let\'s get started'
+      }
+    })
+  }
 }

@@ -4,11 +4,13 @@ import express from 'express';
 
 import { initEnv } from './core/env'
 import { initDb } from './core/db'
+import { initCleanup } from './core/cleanup'
 import { initExpress } from './core/express'
 import routes from './routes'
 
 initEnv()
 initDb()
+initCleanup()
 
 const app = initExpress()
 app.use(express.json())

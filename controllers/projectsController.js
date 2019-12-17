@@ -1,8 +1,8 @@
 import Project from '../models/projectModel'
-export async function projectsController(req, res) {
+
+export async function projectsController(req, res, next) {
   try {
     const projects = await Project.getProjects()
-
     res.render('pages/projects', {
       hero: {
         header: 'welcome to tails',
@@ -11,12 +11,7 @@ export async function projectsController(req, res) {
       projects
     })
   } catch {
-    res.render('pages/error', {
-      error: {
-        header: 'there was an error',
-        body: 'thing'
-      }
-    })
+    next(new Error('failed to get projects'))
   }
 }
 
@@ -27,7 +22,6 @@ export function createProjectController(req, res) {
     }
   })
 }
-
 
 export function editProjectController(req, res) {
   const { project } = req.query

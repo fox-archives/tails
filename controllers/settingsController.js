@@ -1,4 +1,7 @@
-import { takeProjectScreenshots } from '../services/screenshots'
+import {
+  generateProjectScreenshots,
+  generateProjectDataAndUpdateDb
+} from '../services/settingServices'
 
 export function settingsController(req, res) {
   res.render('pages/settings', {
@@ -10,6 +13,12 @@ export function settingsController(req, res) {
 }
 
 export async function generateScreenshots(req, res) {
-  await takeProjectScreenshots()
+  await generateProjectScreenshots()
+  res.redirect(req.get('referer'))
+}
+
+// get all projects in the `./projects` directory, and update db
+export async function generateProjects(req, res) {
+  await generateProjectDataAndUpdateDb()
   res.redirect(req.get('referer'))
 }

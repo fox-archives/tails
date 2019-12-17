@@ -1,2 +1,10 @@
+{{#if err}}
+<div class="bg-error p-2">
+  error: {{ error }}
+  <a href="/projects/create" class="text-secondary">
+    <i class="icon icon-cross float-right mt-1"></i>
+  </a>
+</div>
+{{/if}}
 {{> navbar }}
 {{> hero }}

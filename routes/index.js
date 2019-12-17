@@ -1,11 +1,12 @@
 import { Router } from 'express'
 
-import rootRouter from '../routes/rootRouter'
-import assetsRouter from '../routes/assetsRouter'
-import projectsRouter from '../routes/projectsRouter'
-import settingsRouter from '../routes/settingsRouter'
-import actionsRouter from '../routes/actionRouter'
-import projectRouter from '../routes/projectRouter'
+import rootRouter from './rootRouter'
+import assetsRouter from './assetsRouter'
+import projectsRouter from './projectsRouter'
+import settingsRouter from './settingsRouter'
+import actionsRouter from './actionRouter'
+import projectRouter from './projectRouter'
+import { errorController } from '../controllers/errorController'
 
 const router = Router()
 
@@ -19,5 +20,7 @@ router.use('/action', actionsRouter)
 
 // routes:hosted (to-be microservice)
 router.use('/project', projectRouter)
+
+router.use('/', errorController)
 
 export default router

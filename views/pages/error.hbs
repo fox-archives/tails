@@ -4,11 +4,15 @@
     <i class="icon icon-stop"></i>
   </div>
   <p class="empty-title h5">an error ocurred</p>
-  <p class="empty-subtitle">go back to the home screen</p>
+  <p class="empty-subtitle">{{ error }}</p>
   <div class="empty-action">
+    {{#if linkBack }}
+    <a href="{{ linkBack }}">
+    {{else}}
     <a href="/">
-      <button class="btn btn-primary">home</button>
-    </a>
+    {{/if}}
+      <button class="btn btn-primary">go home</button>
+    </a h>
   </div>
 </div>
 {{> footer }}

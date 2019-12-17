@@ -6,7 +6,6 @@ export function launchCode(projectPath) {
   //   console.log(data);
   // }
   return new Promise((resolve, reject) => {
-    console.log(projectPath)
     const p = spawn('code', ['-n', '-g', 'index.html:1:1', projectPath], {
       cwd: process.cwd(),
       env: process.env

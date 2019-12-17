@@ -1,10 +1,11 @@
 import path from 'path'
+import fs from 'fs'
 
 import puppeteer from 'puppeteer'
 
 import Project from '../models/projectModel'
 
-export async function takeProjectScreenshots() {
+export async function generateProjectScreenshots() {
   const p = path.join(__dirname, '../public/generated-project-pictures')
   const projects = await Project.getProjects()
   let promises = []
@@ -23,4 +24,15 @@ export async function takeProjectScreenshots() {
     }
   })
   return Promise.all(promises)
+}
+
+export async function generateProjectDataAndUpdateDb() {
+  const p = path.join(__dirname, '../projects')
+  const files = (await fs.promises.readdir(p, {
+    withFileTypes: true
+  }))
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name)
+  
+  return Promise.resolve(files)
 }

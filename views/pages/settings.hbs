@@ -7,10 +7,20 @@
         <p class="mb-2">this app creates thumbnails of each project you have. regenerate all of them here. the code is pretty inefficient so make sure you don't have many projects and it might take a few seconds</p>
         <form method="post" action="/settings/generate-screenshots">
           <button name="main-button" class="btn btn-primary">
-            <i class="icon icon-photo"></i>
+            <i class="icon icon-photo mr-1"></i>
             generate
           </button>
         </form> 
+      </div>
+      <div class="column p2">
+        <h4>projects</h4>
+        <p class="mb-2">automatically create / edit project entries in the database according to projects in the 'projects' subfolder. it will create projects that do not already exist and edit the metadata of existing projects</p>
+        <form method="post" action="/settings/generate-projects">
+          <button name="generate-screenshot" class="btn btn-primary">
+            <i class="icon icon-apps mr-1"></i>
+            generate
+          </button>
+        </form>
       </div>
     </div>
   </div>
