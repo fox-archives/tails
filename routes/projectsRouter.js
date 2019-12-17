@@ -9,7 +9,7 @@ import {
 const router = Router()
 
 router.get('/', projectsController)
-router.get('/create', createProjectController) 
+router.get('/create', createProjectController)
 router.get('/edit', editProjectController)
 
 export default router

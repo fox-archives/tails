@@ -12,7 +12,7 @@ export async function takeProjectScreenshots() {
     try {
       const browser = await puppeteer.launch()
       const page = await browser.newPage()
-      await page.goto('http://localhost:3004/project/' + project.slug)
+      await page.goto('http://localhost:3000/project/' + project.slug)
       const prom = page.screenshot({
         path: path.join(p, project.slug + '.png')
       })

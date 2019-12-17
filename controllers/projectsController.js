@@ -28,6 +28,7 @@ export function createProjectController(req, res) {
   })
 }
 
+
 export function editProjectController(req, res) {
   const { project } = req.query
 

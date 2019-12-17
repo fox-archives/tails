@@ -1,3 +1,11 @@
+{{#if err}}
+<div class="bg-error p-2">
+  there was a problem validating form details. try again
+  <a href="/projects/create" class="text-secondary">
+    <i class="icon icon-cross float-right mt-1"></i>
+  </a>
+</div>
+{{/if}}
 {{> header }}
 <main>
   <div class="container mt-2">

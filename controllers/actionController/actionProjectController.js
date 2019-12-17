@@ -1,16 +1,34 @@
 import Project from '../../models/projectModel'
+import { validateProjectForm } from '../../validation/validateProjectForm'
 
 export async function createProjectController(req, res) {
   const { projectName, projectType, projectDesc, projectSlug } = req.body
 
-  await Project.createProject({
-    name: projectName,
-    type: projectType,
-    desc: projectDesc,
-    slug: projectSlug
-  })
+  const err = validateProjectForm(
+    projectName, projectType, projectDesc, projectSlug
+  )
+  if (err) {
+    res.render('forms/createProjectForm', {
+      err,
+      hero: {
+        header: 'create new project'
+      }
+    })
+    return
+  }
 
-  res.redirect('/projects')
+  try {
+    await Project.createProject({
+      name: projectName,
+      type: projectType,
+      desc: projectDesc,
+      slug: projectSlug
+    })
+
+    res.redirect('/projects')
+  } catch {
+    res.redirect('/error')
+  }
 }
 
 export async function editProjectController(req, res) {
