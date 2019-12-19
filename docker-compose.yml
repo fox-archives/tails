@@ -45,6 +45,7 @@ services:
       - 3030
     environment:
       - NODE_ENV=development
+    restart: always
     privileged: false
     stdin_open: true
     tty: true
@@ -65,6 +66,18 @@ services:
       - 3020
     environment:
       - NODE_ENV=development
+    links:
+      - mongo
+    restart: always
+    privileged: false
+    stdin_open: true
+    tty: true
+  mongo:
+    container_name: tails-mongo
+    image: mongo:4.2.2-bionic
+    expose:
+      - 27017
+    restart: always
     privileged: false
     stdin_open: true
     tty: true

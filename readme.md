@@ -48,3 +48,11 @@ if you're like me, you're tired of repeating the same boilerplate when creating 
   - choose which projects to deploy
   - web page lists projects
   - even those most of these are (probably) going to be throwaway test projects, would be cool to select and choose which ones go to prod and only have those deployed and visible in some sort of listing
+
+## usage
+
+not really streamlined yet
+
+```sh
+make start
+```

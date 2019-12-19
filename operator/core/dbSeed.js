@@ -5,7 +5,7 @@ export function dbSeed(mongoose) {
   console.info('seeding database')
 
   mongoose.connection.collections['projects'].drop(err => {
-    if (err) return console.error(err)
+    if (err) return console.trace(err)
 
     console.info('projects collection nuked')
   })
@@ -18,7 +18,7 @@ export function dbSeed(mongoose) {
     })
 
     project.save((err, project) => {
-      if (err) return console.error(err)
+      if (err) return console.trace(err)
     })
   })
 }
