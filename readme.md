@@ -39,31 +39,12 @@ if you're like me, you're tired of repeating the same boilerplate when creating 
 - show generated metadata
   - how much browser support your website has
   - size of codebase gzipped, minified, etc.
-
-### code
-
-microservices architecture. for now, since are in early stages, we will docker compose a swarm until i reconfig later for a more k8-native dev workflow
-
-- `manager`
-  - what 'tails clients' interfaces with. right now this basically performs db ops and launches stuff like vscode
-- dashboards that are frontends to `./manager`. if you want to hack around, the goal is to make it super easy to create your own interface around the manager `./manager` microservice
-  - dashboard-mpa'
-    - express-migrating-to-koa node mpa w/ spectrecss styling. basic
-  - dashboard-spa
-    - svelte spa (including server-side code) w/ tailwindcss styling. to-be-more sophisticated replacement for the mpa
-  - projects
-    - actual projects
-  - temp server that serves all the projects in `projects`. for now serves static files for html, css, js projects
-
-### development
-
-- open any mount of subprojecs at once without conflicts
+- development
+  - open any mount of subprojecs at once without conflicts
   - containerization of non web (static) sites (idk maybe not actually)
-- nice domains during development
-- cli?
-
-### production
-
-- choose which projects to deploy
-- web page lists projects
-- even those most of these are (probably) going to be throwaway test projects, would be cool to select and choose which ones go to prod and only have those deployed and visible in some sort of listing
+  - nice domains during development
+  - cli?
+- production
+  - choose which projects to deploy
+  - web page lists projects
+  - even those most of these are (probably) going to be throwaway test projects, would be cool to select and choose which ones go to prod and only have those deployed and visible in some sort of listing

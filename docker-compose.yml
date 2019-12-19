@@ -43,6 +43,8 @@ services:
         published: 3030
     expose:
       - 3030
+    environment:
+      - NODE_ENV=development
     privileged: false
     stdin_open: true
     tty: true
@@ -61,6 +63,8 @@ services:
     command: node -r esm app
     expose:
       - 3020
+    environment:
+      - NODE_ENV=development
     privileged: false
     stdin_open: true
     tty: true
