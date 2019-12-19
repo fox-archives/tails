@@ -1,5 +1,29 @@
+import _ from 'lodash'
+
+import Project from '../../models/projectModel'
 import { launchCode } from '../../services/code'
 import { validateCodePath } from '../../validations/validateCodePath'
+
+export async function listProjectController(ctx) {
+  try {
+    let projects = await Project.getProjects()
+    projects = _.map(projects, p => _.pick(p, [
+      'name',
+      'type',
+      'desc',
+      'slug'
+    ]))
+    ctx.body = {
+      data: { projects }
+    }
+  } catch (err) {
+    console.log(err)
+    ctx.statusCode = 500
+    ctx.body = {
+      error: err
+    }
+  }
+}
 
 export async function createProjectController(ctx) {
   const { projectName, projectType, projectDesc, projectSlug } = req.body
@@ -18,11 +42,16 @@ export async function createProjectController(ctx) {
   }
 }
 
-export function editProjectController(ctx) {}
+export function editProjectController(ctx) {
+  ctx.statusCode = 501
+}
 
-export function deleteProjectController(ctx) {}
+export function deleteProjectController(ctx) {
+  ctx.statusCode = 501
+}
 
 export async function openProjectController(ctx, next) {
+  ctx.statusCode = 501
   console.log(ctx.body)
   try {
     await validateCodePath()

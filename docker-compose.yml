@@ -9,6 +9,7 @@ services:
       - type: bind
         source: ./dashboard-mpa
         target: /opt/app
+    user: ${UID}:${GID}
     working_dir: /opt/app
     command: npm run serve
     ports:
@@ -36,6 +37,7 @@ services:
       - type: bind
         source: ./projects
         target: /opt/projects
+    user: ${UID}:${GID}
     working_dir: /opt/app
     command: 'npm run serve'
     ports:
@@ -60,6 +62,7 @@ services:
       - type: bind
         source: ./operator
         target: /opt/app
+    user: ${UID}:${GID}
     working_dir: /opt/app
     command: npm run serve
     expose:

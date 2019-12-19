@@ -20,6 +20,7 @@
     "spectre.css": "^0.5.8"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/node": "^12.12.14",
     "nodemon": "^2.0.1"
   }

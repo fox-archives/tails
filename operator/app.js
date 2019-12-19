@@ -12,6 +12,7 @@ initDb()
 const app = new Koa()
 app.use(helmet())
 app.use(logger())
+
 app.use(routes)
 
 app.on('error', err => console.error('e: ', err))

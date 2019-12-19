@@ -1,17 +1,17 @@
-// import Project from '../models/projectModel'
+import { operatorReq } from '../core/axios'
 
 export async function projectsController(req, res, next) {
   try {
-    // const projects = await Project.getProjects()
-    const projects = await axios.get(`${process.env.MANAGER_URI}`)
+    const { data: projects } = await operatorReq('/api/project/list')
     res.render('pages/projects', {
       hero: {
         header: 'welcome to tails',
         body: "let's get started"
       },
-      projects
+      projects: projects.data.projects
     })
-  } catch {
+  } catch (err) {
+    console.error(err)
     next(new Error('failed to get projects'))
   }
 }
