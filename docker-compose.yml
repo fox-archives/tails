@@ -10,7 +10,7 @@ services:
         source: ./dashboard-mpa
         target: /opt/app
     working_dir: /opt/app
-    command: node -r esm app.js
+    command: npm run serve
     ports:
       - target: 3010
         published: 3010
@@ -37,7 +37,7 @@ services:
         source: ./projects
         target: /opt/projects
     working_dir: /opt/app
-    command: node -r esm app
+    command: 'npm run serve'
     ports:
       - target: 3030
         published: 3030
@@ -61,7 +61,7 @@ services:
         source: ./operator
         target: /opt/app
     working_dir: /opt/app
-    command: node -r esm app
+    command: npm run serve
     expose:
       - 3020
     environment:
