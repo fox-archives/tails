@@ -1,0 +1,26 @@
+{
+  "name": "tails-dashboard-mpa",
+  "private": true,
+  "version": "0.0.0",
+  "license": "GPL-2.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "node -r esm app",
+    "serve": "nodemon -e js,css,html,hbs -r esm app"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "dotenv": "^8.2.0",
+    "dotenv-expand": "^5.1.0",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "hbs": "^4.0.6",
+    "helmet": "^3.21.2",
+    "mongoose": "^5.8.1",
+    "spectre.css": "^0.5.8"
+  },
+  "devDependencies": {
+    "@types/node": "^12.12.14",
+    "nodemon": "^2.0.1"
+  }
+}

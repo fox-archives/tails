@@ -1,0 +1,66 @@
+version: '3.7'
+services:
+  dashboard-mpa:
+    container_name: tails-dashboard-mpa
+    image: node:13.4.0-alpine
+    build:
+      context: ./dashboard-mpa
+    volumes:
+      - type: bind
+        source: ./dashboard-mpa
+        target: /opt/app
+    working_dir: /opt/app
+    command: node -r esm app.js
+    ports:
+      - target: 3010
+        published: 3010
+    expose:
+      - 3010
+    environment:
+      - NODE_ENV=development
+    links:
+      - operator
+    restart: always
+    privileged: false
+    stdin_open: true
+    tty: true
+  projects-served:
+    container_name: tails-projects-served
+    image: node:13.4.0-alpine
+    build:
+      context: './projects-served'
+    volumes:
+      - type: bind
+        source: ./projects-served
+        target: /opt/app
+      - type: bind
+        source: ./projects
+        target: /opt/projects
+    working_dir: /opt/app
+    command: node -r esm app
+    ports:
+      - target: 3030
+        published: 3030
+    expose:
+      - 3030
+    privileged: false
+    stdin_open: true
+    tty: true
+  operator:
+    container_name: tails-operator
+    image: node:13.4.0-alpine
+    build:
+      context: ./operator
+    env_file:
+      - ./.env
+    volumes:
+      - type: bind
+        source: ./operator
+        target: /opt/app
+    working_dir: /opt/app
+    command: node -r esm app
+    expose:
+      - 3020
+    privileged: false
+    stdin_open: true
+    tty: true
