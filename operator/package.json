@@ -7,14 +7,7 @@
   "scripts": {
     "start": "node -r esm app",
     "serve": "nodemon -r esm app",
-    "test": "ava tests/**/*.test.js -w"
-  },
-  "ava": {
-    "require": [
-      "esm"
-    ],
-    "babel": false,
-    "compileEnhancements": false
+    "test": "jest tests/**/*.test.js --watch"
   },
   "dependencies": {
     "@koa/router": "^8.0.5",
@@ -27,9 +20,13 @@
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
     "@types/mongoose": "^5.5.34",
     "@types/node": "^12.12.21",
-    "ava": "^2.4.0",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "mongodb-memory-server": "^6.0.2",
     "nodemon": "^2.0.2"
   }
 }

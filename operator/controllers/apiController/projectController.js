@@ -7,17 +7,13 @@ import { validateCodePath } from '../../validations/validateCodePath'
 export async function listProjectController(ctx) {
   try {
     let projects = await Project.getProjects()
-    projects = _.map(projects, p => _.pick(p, [
-      'name',
-      'type',
-      'desc',
-      'slug'
-    ]))
+    
     ctx.body = {
       data: { projects }
     }
   } catch (err) {
     console.log(err)
+    
     ctx.statusCode = 500
     ctx.body = {
       error: err

@@ -3,10 +3,6 @@ import _ from 'lodash'
 import mongoose from '../core/mongoose'
 
 const projectSchema = new mongoose.Schema({
-  // id: {
-  //   type: Number,
-  //   required: true
-  // },
   name: {
     type: String,
     trim: true, // custom setter
@@ -57,6 +53,7 @@ projectSchema.statics.createProject = function(newProject) {
     project.save((err, project) => {
       if (err) reject(err)
 
+      _.pick(project, ['name', 'type', 'desc', 'slug'])
       resolve(project)
     })
   })
@@ -67,6 +64,9 @@ projectSchema.statics.getProjects = function() {
     this.find((err, projects) => {
       if (err) reject(err)
 
+      projects = _.map(projects, p =>
+        _.pick(p, ['name', 'type', 'desc', 'slug'])
+      )
       resolve(projects)
     })
   })
