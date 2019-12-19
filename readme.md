@@ -1,6 +1,6 @@
 # tails 🦊
 
-`tails` enables you to view, edit, and organize all your javascript projects in one place. currently *pre-alpha*
+`tails` enables you to view, edit, and organize all your javascript projects in one place
 
 if you're like me, you're tired of repeating the same boilerplate when creating spas, mpas, or just regular js apps. it also gets quite repetitive just to start an app: cd in a project subdirectory, lookup the start command, start the app, find the port, open the browser, and navigate to it. stuff like hot and auto reload don't come out of the box and have to be set up _every single time_. even if its just a few steps, it's quite monotonous. create-react-app, vue-cli, and the similar help out with *some* boilerplate, but the issue still persists. websites such as jsfiddle and codesandbox solve some issues, but the main drawback is that you must use the website code editor, rather than a normal one. also, your code is in a little iframe in the corner of the screen. inspecting element with iframes doesn't really work like the way you want it. also, your projects are not tracked by any vcs and they are not stored on your computer. tails alleviates all these problems by allowing you to create, view, edit, and launch, your projects all in one place. creating projects via managed presets removes nearly all boilerplate code so you can just experiment with what you want to.
 
@@ -51,8 +51,13 @@ if you're like me, you're tired of repeating the same boilerplate when creating 
 
 ## usage
 
-not really streamlined yet
+not really streamlined yet; project still in early development (pre-alpha)
+
+## contributing
 
 ```sh
+git clone --recurse-submodules https://github.com/eankeen/tails
+yarn install
+yarn lerna bootstrap
 make start
 ```

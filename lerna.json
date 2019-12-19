@@ -1,0 +1,18 @@
+{
+  "version": "0.0.0",
+  "npmClient": "yarn",
+  "packages": [
+    "dashboard-mpa",
+    "dashboard-spa",
+    "operator",
+    "projects-served"
+  ],
+  "bootstrap": {
+    "npmClientArgs": ["--no-package-lock"]
+  },
+  "command": {
+    "run": {
+      "npmClient": "yarn"
+    }
+  }
+}
