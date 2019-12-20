@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import mongoose from 'mongoose'
 
 import { 
@@ -7,6 +8,7 @@ import {
   closeDb
  } from './dbHandler'
 import Project from '../../models/projectModel'
+import { newProjects } from '../fixtures/projects'
 
 mongoose.Promise = globalThis.Promise
 mongoose.set('debug', false)
@@ -18,7 +20,7 @@ afterAll(async () => await closeDb())
 
 
 describe('project', () => {
-  it('can get projects without throwing', async () => {
+  test('can get projects without throwing', async () => {
     const gettingProjects = async () => await Project.getProjects()
 
     expect(gettingProjects)
@@ -26,17 +28,33 @@ describe('project', () => {
       .toThrow()
   })
 
-  it('can create project without throwing', async () => {
-    const creatingProjects = async () => await Project.createProject({
-      name: 'mock-1',
-      type: 'web',
-      desc: 'thing',
-      slug: 'other'
-    })
+  test('can create project without throwing', async () => {
+    const creatingProjects = async () => await Project.createProject(
+      newProjects(1)[0]
+    )
 
     expect(creatingProjects)
       .not
       .toThrow()
   })
 
+  // ensure stuff like _id and __ver are not returned
+  test('project only has specific properties exposed', async () => {
+    const project = await Project.findOne({
+      name: 'fake-project-0'
+    })
+      .select('-__v')
+    
+    // const project2 = _.clone(project)
+    // _.unset(project2, '_id')
+    const { desc, name, slug, type } = project
+    const project2 = { desc, name, slug, type }
+
+    expect(project2).toEqual({
+      name: 'fake-project-0',
+      type: 'web',
+      desc: 'fake-project-0-desc',
+      slug: 'fake-project-0'
+    })
+  })
 })
