@@ -71,6 +71,7 @@ services:
       - NODE_ENV=development
     links:
       - mongo
+      - storage
     restart: always
     privileged: false
     stdin_open: true
@@ -84,3 +85,27 @@ services:
     privileged: false
     stdin_open: true
     tty: true
+  storage:
+    container_name: tails-storage
+    image: node:13.4.0-alpine
+    build:
+      context: ./storage
+    volumes:
+      - type: bind
+        source: ./storage
+        target: /opt/app
+      - type: bind
+        source: ./projects
+        target: /opt/app/projects
+    user: ${UID}:${GID}
+    working_dir: /opt/app
+    command: npm run serve
+    expose:
+      - 3040
+    environment:
+      - NODE_ENV=development
+    restart: always
+    privileged: false
+    stdin_open: true
+    tty: true
+  
