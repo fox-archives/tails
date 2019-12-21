@@ -1,4 +1,6 @@
 import _ from 'lodash'
+
+import { storageReq } from './axios'
 import Project from '../models/projectModel'
 
 export function dbSeed(mongoose) {
@@ -9,16 +11,26 @@ export function dbSeed(mongoose) {
 
     console.info('projects collection nuked')
   })
-  _.times(3, n => {
-    const project = new Project({
-      name: 'project-' + n,
-      type: 'web',
-      desc: 'project-desc-' + n,
-      slug: 'project-' + n
-    })
 
-    project.save((err, project) => {
-      if (err) return console.trace(err)
+  storageReq
+    .get('/api/projects/read')
+    .then(res => {
+      const projects = res.data.data.projects
+
+      projects.forEach(projectName => {
+        const project = new Project({
+          name: projectName,
+          type: 'web',
+          desc: `${projectName} description`,
+          slug: projectName
+        })
+
+        project.save((err, proj) => {
+          if (err) return console.trace(err)
+        })
+      })
     })
-  })
+    .catch(err => {
+      console.error(err)
+    })
 }

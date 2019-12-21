@@ -3,9 +3,17 @@ import {
 } from '../services/readFs'
 
 export async function readFsProjectController(ctx) {
-  const projects = await readProjects()
+  try {
+    const projects = await readProjects()
 
-  ctx.body = {
-    data: { projects }
+    ctx.body = {
+      data: { projects }
+    }
   }
+  catch (err) {
+    ctx.body = {
+      error: { err }
+    }
+  }
+ 
 }

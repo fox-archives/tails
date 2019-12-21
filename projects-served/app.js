@@ -11,6 +11,7 @@ const app = new Koa()
 
 app.use(logger())
 app.use(helmet())
+
 fs.promises.readdir(path.join(__dirname, '../projects'), {
   withFileTypes: true
 })
