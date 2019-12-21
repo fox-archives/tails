@@ -1,9 +1,21 @@
 # tails 🦊
 
-`tails` enables you to view, edit, and organize all your javascript projects in one place
+`tails` enables you to view, edit, and organize all your programming projects in one place
 
-if you're like me, you're tired of repeating the same boilerplate when creating spas, mpas, or just regular js apps. it also gets quite repetitive just to start an app: cd in a project subdirectory, lookup the start command, start the app, find the port, open the browser, and navigate to it. stuff like hot and auto reload don't come out of the box and have to be set up _every single time_. even if its just a few steps, it's quite monotonous. create-react-app, vue-cli, and the similar help out with *some* boilerplate, but the issue still persists. websites such as jsfiddle and codesandbox solve some issues, but the main drawback is that you must use the website code editor, rather than a normal one. also, your code is in a little iframe in the corner of the screen. inspecting element with iframes doesn't really work like the way you want it. also, your projects are not tracked by any vcs and they are not stored on your computer. tails alleviates all these problems by allowing you to create, view, edit, and launch, your projects all in one place. creating projects via managed presets removes nearly all boilerplate code so you can just experiment with what you want to.
+**are you tried of**
 
+- creating the same boilerplate when creating spas, mpas, or regular js apps
+- cd in a project subdirectory, lookup the start command, start the app, find the port, open the browser, and navigate to it just to open up one of your side projects
+- setting up hmr and and nodemon _every single time_
+- using sites like jsfiddle, codesandbox, replit, etc. and
+  - using the normie editor rather than your build in one, that you use locally
+  - the code is not stored locally, and its stored on someone elses cloud
+  - have the code output in some tiny iframe
+  - changes not tracked under vcs, or if is, some weird vc-lite system
+
+tails alleviates all these problems by allowing you to create, view, edit, and launch, your projects all in one place. creating projects via managed presets removes nearly all boilerplate code so you can just experiment with what you want to. babel and postcss plugin configuration is a click away, and so is project boillerplate setup including linting etc. this tool is inherently framework, utility, and ide agnostic, allowing you to plugin whatever drivers and modules you need to extend the feature set. all of this, with an automanaged, kubernetes-based one-click deploy solution. it's basically a super cute fully e2e customizable paas for *all* of your personal projects
+
+what it looks like *now*
 ![tails preview](./tails.png)
 
 ## goals
@@ -11,18 +23,17 @@ if you're like me, you're tired of repeating the same boilerplate when creating 
 - main idea: paas for running *trusted* code (small-medium-sized codebases)
 - use your standard ide tools to edit these projects
 - view projects directly in browser
-- browse through, label, sort, and manage all your javascript projects within the web interface
+- browse through, label, sort, and manage all your projects within the web interface
 - start projects on demand, *quickly*
 - have nice urls during development (no localhost and port crap, all managed for you)
 
 ## details
 
-- proposed project types
+- proposed project types (more generic languages will come later)
   - web (static files)
   - spa (parcel, webpack, or rollup bundlers)
   - node
   - node + spa (parcel, webpack, or rollup bundlers)
-  - deno
 - ability to 'upgrade' web projects
   - ex. 'upgrade' web (static files) to node (importing `express` or `server-static`, etc.)
     - this copies rather than edits to prevent mistakes in upgrade process
@@ -52,6 +63,7 @@ if you're like me, you're tired of repeating the same boilerplate when creating 
 ## usage
 
 not really streamlined yet; project still in early development (pre-alpha)
+mostly focusing on fully managed javascript solutions
 
 ## contributing
 
