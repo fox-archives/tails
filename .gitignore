@@ -1,6 +1,11 @@
-# app
-public/generated-project-pictures/*
-!public/generated-project-pictures/.gitkeep
+# documentation
+documentation/build
+.docusaurus
+.cache-loader
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # node
 node_modules/
