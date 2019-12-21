@@ -29,7 +29,7 @@ services:
     container_name: tails-projects-served
     image: node:13.4.0-alpine
     build:
-      context: './projects-served'
+      context: ./projects-served
     volumes:
       - type: bind
         source: ./projects-served
@@ -39,7 +39,7 @@ services:
         target: /opt/projects
     user: ${UID}:${GID}
     working_dir: /opt/app
-    command: 'npm run serve'
+    command: npm run serve
     ports:
       - target: 3030
         published: 3030
