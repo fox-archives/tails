@@ -65,6 +65,9 @@ services:
     user: ${UID}:${GID}
     working_dir: /opt/app
     command: npm run serve
+    ports:
+      - target: 3020
+        published: 3020
     expose:
       - 3020
     environment:

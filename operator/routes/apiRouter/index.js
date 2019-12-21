@@ -2,6 +2,7 @@ import Router from '@koa/router'
 
 import {
   listProjectController,
+  viewProjectController,
   createProjectController,
   editProjectController,
   deleteProjectController,
@@ -11,6 +12,7 @@ import {
 const router = new Router()
 
 router.get('/project/list', listProjectController)
+router.get('/project/view', viewProjectController)
 router.post('/project/create', createProjectController)
 router.post('/project/edit', editProjectController)
 router.post('/project/delete', deleteProjectController)

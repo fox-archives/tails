@@ -21,6 +21,33 @@ export async function listProjectController(ctx) {
   }
 }
 
+export async function viewProjectController(ctx) {
+  const projectName = ctx.query.project
+
+  if(!projectName) {
+    ctx.statusCode = 500
+    ctx.body = {
+      error: 'must add `project` query parameter'
+    }
+    return
+  }
+
+  try {
+    const { name, type, desc, slug } = await Project.getProject(projectName)
+
+    ctx.body = {
+      project: { name, type, desc, slug }
+    }
+  } catch (err) {
+    console.error(err)
+
+    ctx.statusCode = 500
+    ctx.body = {
+      error: err
+    }
+  }
+}
+
 export async function createProjectController(ctx) {
   const { projectName, projectType, projectDesc, projectSlug } = req.body
 
@@ -34,7 +61,12 @@ export async function createProjectController(ctx) {
 
     ctx.body = 'success'
   } catch {
-    ctx.body = 'failure'
+    console.error(err)
+    
+    ctx.statusCode = 500
+    ctx.body = {
+      error: err
+    }
   }
 }
 

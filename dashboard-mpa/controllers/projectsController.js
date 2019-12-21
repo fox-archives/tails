@@ -28,14 +28,17 @@ export function createProjectControllerPost(req, res) {
   // process the post request by calling service that makes request to subsequent microservice
 }
 
-export function editProjectControllerGet(req, res) {
-  const { project } = req.query
+export async function editProjectControllerGet(req, res) {
+  const { project: projectName } = req.query
+
+  const { data: { project } } = await operatorReq.get(`/api/project/view?project=${projectName}`)
 
   res.render('forms/editProjectForm', {
     hero: {
       header: 'edit existing project',
-      body: `edit the ${project} project`
-    }
+      body: `edit the ${projectName} project`
+    },
+    project
   })
 }
 
