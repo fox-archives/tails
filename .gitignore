@@ -1,11 +1,14 @@
 # documentation
-documentation/build
 .docusaurus
 .cache-loader
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+documentation/lib/core/metadata.js
+documentation/lib/core/MetadataBlog.js
+documentation/website/translated_docs
+documentation/website/build/
+documentation/website/yarn.lock
+documentation/website/node_modules
+documentation/website/i18n/*
+
 
 # node
 node_modules/
