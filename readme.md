@@ -4,18 +4,28 @@
 
 **are you tried of**
 
-- creating the same boilerplate when creating spas, mpas, or regular js apps
-- cd in a project subdirectory, lookup the start command, start the app, find the port, open the browser, and navigate to it just to open up one of your side projects
-- setting up hmr and and nodemon _every single time_
-- using sites like jsfiddle, codesandbox, replit, etc. and
-  - using the normie editor rather than your build in one, that you use locally
-  - the code is not stored locally, and its stored on someone elses cloud
-  - have the code output in some tiny iframe
-  - changes not tracked under vcs, or if is, some weird vc-lite system
+- creating the same boilerplate when creating spas, mpas, or just apps in your programming language of choice
+- having to search for your project on your hard drive, and find out how to run it or access it or deploy it
+- setting up hmr and and nodemon _every single time_, or similar utilities
+- and having to use sites like jsfiddle, codesandbox, replit, etc. which
+  - use some normie editor rather than an ide that you are used to
+  - does not let you directly access your projects / download them (and have them easily work even after downloading them)
+  - has the code output in a tiny iframe
+  - does not use a vcs, or use some downgraded vcs
 
-tails alleviates all these problems by allowing you to create, view, edit, and launch, your projects all in one place. creating projects via managed presets removes nearly all boilerplate code so you can just experiment with what you want to. babel and postcss plugin configuration is a click away, and so is project boillerplate setup including linting etc. this tool is inherently framework, utility, and ide agnostic, allowing you to plugin whatever drivers and modules you need to extend the feature set. all of this, with an automanaged, kubernetes-based one-click deploy solution. it's basically a super cute fully e2e customizable paas for *all* of your personal projects
+**don't you want**
 
-what it looks like *now*
+- to create, view, edit, and launch, your programming projects all in one place
+- to create managed presets removes nearly all boilerplate code so you can just experiment with what you want to
+- to automatically setup babel, postcss, stylelint, editorconfig, typescript configs, and manage them in a unified interface, non-repetative for your projects
+- a framework, utility, and ide agnostic tool
+- a super extensible, allowing you to plugin whatever drivers and modules you need to extend the feature set
+- a automated, kubernetes-based one-click deploy solution, for *exactly* the proejcts you want to make public
+- a super cute fully e2e customizable paas for *all* of your personal projects
+
+it may sound like a pipedream, but thats what this project is trying to do
+
+what it looks like (so far)
 ![tails preview](./tails.png)
 
 ## goals
