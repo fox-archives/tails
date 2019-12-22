@@ -114,15 +114,18 @@ services:
     privileged: false
     stdin_open: true
     tty: true
-  documentation:
-    container_name: tails-documentation
+  documentation-site:
+    container_name: tails-documentation-site
     image: node:13.4.0-alpine
     build:
-      context: ./documentation
+      context: ./documentation-site
     volumes:
       - type: bind
         source: ./documentation
-        target: /opt/app
+        target: /opt/app/docs
+      - type: bind
+        source: ./documentation-site
+        target: /opt/app/website
     user: ${UID}:${GID}
     working_dir: /opt/app/website
     command: npm run start
@@ -140,4 +143,3 @@ services:
     privileged: false
     stdin_open: true
     tty: false
-    

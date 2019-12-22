@@ -6,7 +6,8 @@
     "dashboard-spa",
     "operator",
     "projects-served",
-    "storage"
+    "storage",
+    "documentation-site"
   ],
   "bootstrap": {
     "npmClientArgs": ["--no-package-lock"]
