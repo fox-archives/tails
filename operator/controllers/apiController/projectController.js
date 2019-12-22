@@ -7,13 +7,13 @@ import { validateCodePath } from '../../validations/validateCodePath'
 export async function listProjectController(ctx) {
   try {
     let projects = await Project.getProjects()
-    
+
     ctx.body = {
-      data: { projects }
+      projects
     }
   } catch (err) {
     console.log(err)
-    
+
     ctx.status = 500
     ctx.body = {
       error: err
@@ -24,45 +24,43 @@ export async function listProjectController(ctx) {
 export async function viewProjectController(ctx) {
   const projectName = ctx.query.project
 
-  if(!projectName) {
+  if (!projectName) {
     ctx.status = 500
     ctx.body = {
-      error: 'must add `project` query parameter'
+      error: "must add 'project' query parameter"
     }
     return
   }
 
   try {
-    const { name, type, desc, slug } = await Project.getProject(projectName)
-
+    const obj = await Project.getProject(projectName)
+    const project = _.pick(obj, ['name', 'type', 'desc', 'slug'])
+    
     ctx.body = {
-      project: { name, type, desc, slug }
+      ...project
     }
   } catch (err) {
     console.error(err)
 
     ctx.status = 500
     ctx.body = {
-      error: err
+      error: 'your db request could not be fulfilled'
     }
   }
 }
 
 export async function createProjectController(ctx) {
-  const { projectName, projectType, projectDesc, projectSlug } = req.body
+  const project = _.pick(ctx.body, ['name', 'type', 'desc', 'slug'])
 
   try {
-    await Project.createProject({
-      name: projectName,
-      type: projectType,
-      desc: projectDesc,
-      slug: projectSlug
-    })
+    await Project.createProject(project)
 
-    ctx.body = 'success'
+    ctx.body = {
+      ...project
+    }
   } catch {
     console.error(err)
-    
+
     ctx.status = 500
     ctx.body = {
       error: err

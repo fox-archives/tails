@@ -8,7 +8,7 @@ export async function projectsController(req, res, next) {
         header: 'welcome to tails',
         body: "let's get started"
       },
-      projects: projects.data.projects
+      projects: projects
     })
   } catch (err) {
     console.error(err)

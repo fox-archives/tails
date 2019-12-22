@@ -7,7 +7,7 @@ const warn = () =>
 const operatorRequest = {
   get(url, opts = {}) {
     if (opts.method) warn()
-    return fetch(n(url), { ...opts, method: 'POST' }).then(res => res.json())
+    return fetch(n(url), { ...opts, method: 'GET' }).then(res => res.json())
   },
   post(url, opts = {}) {
     if (opts.method) warn()

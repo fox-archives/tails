@@ -68,7 +68,7 @@ we will be returning the project data group a lot. it (hopefully) looks like thi
 }
 ```
 
-### get `/api/project/view`
+### get `/api/project/view?project=${project.name}`
 
 #### 200 ok
 
