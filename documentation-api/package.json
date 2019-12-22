@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "GPL-2.0",
   "scripts": {
-    "serve": "aglio --theme-variables slate -i operator.apib -s",
-    "triple": "aglio --theme-variables slate --theme-template double -i operator.apib -s"
+    "serve": "aglio --theme-variables slate -i operator.apib -s -p 2980",
+    "triple": "aglio --theme-variables slate --theme-template double -i operator.apib -s -p 2980"
   },
   "dependencies": {
     "aglio": "^2.3.0"

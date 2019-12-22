@@ -5,29 +5,22 @@ title: storage
 
 the storage microservice is responsible for interfacing with storage. this includes reading information about the filesystem, and writing files to the file system
 
+## general
+
+all routes are prefixed with `/api`. at port 3040 during development, and open
+
 ## endpoints
 
-### `/api/projects/read`
+### get `/api/projects/read`
 
-#### method
-
-get
-
-#### url params
-
-none
-
-#### success
-
-http 200 ok
+#### 200 ok
 
 ```json
 {
-  "data": {
-    "projects": [
-      ...
-    ]
-  }
+  "projects": [
+    "css-test",
+    "battery-test"
+  ]
 }
 ```
 
@@ -44,11 +37,6 @@ http 401 unauthorized
 #### example
 
 ```js
-const { data: { data: projects } } = axios.get('/api/projects/read`)
+const { data: projects } = axios.get('/api/projects/read`)
 console.info(projects)
-
-const { data: projects2 } = fetch('/api/projects/read`, {
-  method: 'GET'
-})
-console.info(projects2)
 ```

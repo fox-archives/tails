@@ -14,7 +14,7 @@ export async function listProjectController(ctx) {
   } catch (err) {
     console.log(err)
     
-    ctx.statusCode = 500
+    ctx.status = 500
     ctx.body = {
       error: err
     }
@@ -25,7 +25,7 @@ export async function viewProjectController(ctx) {
   const projectName = ctx.query.project
 
   if(!projectName) {
-    ctx.statusCode = 500
+    ctx.status = 500
     ctx.body = {
       error: 'must add `project` query parameter'
     }
@@ -41,7 +41,7 @@ export async function viewProjectController(ctx) {
   } catch (err) {
     console.error(err)
 
-    ctx.statusCode = 500
+    ctx.status = 500
     ctx.body = {
       error: err
     }
@@ -63,7 +63,7 @@ export async function createProjectController(ctx) {
   } catch {
     console.error(err)
     
-    ctx.statusCode = 500
+    ctx.status = 500
     ctx.body = {
       error: err
     }
@@ -71,15 +71,15 @@ export async function createProjectController(ctx) {
 }
 
 export function editProjectController(ctx) {
-  ctx.statusCode = 501
+  ctx.status = 501
 }
 
 export function deleteProjectController(ctx) {
-  ctx.statusCode = 501
+  ctx.status = 501
 }
 
 export async function openProjectController(ctx, next) {
-  ctx.statusCode = 501
+  ctx.status = 501
   console.log(ctx.body)
   try {
     await validateCodePath()

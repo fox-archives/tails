@@ -7,12 +7,13 @@ export async function readFsProjectController(ctx) {
     const projects = await readProjects()
 
     ctx.body = {
-      data: { projects }
+      projects
     }
   }
   catch (err) {
+    ctx.status = 500
     ctx.body = {
-      error: { err }
+      error: "error reading file system or storage mechanism"
     }
   }
  

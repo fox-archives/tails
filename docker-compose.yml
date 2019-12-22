@@ -9,7 +9,7 @@ services:
       - type: bind
         source: ./dashboard-mpa
         target: /opt/app
-    user: ${UID}:${GID}
+    user: 1000:1000
     working_dir: /opt/app
     command: npm run serve
     ports:
@@ -37,7 +37,7 @@ services:
       - type: bind
         source: ./projects
         target: /opt/projects
-    user: ${UID}:${GID}
+    user: 1000:1000
     working_dir: /opt/app
     command: npm run serve
     ports:
@@ -62,7 +62,7 @@ services:
       - type: bind
         source: ./operator
         target: /opt/app
-    user: ${UID}:${GID}
+    user: 1000:1000
     working_dir: /opt/app
     command: npm run serve
     ports:
@@ -100,7 +100,7 @@ services:
       - type: bind
         source: ./projects
         target: /opt/app/projects
-    user: ${UID}:${GID}
+    user: 1000:1000
     working_dir: /opt/app
     command: npm run serve
     ports:
@@ -126,7 +126,7 @@ services:
       - type: bind
         source: ./documentation-site
         target: /opt/app/website
-    user: ${UID}:${GID}
+    user: 1000:1000
     working_dir: /opt/app/website
     command: npm run start
     ports:

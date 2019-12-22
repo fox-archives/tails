@@ -1,8 +1,8 @@
-import { operatorReq } from '../core/axios'
+import { operatorReq } from '../core/fetch'
 
 export async function projectsController(req, res, next) {
   try {
-    const { data: projects } = await operatorReq('/api/project/list')
+    const { projects } = await operatorReq.get('/api/project/list')
     res.render('pages/projects', {
       hero: {
         header: 'welcome to tails',
@@ -31,7 +31,7 @@ export function createProjectControllerPost(req, res) {
 export async function editProjectControllerGet(req, res) {
   const { project: projectName } = req.query
 
-  const { data: { project } } = await operatorReq.get(`/api/project/view?project=${projectName}`)
+  const { project } = await operatorReq.get(`/api/project/view?project=${projectName}`)
 
   res.render('forms/editProjectForm', {
     hero: {
