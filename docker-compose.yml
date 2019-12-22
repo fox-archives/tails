@@ -114,4 +114,30 @@ services:
     privileged: false
     stdin_open: true
     tty: true
-  
+  documentation:
+    container_name: tails-documentation
+    image: node:13.4.0-alpine
+    build:
+      context: ./documentation
+    volumes:
+      - type: bind
+        source: ./documentation
+        target: /opt/app
+    user: ${UID}:${GID}
+    working_dir: /opt/app/website
+    command: npm run start
+    ports:
+      - target: 2990
+        published: 2990
+      - target: 35729 # for hmr
+        published: 35729
+    expose:
+      - 2990
+    environment:
+      - NODE_ENV=development
+      - PORT=2990
+    restart: always
+    privileged: false
+    stdin_open: true
+    tty: false
+    
