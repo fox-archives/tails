@@ -7,7 +7,8 @@
     "operator",
     "projects-served",
     "storage",
-    "documentation-site"
+    "documentation-site",
+    "documentation-api"
   ],
   "bootstrap": {
     "npmClientArgs": ["--no-package-lock"]

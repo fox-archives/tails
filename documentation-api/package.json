@@ -1,0 +1,13 @@
+{
+  "name": "documentation-api",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "GPL-2.0",
+  "scripts": {
+    "serve": "aglio --theme-variables slate -i operator.apib -s",
+    "triple": "aglio --theme-variables slate --theme-template double -i operator.apib -s"
+  },
+  "dependencies": {
+    "aglio": "^2.3.0"
+  }
+}

@@ -73,7 +73,6 @@ what it looks like (so far)
 ## usage
 
 not really streamlined yet; project still in early development (pre-alpha)
-mostly focusing on fully managed javascript solutions
 
 ## contributing
 
