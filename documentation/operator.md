@@ -41,11 +41,13 @@ we will be returning the project data group a lot. it (hopefully) looks like thi
 
 ```json
 {
-  "id": 21903841039847,
+  "id": "6dc94f38-7ae8-4dc7-8d01-497574742c1d",
   "name": "battery status api",
-  "type": "web | node",
+  "type": "web",
   "desc": "description of project",
-  "slug": "battery-status-api"
+  "slug": "battery-status-api",
+  "firstCreated": 1577072153588,
+  "lastUpdated": 1577072153588
 }
 ```
 
@@ -68,7 +70,7 @@ we will be returning the project data group a lot. it (hopefully) looks like thi
 }
 ```
 
-### get `/api/project/view?project=${project.name}`
+### get `/api/project/view?project=${project.id}`
 
 #### 200 ok
 
@@ -107,7 +109,7 @@ we will be returning the project data group a lot. it (hopefully) looks like thi
 
 ```json
 {
-  // project (with edited details. note project id cannot be edited of course)
+  // project (with edited details) (do not edit firstCreated or id, lastEdited should be automatic)
 }
 ```
 
@@ -125,7 +127,7 @@ we will be returning the project data group a lot. it (hopefully) looks like thi
 
 ```json
 {
-  id: 2345345
+  id: "3b43ac38-859e-459b-b1bc-4b109345f4a7"
 }
 ```
 
@@ -145,7 +147,7 @@ opens project in vscode
 
 ```json
 {
-  id: 31245214
+  id: "3b43ac38-859e-459b-b1bc-4b109345f4a7"
 }
 ```
 

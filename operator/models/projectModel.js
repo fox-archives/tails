@@ -1,52 +1,54 @@
-import _ from 'lodash'
-
 import mongoose from '../core/mongoose'
 
 const projectSchema = new mongoose.Schema(
   {
+    id: {
+      type: String,
+      trim: true,
+      lowercase: true,
+      required: true
+    },
     name: {
       type: String,
       trim: true, // custom setter
       lowercase: true, // custom setter
-      minLength: 2, // validator
       required: true // validator
     },
     type: {
       type: String,
       trim: true,
       lowercase: true,
-      minLength: 2,
       required: true
     },
     desc: {
       type: String,
       trim: true,
       lowercase: true,
-      minLength: 2,
       required: true
     },
     slug: {
       type: String,
       trim: true,
       lowercase: true,
-      minLength: 2,
+      required: true
+    },
+    firstCreated: {
+      type: Number,
+      min: 0,
+      required: true
+    },
+    lastUpdated: {
+      type: Number,
+      min: 0,
       required: true
     }
   },
   {
-    id: false,
-    minimize: false,
-    strictQuery: true
+    id: false, // does not create id getter for documents _id field
+    minimize: false, // does not minimize schemas, writing empty objects
+    strictQuery: true // enables strict mode for filter parameter to queries
   }
 )
-
-// projectSchema.pre('save', async function save(next) {
-//   next()
-// })
-
-// projectSchema.virtual('fullThing').get(() => {
-//   return this.name.first + ' ' + this.name.last
-// })
 
 projectSchema.statics.createProject = function(newProject) {
   return new Promise((resolve, reject) => {
@@ -56,7 +58,6 @@ projectSchema.statics.createProject = function(newProject) {
     project.save((err, project) => {
       if (err) reject(err)
 
-      _.pick(project, ['name', 'type', 'desc', 'slug'])
       resolve(project)
     })
   })
@@ -67,9 +68,6 @@ projectSchema.statics.getProjects = function() {
     this.find((err, projects) => {
       if (err) reject(err)
 
-      projects = _.map(projects, p =>
-        _.pick(p, ['name', 'type', 'desc', 'slug'])
-      )
       resolve(projects)
     })
   })

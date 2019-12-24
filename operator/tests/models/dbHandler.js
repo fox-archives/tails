@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { v4 as uuid } from 'uuid'
 import mongoose from 'mongoose'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 
@@ -17,10 +18,13 @@ export async function connectDb() {
 
 export async function fillDb() {
   _.times(10, n => Project.createProject({
+    id: uuid(),
     name: `fake-project-${n}`,
     type: 'web',
     desc: `fake-project-${n}-desc`,
-    slug: `fake-project-${n}`
+    slug: `fake-project-${n}`,
+    firstCreated: Date.now(),
+    lastUpdated: Date.now()
   }))
 }
 

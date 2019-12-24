@@ -5,14 +5,16 @@
   "license": "GPL-2.0",
   "main": "app.js",
   "scripts": {
-    "start": "node -r esm app",
-    "serve": "nodemon -r esm app",
-    "test": "jest tests/**/*.test.js --watch"
+    "start": "cross-env NODE_ENV=production node -r esm app",
+    "serve": "cross-env NODE_ENV=development nodemon -r esm app",
+    "test": "cross-env NODE_ENV=test jest tests/**/*.test.js --watch"
   },
   "dependencies": {
     "@koa/router": "^8.0.5",
+    "cross-env": "^6.0.3",
     "esm": "^3.2.25",
     "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1",
     "koa-helmet": "^5.2.0",
     "koa-logger": "^3.2.1",
     "lodash": "^4.17.15",
@@ -26,6 +28,7 @@
     "@types/mongoose": "^5.5.34",
     "@types/node": "^12.12.21",
     "babel-jest": "^24.9.0",
+    "http-status-codes": "^1.4.0",
     "jest": "^24.9.0",
     "mongodb-memory-server": "^6.0.2",
     "nodemon": "^2.0.2"

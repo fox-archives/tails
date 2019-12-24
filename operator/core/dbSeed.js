@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import { v4 as uuid } from 'uuid'
 
 import { storageReq } from './fetch'
 import Project from '../models/projectModel'
@@ -29,10 +30,13 @@ export function dbSeed(mongoose) {
 
       projects.forEach(projectName => {
         const project = new Project({
+          id: uuid(),
           name: projectName,
           type: 'web',
           desc: `${projectName} description`,
-          slug: projectName
+          slug: projectName,
+          firstCreated: Date.now(),
+          lastUpdated: Date.now()
         })
 
         project.save((err, proj) => {

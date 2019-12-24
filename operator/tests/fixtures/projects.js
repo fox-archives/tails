@@ -8,5 +8,7 @@ export function newProjects(n) {
     type: 'web',
     desc: `fake-project${n}`,
     slug: `fake-project-${n}`,
+    firstCreated: Date.now(),
+    lastUpdated: Date.now()
   }))
 }

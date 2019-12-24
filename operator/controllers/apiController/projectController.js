@@ -1,8 +1,23 @@
 import _ from 'lodash'
+import { v4 as uuid } from 'uuid'
 
 import Project from '../../models/projectModel'
 import { launchCode } from '../../services/code'
 import { validateCodePath } from '../../validations/validateCodePath'
+import { toSlug } from '../../util/string'
+
+// prevent _id, __v, or other hidden properties from being exposed
+const pickProjectProperties = project =>
+  _.pick(project, [
+    'id',
+    'name',
+    'type',
+    'desc',
+    'slug',
+    'firstCreated',
+    'lastAccessed',
+    'lastUpdated'
+  ])
 
 export async function listProjectController(ctx) {
   try {
@@ -34,8 +49,8 @@ export async function viewProjectController(ctx) {
 
   try {
     const obj = await Project.getProject(projectName)
-    const project = _.pick(obj, ['name', 'type', 'desc', 'slug'])
-    
+    const project = pickProjectProperties(obj)
+
     ctx.body = {
       ...project
     }
@@ -50,30 +65,69 @@ export async function viewProjectController(ctx) {
 }
 
 export async function createProjectController(ctx) {
-  const project = _.pick(ctx.body, ['name', 'type', 'desc', 'slug'])
-
+  const project = pickProjectProperties(ctx.request.body)
   try {
+    if (!project.name) throw new Error('did not indicate project name')
+    if (!project.type) throw new Error('did not indicate project type')
+    if (project.firstCreated) throw new Error('do not add a project firstCreated')
+    if (project.lastUpdated) throw new Error('do not add a project lastUpdated')
+    if (!project.id) project.id = uuid()
+    if (!project.desc) project.desc = 'l'
+    if (!project.slug) project.slug = toSlug(project.name)
+    project.firstCreated = Date.now()
+    project.lastUpdated = Date.now()
+
     await Project.createProject(project)
 
     ctx.body = {
       ...project
     }
-  } catch {
+  } catch (err) {
     console.error(err)
 
     ctx.status = 500
     ctx.body = {
-      error: err
+      error: err.message
     }
   }
 }
 
-export function editProjectController(ctx) {
-  ctx.status = 501
+export async function editProjectController(ctx) {
+  const project = pickProjectProperties(ctx.request.body)
+
+  console.log(project)
+  const { id } = project
+
+  try {
+    const actualProject = await Project.findOneAndUpdate({ id }, project, {
+      new: true,
+      returnOriginal: true
+    }, (err, project) => {
+      if (err) console.error(err)
+
+      console.log('lll', project)
+      ctx.body = {
+        ...project
+      }
+    })
+    console.log(actualProject)
+
+    ctx.body = {
+      ...actualProject
+    }
+  } catch (err) {
+    console.error(err)
+
+    ctx.status = 500
+    ctx.body = {
+      error: 'error when editing project'
+    }
+  }
+ 
 }
 
 export function deleteProjectController(ctx) {
-  ctx.status = 501
+  ctx.status = 401
 }
 
 export async function openProjectController(ctx, next) {

@@ -24,8 +24,19 @@ export function createProjectControllerGet(req, res) {
   })
 }
 
-export function createProjectControllerPost(req, res) {
-  // process the post request by calling service that makes request to subsequent microservice
+export async function createProjectControllerPost(req, res) {
+  const { name, type } = req.body
+
+  if (!name) throw new Error('foo')
+  if (!type) throw new Error('bar')
+  
+  const project = await operatorReq.post('/api/project/create', {
+    body: JSON.stringify({
+      name, type
+    })
+  })
+
+  res.json(project)
 }
 
 export async function editProjectControllerGet(req, res) {

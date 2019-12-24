@@ -19,6 +19,7 @@ services:
       - 3010
     environment:
       - NODE_ENV=development
+      - PORT=3010
     links:
       - operator
     restart: always
@@ -47,6 +48,7 @@ services:
       - 3030
     environment:
       - NODE_ENV=development
+      - PORT=3030
     restart: always
     privileged: false
     stdin_open: true
@@ -72,6 +74,7 @@ services:
       - 3020
     environment:
       - NODE_ENV=development
+      - PORT=3020
     links:
       - mongo
       - storage
@@ -82,12 +85,17 @@ services:
   mongo:
     container_name: tails-mongo
     image: mongo:4.2.2-bionic
+    ports:
+      - target: 27017
+        published: 27017
     expose:
       - 27017
     restart: always
     privileged: false
     stdin_open: true
     tty: true
+    logging:
+        driver: none
   storage:
     container_name: tails-storage
     image: node:13.4.0-alpine
@@ -110,6 +118,7 @@ services:
       - 3040
     environment:
       - NODE_ENV=development
+      - PORT=3040
     restart: always
     privileged: false
     stdin_open: true
@@ -142,4 +151,4 @@ services:
     restart: always
     privileged: false
     stdin_open: true
-    tty: false
+    tty: true
