@@ -2,16 +2,14 @@ version: '3.7'
 services:
   dashboard-mpa:
     container_name: tails-dashboard-mpa
-    image: node:13.4.0-alpine
-    build:
-      context: ./dashboard-mpa
+    image: node:12-slim
+    user: 1000:1000
+    working_dir: /opt/app
+    command: npm run serve
     volumes:
       - type: bind
         source: ./dashboard-mpa
         target: /opt/app
-    user: 1000:1000
-    working_dir: /opt/app
-    command: npm run serve
     ports:
       - target: 3010
         published: 3010
@@ -22,15 +20,17 @@ services:
       - PORT=3010
     links:
       - operator
+      - rabbitmq
     restart: always
     privileged: false
     stdin_open: true
     tty: true
   projects-served:
     container_name: tails-projects-served
-    image: node:13.4.0-alpine
-    build:
-      context: ./projects-served
+    image: node:12-slim
+    user: 1000:1000
+    working_dir: /opt/app
+    command: npm run serve
     volumes:
       - type: bind
         source: ./projects-served
@@ -38,9 +38,6 @@ services:
       - type: bind
         source: ./projects
         target: /opt/projects
-    user: 1000:1000
-    working_dir: /opt/app
-    command: npm run serve
     ports:
       - target: 3030
         published: 3030
@@ -55,18 +52,16 @@ services:
     tty: true
   operator:
     container_name: tails-operator
-    image: node:13.4.0-alpine
-    build:
-      context: ./operator
+    image: node:12-slim
+    user: 1000:1000
+    working_dir: /opt/app
+    command: npm run serve
     env_file:
       - ./.env
     volumes:
       - type: bind
         source: ./operator
         target: /opt/app
-    user: 1000:1000
-    working_dir: /opt/app
-    command: npm run serve
     ports:
       - target: 3020
         published: 3020
@@ -78,6 +73,7 @@ services:
     links:
       - mongo
       - storage
+      - rabbitmq
     restart: always
     privileged: false
     stdin_open: true
@@ -98,9 +94,10 @@ services:
         driver: none
   storage:
     container_name: tails-storage
-    image: node:13.4.0-alpine
-    build:
-      context: ./storage
+    image: node:12-slim
+    user: 1000:1000
+    working_dir: /opt/app
+    command: npm run serve
     volumes:
       - type: bind
         source: ./storage
@@ -108,9 +105,6 @@ services:
       - type: bind
         source: ./projects
         target: /opt/app/projects
-    user: 1000:1000
-    working_dir: /opt/app
-    command: npm run serve
     ports:
       - target: 3040
         published: 3040
@@ -119,15 +113,18 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3040
+    links:
+      - rabbitmq
     restart: always
     privileged: false
     stdin_open: true
     tty: true
   documentation-site:
     container_name: tails-documentation-site
-    image: node:13.4.0-alpine
-    build:
-      context: ./documentation-site
+    image: node:12-slim
+    user: 1000:1000
+    working_dir: /opt/app/website
+    command: npm run start
     volumes:
       - type: bind
         source: ./documentation
@@ -135,9 +132,6 @@ services:
       - type: bind
         source: ./documentation-site
         target: /opt/app/website
-    user: 1000:1000
-    working_dir: /opt/app/website
-    command: npm run start
     ports:
       - target: 2990
         published: 2990
@@ -148,6 +142,20 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=2990
+    restart: always
+    privileged: false
+    stdin_open: true
+    tty: true
+  rabbitmq:
+    container_name: tails-rabbitmq
+    image: rabbitmq:3.8-management-alpine
+    ports:
+      - target: 5672
+        published: 5672
+      - target: 15672
+        published: 15672
+    logging:
+      driver: none
     restart: always
     privileged: false
     stdin_open: true
