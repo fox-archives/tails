@@ -20,7 +20,7 @@ services:
       - PORT=3010
     links:
       - operator
-      - rabbitmq
+      - nats
     restart: always
     privileged: false
     stdin_open: true
@@ -73,7 +73,7 @@ services:
     links:
       - mongo
       - storage
-      - rabbitmq
+      - nats
     restart: always
     privileged: false
     stdin_open: true
@@ -114,7 +114,7 @@ services:
       - NODE_ENV=development
       - PORT=3040
     links:
-      - rabbitmq
+      - nats
     restart: always
     privileged: false
     stdin_open: true
@@ -146,16 +146,16 @@ services:
     privileged: false
     stdin_open: true
     tty: true
-  rabbitmq:
-    container_name: tails-rabbitmq
-    image: rabbitmq:3.8-management-alpine
+  nats:
+    container_name: tails-nats
+    image: nats:2.1
+    expose:
+      - 6222
     ports:
-      - target: 5672
-        published: 5672
-      - target: 15672
-        published: 15672
-    logging:
-      driver: none
+      - target: 4222
+        published: 4222
+      - target: 8222
+        published: 8222
     restart: always
     privileged: false
     stdin_open: true

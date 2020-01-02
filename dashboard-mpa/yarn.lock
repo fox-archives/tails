@@ -845,6 +845,14 @@ ms@^2.1.1:
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.2.tgz#d09d1f357b443f493382a8eb3ccd183872ae6009"
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
+nats@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/nats/-/nats-1.3.2.tgz#e80c8fbb31f9e664c6293a7f444d846b9e7659ef"
+  integrity sha512-4BVDo3aT+x+ac/RgW1GXBLkjS7iXYrmQymFgQ33/bYn8VuU65M8gd7yxra+7Dr5J3RRN6+Bt0KhoG9ugzmL0rQ==
+  dependencies:
+    nuid "^1.0.0"
+    ts-nkeys "^1.0.8"
+
 negotiator@0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.2.tgz#feacf7ccf525a77ae9634436a64883ffeca346fb"
@@ -899,6 +907,11 @@ npm-run-path@^2.0.0:
   integrity sha1-NakjLfo11wZ7TLLd8jV7GHFTbF8=
   dependencies:
     path-key "^2.0.0"
+
+nuid@^1.0.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/nuid/-/nuid-1.1.0.tgz#e0c5746350a25562f58283197f34c50861f44675"
+  integrity sha512-C/JdZ6PtCqKsCEs4ni76nhBsdmuQgLAT/CTLNprkcLViDAnkk7qx5sSA8PVC2vmSsdBlSsFuGb52v6pwn1oaeg==
 
 on-finished@~2.3.0:
   version "2.3.0"
@@ -1195,6 +1208,18 @@ touch@^3.1.0:
   integrity sha512-WBx8Uy5TLtOSRtIq+M03/sKDrXCLHxwDcquSP2c43Le03/9serjQBIztjRz6FkJez9D/hleyAXTBGLwwZUw9lA==
   dependencies:
     nopt "~1.0.10"
+
+ts-nkeys@^1.0.8:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/ts-nkeys/-/ts-nkeys-1.0.14.tgz#3d4b61b6aa4fa952c649ecfafacdce1a4831ba57"
+  integrity sha512-WIPykDjpnOvVn5zDNv1uu6o1+Uj+CXaQOM4Od6k2SRiUF4rmhjk7nAHC0mGrWjj0GxeQnwKQv++65qtm1O6kiA==
+  dependencies:
+    tweetnacl "^1.0.1"
+
+tweetnacl@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-1.0.1.tgz#2594d42da73cd036bd0d2a54683dd35a6b55ca17"
+  integrity sha512-kcoMoKTPYnoeS50tzoqjPY3Uv9axeuuFAZY9M/9zFnhoVvRfxz9K29IMPD7jGmt2c8SW7i3gT9WqDl2+nV7p4A==
 
 type-is@~1.6.17, type-is@~1.6.18:
   version "1.6.18"

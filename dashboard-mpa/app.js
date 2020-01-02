@@ -4,6 +4,7 @@ import helmet from 'helmet'
 
 import { initCleanup } from './core/cleanup'
 import { initEnv } from './core/env'
+import './core/nats'
 import routes from './routes'
 
 initCleanup()
