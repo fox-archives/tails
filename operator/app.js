@@ -3,13 +3,10 @@ import logger from 'koa-logger'
 import helmet from 'koa-helmet'
 import bodyParser from 'koa-bodyparser'
 
-import { initCleanup } from './core/cleanup'
-import { initDb } from './core/db'
+import './core/cleanup'
+import './core/db'
 import './subscribers/project'
 import routes from './routes'
-
-initCleanup()
-initDb()
 
 const app = new Koa()
 app.use(logger())

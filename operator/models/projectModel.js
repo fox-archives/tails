@@ -1,5 +1,7 @@
 import mongoose from '../core/mongoose'
 
+console.log('FOO', mongoose)
+
 const projectSchema = new mongoose.Schema(
   {
     id: {

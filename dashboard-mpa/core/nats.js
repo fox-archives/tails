@@ -33,10 +33,8 @@ nats.on('unsubscribe', (sid, subject) => {
   console.info(`nats id ${sid} unsubscribed from subject ${subject}`)
 })
 
-/* occurs when the client cannot subscribe and / or publish / request
-  on the specific subject */
 nats.on('premission_error', err => {
-  console.error('nats permission error', err.message)
+  console.error('nats permission error', err)
 })
 
 export { nats }

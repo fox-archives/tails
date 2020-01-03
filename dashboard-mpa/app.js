@@ -2,13 +2,11 @@ import express from 'express'
 import hbs from 'hbs'
 import helmet from 'helmet'
 
-import { initCleanup } from './core/cleanup'
-import { initEnv } from './core/env'
+import './core/cleanup'
+import './core/env'
 import './core/nats'
-import routes from './routes'
 
-initCleanup()
-initEnv()
+import routes from './routes'
 
 const app = express()
 app.enable('case sensitive routing')
