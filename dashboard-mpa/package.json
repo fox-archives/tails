@@ -9,6 +9,7 @@
     "serve": "nodemon -e js,css,html,hbs -r esm app"
   },
   "dependencies": {
+    "ajv": "^6.10.2",
     "dotenv": "^8.2.0",
     "dotenv-expand": "^5.1.0",
     "esm": "^3.2.25",

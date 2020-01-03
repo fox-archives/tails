@@ -15,6 +15,9 @@
         "title": "guide",
         "sidebar_label": "guide"
       },
+      "nats": {
+        "title": "nats"
+      },
       "operator": {
         "title": "operator"
       },
@@ -31,6 +34,7 @@
     "categories": {
       "tails": "tails",
       "guide": "guide",
+      "nats": "nats",
       "api": "api",
       "operator": "operator",
       "storage": "storage"

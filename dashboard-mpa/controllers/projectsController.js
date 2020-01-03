@@ -2,10 +2,22 @@ import { nats } from '../core/nats'
 import { operatorReq } from '../core/fetch'
 
 export async function projectsController(req, res, next) {
-  nats.request('project', { action: 'create' }, res => {
-    console.log('DONEFOR', res)
-  })
-  res.send('fo')
+  try {
+    nats.request('project', { action: 'list' }, natsres => {
+      console.info('SSSSSS', natsres)
+      res.render('pages/projects', {
+        hero: {
+          header: 'welcome to tails',
+          body: "let's get started"
+        },
+        projects: natsres.projects
+      })
+    })
+  } catch (err) {
+    console.error(err)
+    next(new Error('failed to get projects'))
+  }
+
   // try {
   //   // nats.request(
   //   //   'project',
@@ -18,7 +30,7 @@ export async function projectsController(req, res, next) {
   //   //     console.log('DONEFOR', res)
   //   //   }
   //   // )
-    
+
   //   const { projects } = await operatorReq.get('/api/project/list')
 
   //   res.render('pages/projects', {

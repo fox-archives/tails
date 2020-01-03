@@ -11,10 +11,6 @@ nats.on('error', err => {
 
 nats.on('connect', nc => {
   console.info('nats connected')
-
-  nats.subscribe('project', (req, replyTo) => {
-    nats.publish(replyTo, 'i can help', req)
-  })
 })
 
 nats.on('disconnect', () => {

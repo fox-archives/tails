@@ -5,6 +5,7 @@ import bodyParser from 'koa-bodyparser'
 
 import { initCleanup } from './core/cleanup'
 import { initDb } from './core/db'
+import './subscribers/project'
 import routes from './routes'
 
 initCleanup()

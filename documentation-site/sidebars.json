@@ -1,7 +1,8 @@
 {
   "docs": {
     "tails": ["doc1"],
-    "guide": ["guide"]
+    "guide": ["guide"],
+    "nats": ["nats"]
   },
   "docs-other": {
     "api": ["doc2"],
