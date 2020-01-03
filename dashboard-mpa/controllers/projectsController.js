@@ -4,7 +4,7 @@ import { operatorReq } from '../core/fetch'
 export async function projectsController(req, res, next) {
   try {
     nats.request('project', { action: 'list' }, natsres => {
-      console.info('SSSSSS', natsres)
+
       res.render('pages/projects', {
         hero: {
           header: 'welcome to tails',
