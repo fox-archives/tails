@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid'
 import mongoose from 'mongoose'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 
-import Project from '../../models/projectModel'
+import Project from '../models/projectModel'
 
 const mongod = new MongoMemoryServer()
 
@@ -17,7 +17,7 @@ export async function connectDb() {
 }
 
 export async function fillDb() {
-  _.times(10, n => Project.createProject({
+  _.times(5, n => Project.createProject({
     id: uuid(),
     name: `fake-project-${n}`,
     type: 'web',

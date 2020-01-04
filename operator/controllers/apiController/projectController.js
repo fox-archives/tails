@@ -5,6 +5,7 @@ import Project from '../../models/projectModel'
 import { launchCode } from '../../services/code'
 import { validateCodePath } from '../../validations/validateCodePath'
 import { toSlug } from '../../util/string'
+import { listProjectService } from '../../services/projectService'
 
 // prevent _id, __v, or other hidden properties from being exposed
 const pickProjectProperties = project =>
@@ -21,7 +22,7 @@ const pickProjectProperties = project =>
 
 export async function listProjectController(ctx) {
   try {
-    let projects = await Project.getProjects()
+    let projects = await listProjectService()
 
     ctx.body = {
       projects

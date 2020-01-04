@@ -28,6 +28,7 @@
     "@babel/preset-env": "^7.7.7",
     "@types/mongoose": "^5.5.34",
     "@types/node": "^12.12.21",
+    "ava": "^2.4.0",
     "babel-jest": "^24.9.0",
     "http-status-codes": "^1.4.0",
     "jest": "^24.9.0",

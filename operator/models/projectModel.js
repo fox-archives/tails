@@ -50,6 +50,15 @@ const projectSchema = new mongoose.Schema(
   }
 )
 
+projectSchema.statics.listProjects = function() {
+  return new Promise((resolve, reject) => {
+    this.find((err, projects) => {
+      if (err) reject(err)
+
+      resolve(projects)
+    })
+  })
+}
 projectSchema.statics.createProject = function(newProject) {
   return new Promise((resolve, reject) => {
     const Project = mongoose.model('Project')
@@ -68,6 +77,7 @@ projectSchema.statics.getProjects = function() {
     this.find((err, projects) => {
       if (err) reject(err)
 
+      console.error(projects)
       resolve(projects)
     })
   })

@@ -72,7 +72,7 @@ what it looks like (so far)
 
 ## usage
 
-not really streamlined yet; project still in early development (pre-alpha)
+project still in (heavy) early development (pre-alpha)
 
 ## contributing
 

@@ -6,7 +6,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node -r esm app",
-    "serve": "nodemon -e js,css,html,hbs -r esm app"
+    "serve": "nodemon --ignore 'tests/**/*.test.js' -r esm app"
   },
   "dependencies": {
     "ajv": "^6.10.2",

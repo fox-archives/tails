@@ -17,33 +17,6 @@ export async function projectsController(req, res, next) {
     console.error(err)
     next(new Error('failed to get projects'))
   }
-
-  // try {
-  //   // nats.request(
-  //   //   'project',
-  //   //   {
-  //   //     action: 'create'
-  //   //   },
-  //   //   { max: 1 },
-  //   //   1000,
-  //   //   res => {
-  //   //     console.log('DONEFOR', res)
-  //   //   }
-  //   // )
-
-  //   const { projects } = await operatorReq.get('/api/project/list')
-
-  //   res.render('pages/projects', {
-  //     hero: {
-  //       header: 'welcome to tails',
-  //       body: "let's get started"
-  //     },
-  //     projects: projects
-  //   })
-  // } catch (err) {
-  //   console.error(err)
-  //   next(new Error('failed to get projects'))
-  // }
 }
 
 export function createProjectControllerGet(req, res) {
