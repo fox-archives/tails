@@ -1,7 +1,4 @@
-.PHONY: start, debug
+.PHONY: start
 
 start:
-	docker-compose up dashboard-mpa projects-served documentation-site
-
-debug:
-	DEBUG=express:* docker-compose up --log-level INFO dashboard-mpa projects-served documentation-site --build
+	docker-compose up nats dashboard-mpa editor operator

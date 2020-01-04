@@ -1,5 +1,17 @@
 version: '3.7'
 services:
+  nats:
+    container_name: tails-nats
+    image: nats:2.1
+    expose:
+      - 6222
+    ports:
+      - target: 4222
+        published: 4222
+      - target: 8222
+        published: 8222
+    restart: always
+    privileged: false
   dashboard-mpa:
     container_name: tails-dashboard-mpa
     image: node:12-slim
@@ -16,40 +28,29 @@ services:
     expose:
       - 3010
     environment:
-      - NODE_ENV=development
-      - PORT=3010
+      NODE_ENV: development
+      PORT: 3010
     links:
       - operator
       - nats
     restart: always
     privileged: false
-    stdin_open: true
-    tty: true
-  projects-served:
-    container_name: tails-projects-served
+  editor:
+    container_name: tails-editor
     image: node:12-slim
     user: 1000:1000
     working_dir: /opt/app
     command: npm run serve
     volumes:
       - type: bind
-        source: ./projects-served
+        source: ./editor
         target: /opt/app
-      - type: bind
-        source: ./projects
-        target: /opt/projects
     ports:
       - target: 3030
         published: 3030
-    expose:
-      - 3030
     environment:
-      - NODE_ENV=development
-      - PORT=3030
-    restart: always
-    privileged: false
-    stdin_open: true
-    tty: true
+      NODE_ENV: development
+      PORT: 3030
   operator:
     container_name: tails-operator
     image: node:12-slim
@@ -68,57 +69,14 @@ services:
     expose:
       - 3020
     environment:
-      - NODE_ENV=development
-      - PORT=3020
+      NODE_ENV: development
+      PORT: 3020
     links:
       - mongo
       - storage
       - nats
     restart: always
     privileged: false
-    stdin_open: true
-    tty: true
-  mongo:
-    container_name: tails-mongo
-    image: mongo:4.2.2-bionic
-    ports:
-      - target: 27017
-        published: 27017
-    expose:
-      - 27017
-    restart: always
-    privileged: false
-    stdin_open: true
-    tty: true
-    logging:
-        driver: none
-  storage:
-    container_name: tails-storage
-    image: node:12-slim
-    user: 1000:1000
-    working_dir: /opt/app
-    command: npm run serve
-    volumes:
-      - type: bind
-        source: ./storage
-        target: /opt/app
-      - type: bind
-        source: ./projects
-        target: /opt/app/projects
-    ports:
-      - target: 3040
-        published: 3040
-    expose:
-      - 3040
-    environment:
-      - NODE_ENV=development
-      - PORT=3040
-    links:
-      - nats
-    restart: always
-    privileged: false
-    stdin_open: true
-    tty: true
   documentation-site:
     container_name: tails-documentation-site
     image: node:12-slim
@@ -135,28 +93,8 @@ services:
     ports:
       - target: 2990
         published: 2990
-      - target: 35729 # for hmr
-        published: 35729
-    expose:
-      - 2990
     environment:
-      - NODE_ENV=development
-      - PORT=2990
+      NODE_ENV: development
+      PORT: 2990
     restart: always
     privileged: false
-    stdin_open: true
-    tty: true
-  nats:
-    container_name: tails-nats
-    image: nats:2.1
-    expose:
-      - 6222
-    ports:
-      - target: 4222
-        published: 4222 # for tests
-      - target: 8222
-        published: 8222
-    restart: always
-    privileged: false
-    stdin_open: true
-    tty: true

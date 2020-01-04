@@ -2,7 +2,7 @@
   "name": "tails-dashboard-mpa",
   "private": true,
   "version": "0.0.0",
-  "license": "GPL-2.0",
+  "license": "GPL-3.0",
   "main": "app.js",
   "scripts": {
     "start": "node -r esm app",

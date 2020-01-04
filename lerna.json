@@ -3,12 +3,9 @@
   "npmClient": "yarn",
   "packages": [
     "dashboard-mpa",
-    "dashboard-spa",
+    "editor",
     "operator",
-    "projects-served",
-    "storage",
-    "documentation-site",
-    "documentation-api"
+    "documentation/site"
   ],
   "bootstrap": {
     "npmClientArgs": ["--no-package-lock"]
