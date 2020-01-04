@@ -31,8 +31,9 @@ services:
       NODE_ENV: development
       PORT: 3010
     links:
-      - operator
       - nats
+      - editor
+      - operator
     restart: always
     privileged: false
   editor:
@@ -45,12 +46,17 @@ services:
       - type: bind
         source: ./editor
         target: /opt/app
+      - type: bind
+        source: ./projects
+        target: /opt/app/projects
     ports:
       - target: 3030
         published: 3030
     environment:
       NODE_ENV: development
       PORT: 3030
+    links:
+      - nats
   operator:
     container_name: tails-operator
     image: node:12-slim
@@ -72,8 +78,6 @@ services:
       NODE_ENV: development
       PORT: 3020
     links:
-      - mongo
-      - storage
       - nats
     restart: always
     privileged: false

@@ -1,0 +1,14 @@
+{
+  "name": "tails-editor",
+  "version": "0.0.0",
+  "main": "app.js",
+  "license": "GPL-3.0",
+  "scripts": {
+    "serve": "nodemon --ignore 'tests/**/*.test.js' -r esm app",
+    "start": "node -r esm app"
+  },
+  "dependencies": {
+    "esm": "^3.2.25",
+    "nodemon": "^2.0.2"
+  }
+}
