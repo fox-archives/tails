@@ -81,7 +81,7 @@ services:
       - nats
     restart: always
     privileged: false
-  documentation-site:
+  documentation:
     container_name: tails-documentation-site
     image: node:12-slim
     user: 1000:1000
@@ -89,10 +89,10 @@ services:
     command: npm run serve
     volumes:
       - type: bind
-        source: ./documentation
+        source: ./documentation/docs
         target: /opt/app/docs
       - type: bind
-        source: ./documentation-site
+        source: ./documentation/site
         target: /opt/app/website
     ports:
       - target: 2990
@@ -100,5 +100,18 @@ services:
     environment:
       NODE_ENV: development
       PORT: 2990
+    restart: always
+    privileged: false
+  debug:
+    container_name: tails-debug
+    image: node:12-slim
+    working_dir: /opt/app/debug
+    command: npm run serve
+    volumes:
+      - type: bind
+        source: ./debug
+        target: /opt/app/debug
+    environment:
+      NODE_ENV: development
     restart: always
     privileged: false

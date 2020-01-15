@@ -1,4 +1,4 @@
 .PHONY: start
 
 start:
-	docker-compose up nats dashboard-mpa editor operator
+	docker-compose up nats dashboard-mpa editor operator deubg
