@@ -1,26 +1,6 @@
 {
-  "name": "tails-operator",
-  "private": true,
-  "version": "0.0.0",
-  "license": "GPL-3.0",
-  "main": "app.js",
-  "scripts": {
-    "start": "cross-env NODE_ENV=production node -r esm app",
-    "serve": "cross-env NODE_ENV=development nodemon --ignore 'tests/**/*.test.js' -r esm app",
-    "test": "cross-env NODE_ENV=test jest 'tests/**/*.test.js' --watch"
-  },
-  "dependencies": {
-    "cross-env": "^6.0.3",
-    "esm": "^3.2.25",
-    "nats": "^1.3.2",
-    "uuid": "^3.3.3"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
-    "@types/node": "^12.12.21",
-    "babel-jest": "^24.9.0",
-    "jest": "^24.9.0",
-    "nodemon": "^2.0.2"
-  }
+  "name": "coordinator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT"
 }

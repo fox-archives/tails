@@ -3,7 +3,13 @@ import { operatorReq } from '../core/fetch'
 
 export async function projectsController(req, res, next) {
   try {
-    nats.request('project', { action: 'list' }, natsres => {
+    nats.request('tails.project.list', {
+      specversion: '1.0',
+      type: 'tails.project.list',
+      source: 'dashboard-mpa',
+      id: 'actualid',
+      time: 'actualtime'
+    }, natsres => {
 
       res.render('pages/projects', {
         hero: {

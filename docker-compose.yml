@@ -10,7 +10,6 @@ services:
         published: 4222
       - target: 8222
         published: 8222
-    restart: always
     privileged: false
   dashboard-mpa:
     container_name: tails-dashboard-mpa
@@ -34,7 +33,6 @@ services:
       - nats
       - editor
       - operator
-    restart: always
     privileged: false
   editor:
     container_name: tails-editor
@@ -79,7 +77,6 @@ services:
       PORT: 3020
     links:
       - nats
-    restart: always
     privileged: false
   documentation:
     container_name: tails-documentation-site
@@ -100,7 +97,6 @@ services:
     environment:
       NODE_ENV: development
       PORT: 2990
-    restart: always
     privileged: false
   debug:
     container_name: tails-debug
@@ -113,5 +109,4 @@ services:
         target: /opt/app/debug
     environment:
       NODE_ENV: development
-    restart: always
     privileged: false
