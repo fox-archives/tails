@@ -1,4 +1,4 @@
-import client from '../core/proto'
+import client from '../core/grpc'
 
 exports.command = 'project <command>'
 exports.desc = 'edits projectsss'
