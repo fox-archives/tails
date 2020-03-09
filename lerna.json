@@ -4,7 +4,7 @@
   "packages": [
     "dashboard-mpa",
     "editor",
-    "coordinator",
+    "operator",
     "documentation/site"
   ],
   "bootstrap": {

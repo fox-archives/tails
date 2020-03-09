@@ -1,0 +1,16 @@
+{
+  "name": "tails-cli",
+  "version": "0.0.0",
+  "main": "src/index.js",
+  "license": "GPL-3.0",
+  "scripts": {
+    "serve": "nodemon -r esm src/index",
+    "start": "node -r esm src/index"
+  },
+  "dependencies": {
+    "@grpc/proto-loader": "^0.5.3",
+    "esm": "^3.2.25",
+    "grpc": "^1.24.2",
+    "yargs": "^15.3.0"
+  }
+}

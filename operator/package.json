@@ -1,6 +1,14 @@
 {
-  "name": "coordinator",
-  "version": "1.0.0",
+  "name": "tails-operator",
+  "version": "0.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "GPL-3.0",
+  "scripts": {
+    "start": "node -r esm index"
+  },
+  "dependencies": {
+    "@grpc/proto-loader": "^0.5.3",
+    "esm": "^3.2.25",
+    "grpc": "^1.24.2"
+  }
 }

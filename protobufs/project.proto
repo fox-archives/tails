@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package main;
+
+message ProjectRequest {
+  required string name = 1;
+  // required int32 id = 2;
+}
+
+message ProjectReply {
+  required string name = 1;
+  required string prop = 2;
+}
+
+service Project {
+  // rpc ListProjects() returns (Projects) {}
+
+  rpc showProject(ProjectRequest) returns (ProjectReply) {}
+}
