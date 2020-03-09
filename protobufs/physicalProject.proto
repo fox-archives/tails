@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package file;
+
+message PhysicalProject {
+  required string projectName = 1;
+  required string folderName = 2;
+  required string folderContents = 3;
+}
+
+message ListPhysicalProjectRequest {}
+
+message PhysicalProjectRequest {
+  required string name = 1;
+  optional bool simple = 2;
+}
+
+service PhysicalProjectService {
+  rpc listPhysicalProject(ListPhysicalProjectRequest) returns (stream PhysicalProject);
+  // rpc showPhysicalProject(PhysicalProjectRequest) returns (PhysicalProject);
+}

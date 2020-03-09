@@ -1,0 +1,22 @@
+{
+  "name": "tails-pawn",
+  "version": "0.0.0",
+  "main": "index.js",
+  "license": "GPL-3.0",
+  "scripts": {
+    "serve": "nodemon -r esm index",
+    "start": "node -r esm index",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@grpc/proto-loader": "^0.5.3",
+    "esm": "^3.2.25",
+    "grpc": "^1.24.2",
+    "toml": "^3.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.7",
+    "@babel/plugin-transform-modules-commonjs": "^7.8.3",
+    "jest": "^25.1.0"
+  }
+}
