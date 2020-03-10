@@ -1,0 +1,30 @@
+syntax = "proto3";
+package tails.paws.v1;
+
+service PhysicalProjectAPI {
+  rpc ListPhysicalProject(ListPhysicalProjectRequest) returns (stream ListPhysicalProjectResponse);
+  rpc ShowPhysicalProject(ShowPhysicalProjectRequest) returns (ShowPhysicalProjectResponse);
+}
+
+message ListPhysicalProjectRequest {}
+
+message ShowPhysicalProjectRequest {
+  string name = 1;
+  bool simple = 2;
+  oneof timestamp {
+    int64 created = 3;
+    int64 updated = 4;
+  }
+}
+
+message ListPhysicalProjectResponse {
+  string name = 1;
+  string folder_name = 2;
+  string folder_contents = 3;
+}
+
+message ShowPhysicalProjectResponse {
+  string name = 1;
+  string folder_name = 2;
+  string folder_contents = 3;
+}

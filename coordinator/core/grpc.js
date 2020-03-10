@@ -16,7 +16,7 @@ class GrpcServer {
   create(services) {
     if (!this.instance) {
       let packageDefinition = protoLoader.loadSync(
-        '../protobufs/project.proto',
+        '../protobufs/coordinator/project_api.proto',
         {
           keepCase: true,
           longs: String,
@@ -26,10 +26,10 @@ class GrpcServer {
         }
       )
 
-      let mainProto = grpc.loadPackageDefinition(packageDefinition).main
+      let mainProto = grpc.loadPackageDefinition(packageDefinition).tails.coordinator.v1
 
       let server = new grpc.Server()
-      server.addService(mainProto.Project.service, {
+      server.addService(mainProto.ProjectAPI.service, {
         showProject: services.showProject
       })
       server.bind('0.0.0.0:50052', grpc.ServerCredentials.createInsecure())
@@ -45,7 +45,7 @@ class GrpcServer {
 function GrpcClient() {}
 GrpcClient.prototype.create = function() {
   if (!clientInstance) {
-    let packageDefinition = protoLoader.loadSync('../protobufs/project.proto', {
+    let packageDefinition = protoLoader.loadSync('../protobufs/coordinator/project_api.proto', {
       keepCase: true,
       longs: String,
       enums: String,
@@ -53,7 +53,7 @@ GrpcClient.prototype.create = function() {
       oneofs: true
     })
 
-    let mainProto = grpc.loadPackageDefinition(packageDefinition).main
+    let mainProto = grpc.loadPackageDefinition(packageDefinition).tails.coordinator
 
     const client = new mainProto.Project(
       'localhost:50052',

@@ -1,0 +1,19 @@
+syntax = "proto3";
+package tails.coordinator.v1;
+
+service ProjectAPI {
+  // rpc ListProjects() returns (Projects) {}
+
+  rpc ShowProject(ShowProjectRequest) returns (ShowProjectResponse) {}
+}
+
+message ShowProjectRequest {
+  string name = 1;
+  // required int32 id = 2;
+}
+
+message ShowProjectResponse {
+  string name = 1;
+  string prop = 2;
+}
+

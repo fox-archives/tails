@@ -6,7 +6,13 @@ import { getConfig } from '../util'
 export async function listPhysicalProject(projectDir, opts = {
   simple: false
 }) {
-  const cfg = await getConfig(projectDir)
+  let cfg;
+  try {
+    cfg = await getConfig(projectDir)
+  } catch (err) {
+    console.error(err)
+    return
+  }
   
   const unfilteredProjectDirs = await fs.promises.readdir(projectDir, {
     encoding: 'utf8',
@@ -40,8 +46,14 @@ export async function listPhysicalProject(projectDir, opts = {
 export async function showPhysicalProject(projectDir, projectName, opts = {
   simple: false
 }) {
-  const cfg = await getConfig(projectDir)
-
+  let cfg;
+  try {
+    cfg = await getConfig(projectDir)
+  } catch (err) {
+    console.error(err)
+    return
+  }
+  
   const unfilteredProjectDirs = await fs.promises.readdir(projectDir, {
     encoding: 'utf8',
     withFileTypes: true
@@ -95,4 +107,5 @@ export async function showPhysicalProject(projectDir, projectName, opts = {
       }
     }
   }
+  console.log('end')
 }

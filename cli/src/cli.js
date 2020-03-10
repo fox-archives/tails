@@ -1,6 +1,6 @@
 import yargs from 'yargs'
 
-export function startCli(protoClient) {
+export function startCli() {
   yargs
     .scriptName('tails')
     .usage('$0 <cmd> [args]')
@@ -9,6 +9,6 @@ export function startCli(protoClient) {
 
   yargs
     .commandDir('yargs')
-    // .demandCommand()
+    .demandCommand()
     .help().argv
 }

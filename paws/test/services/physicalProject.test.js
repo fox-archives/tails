@@ -5,9 +5,9 @@ import _ from 'lodash'
 import {
   listPhysicalProject,
   showPhysicalProject
-} from '../services/physicalProjectService'
+} from '../../services/physicalProjectService'
 
-const projectDir = path.join(__dirname, 'fixtures/read-test')
+const projectDir = path.join(__dirname, '../fixtures/read-test')
 
 describe('physicalProjectService', () => {
   test('physicalProject lists properly', async () => {

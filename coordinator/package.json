@@ -4,7 +4,8 @@
   "main": "index.js",
   "license": "GPL-3.0",
   "scripts": {
-    "start": "node -r esm index"
+    "start": "node -r esm index",
+    "serve": "nodemon -r esm index"
   },
   "dependencies": {
     "@grpc/proto-loader": "^0.5.3",

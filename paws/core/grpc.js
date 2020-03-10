@@ -6,7 +6,7 @@ let serverInstance
 function GrpcServer() {}
 GrpcServer.prototype.create = function(services) {
   if (!serverInstance) {
-    let packageDefinition = protoLoader.loadSync('../protobufs/physicalProject.proto', {
+    let packageDefinition = protoLoader.loadSync('../protobufs/paws/physical_project_api.proto', {
       keepCase: true,
       longs: String,
       enums: String,
@@ -14,13 +14,11 @@ GrpcServer.prototype.create = function(services) {
       oneofs: true
     })
 
-    let mainProto = grpc.loadPackageDefinition(packageDefinition).file
+    let mainProto = grpc.loadPackageDefinition(packageDefinition).tails.paws.v1
 
     let server = new grpc.Server()
-    server.addService(mainProto.PhysicalProjectService.service, {
-      listPhysicalProject: services.listPhysicalProjectGrpc
-    })
-    server.bind('0.0.0.0:50052', grpc.ServerCredentials.createInsecure())
+    server.addService(mainProto.PhysicalProjectAPI.service, { ...services })
+    server.bind('0.0.0.0:50053', grpc.ServerCredentials.createInsecure())
     server.start()
 
     this.server = server

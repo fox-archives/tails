@@ -1,10 +1,10 @@
-import path from 'path'
-import fs from 'fs'
-
-import { listPhysicalProjectGrpc } from './controllers/physicalProjectController'
-
 import { GrpcServer } from './core/grpc'
+import {
+  listPhysicalProjectGrpc as listPhysicalProject,
+  showPhysicalProjectGrpc as showPhysicalProject
+} from './controllers/physicalProjectController'
 
 GrpcServer.create({
-  listPhysicalProjectGrpc
+  listPhysicalProject,
+  showPhysicalProject
 })
