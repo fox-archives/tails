@@ -5,7 +5,7 @@ import _ from 'lodash'
 import {
   listPhysicalProject,
   showPhysicalProject
-} from '../../services/physicalProjectService'
+} from '../../src/services/physicalProjectService'
 
 const projectDir = path.join(__dirname, '../fixtures/read-test')
 

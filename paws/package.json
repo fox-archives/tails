@@ -1,11 +1,11 @@
 {
-  "name": "tails-pawn",
+  "name": "tails-paws",
   "version": "0.0.0",
   "main": "index.js",
   "license": "GPL-3.0",
   "scripts": {
-    "serve": "nodemon -r esm index",
-    "start": "node -r esm index",
+    "serve": "nodemon -r esm src/index",
+    "start": "node -r esm src/index",
     "test": "jest"
   },
   "dependencies": {

@@ -1,18 +1,20 @@
+import path from 'path'
+
 let grpc = require('grpc')
 let protoLoader = require('@grpc/proto-loader')
+
+import { protoLoaderOptions, $ } from '../config'
 
 let serverInstance
 
 function GrpcServer() {}
 GrpcServer.prototype.create = function(services) {
   if (!serverInstance) {
-    let packageDefinition = protoLoader.loadSync('../protobufs/paws/physical_project_api.proto', {
-      keepCase: true,
-      longs: String,
-      enums: String,
-      defaults: true,
-      oneofs: true
-    })
+    // TODO: do not access out of dir
+    let packageDefinition = protoLoader.loadSync(
+      path.join($, '../protobufs/paws/physical_project_api.proto'),
+      protoLoaderOptions
+    )
 
     let mainProto = grpc.loadPackageDefinition(packageDefinition).tails.paws.v1
 

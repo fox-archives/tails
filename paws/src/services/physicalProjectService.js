@@ -50,8 +50,7 @@ export async function showPhysicalProject(projectDir, projectName, opts = {
   try {
     cfg = await getConfig(projectDir)
   } catch (err) {
-    console.error(err)
-    return
+    throw Error('could not read config file')
   }
   
   const unfilteredProjectDirs = await fs.promises.readdir(projectDir, {
@@ -107,5 +106,6 @@ export async function showPhysicalProject(projectDir, projectName, opts = {
       }
     }
   }
-  console.log('end')
+
+  throw new Error('folder not found')
 }

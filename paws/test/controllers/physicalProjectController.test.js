@@ -1,46 +1,39 @@
-import path from 'path'
+import { createGrcpConnection, client } from './grcpConnection'
 
-let grpc = require('grpc')
-let protoLoader = require('@grpc/proto-loader')
-
-const projectProtobuf = path.join(
-  __dirname,
-  '../../../protobufs/paws/physical_project_api.proto'
-)
+beforeAll(async () => {
+  await createGrcpConnection()
+})
 
 describe('physicalProjectController', () => {
-  test('physicalProjectController accessible via grpc', async () => {
-    let packageDefinition = protoLoader.loadSync(projectProtobuf, {
-      keepCase: true,
-      longs: String,
-      enums: String,
-      defaults: true,
-      oneofs: true
-    })
-
-    let mainProto = grpc.loadPackageDefinition(packageDefinition).tails.paws.v1
-
-    const client = new mainProto.PhysicalProjectAPI(
-      'localhost:50053',
-      grpc.credentials.createInsecure()
-    )
-
+  test('showPhysicalProjectGrpc works on success', done => {
     const projectName = 'css-test'
-    return new Promise((resolve, reject) => {
-      client.showPhysicalProject(
-        {
-          name: projectName,
-          simple: true
-        },
-        (err, response) => {
-          if (err) return console.error(err), reject()
+    client.showPhysicalProject(
+      {
+        name: projectName,
+        simple: true
+      },
+      (err, response) => {
+        if (err) return console.error(err)
 
-          expect(response.name).toBe(projectName)
-          resolve()
-        }
-      )
-    }).catch(err => {
-      console.error(err)
-    })
+        expect(response.name).toBe(projectName)
+        done()
+      }
+    )
+  })
+})
+
+describe('physicalProjectController', () => {
+  test('showPhysicalProjectGrpc fails on error', done => {
+    const projectName = 'does-not-exist-abc'
+    client.showPhysicalProject(
+      {
+        name: projectName,
+        simple: true
+      },
+      (err, response) => {
+        expect(err).toBeInstanceOf(Error)
+        done()
+      }
+    )
   })
 })
