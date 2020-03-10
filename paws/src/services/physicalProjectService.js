@@ -3,26 +3,34 @@ import path from 'path'
 
 import { getConfig } from '../util'
 
-export async function listPhysicalProject(projectDir, opts = {
-  simple: false
-}) {
-  let cfg;
+export async function listPhysicalProject(projectDir) {
+  let cfg
   try {
     cfg = await getConfig(projectDir)
   } catch (err) {
-    console.error(err)
-    return
+    throw new Error('foo')
   }
-  
-  const unfilteredProjectDirs = await fs.promises.readdir(projectDir, {
-    encoding: 'utf8',
-    withFileTypes: true
-  })
+  // if (params.name) {
+  //   console.log('hehefffffffffffff', projectDir)
+  //   throw new Error('must not name property')
+  //   return
+  // }
+
+  // if (params.name) throw new Error('must not name property')
+  let unfilteredProjectDirs
+  try {
+    unfilteredProjectDirs = await fs.promises.readdir(projectDir, {
+      encoding: 'utf8',
+      withFileTypes: true
+    })
+  } catch (err) {
+    throw new Error('famma')
+  }
   let projects = unfilteredProjectDirs
     .filter(dirent => dirent.isDirectory())
     .filter(dirent => !cfg.files.folderGroups.includes(dirent.name))
-  
-  const promises = [];
+
+  const promises = []
   for (let folderGroup of cfg.files.folderGroups) {
     const promise = fs.promises.readdir(path.join(projectDir, folderGroup), {
       encoding: 'utf8',
@@ -35,46 +43,44 @@ export async function listPhysicalProject(projectDir, opts = {
   let subProjects = unfilteredSubProjectDirs
     .flat()
     .filter(dirent => dirent.isDirectory())
-    
-  projects = [...projects, ...subProjects]
-    
-  if (opts.simple) return projects.map(dirent => dirent.name)
 
-  return projects
+  projects = [...projects, ...subProjects]
+
+  return projects.map(dirent => {
+    return {
+      name: dirent.name,
+      isDirectory: dirent.isDirectory(),
+      isFile: dirent.isFile(),
+      isSymbolicLink: dirent.isSymbolicLink()
+    }
+  })
 }
 
-export async function showPhysicalProject(projectDir, projectName, opts = {
-  simple: false
-}) {
-  let cfg;
+export async function showPhysicalProject(projectDir, params = {}) {
+  let cfg
   try {
     cfg = await getConfig(projectDir)
   } catch (err) {
     throw Error('could not read config file')
   }
-  
+
+  if (!params.name) throw Error('must have name property')
+
   const unfilteredProjectDirs = await fs.promises.readdir(projectDir, {
     encoding: 'utf8',
     withFileTypes: true
   })
-  let projects = unfilteredProjectDirs
-    .filter(dirent => dirent.isDirectory())
+  let projects = unfilteredProjectDirs.filter(dirent => dirent.isDirectory())
+
   for (const dirent of projects) {
-    if (dirent.name === projectName) {
-      if (opts.simple) {
-        return dirent.name
-      }
+    if (dirent.name === params.name) {
       return {
-        isBlockDevice: dirent.isBlockDevice(),
-        isCharacterDevice: dirent.isCharacterDevice(),
+        name: dirent.name,
         isDirectory: dirent.isDirectory(),
-        isFIFO: dirent.isFIFO(),
         isFile: dirent.isFile(),
-        isSocket: dirent.isSocket(),
         isSymbolicLink: dirent.isSymbolicLink(),
-        name: dirent.name
       }
-    } 
+    }
   }
 
   const promises = []
@@ -90,19 +96,12 @@ export async function showPhysicalProject(projectDir, projectName, opts = {
     .flat()
     .filter(dirent => dirent.isDirectory())
   for (const dirent of subProjects) {
-    if (dirent.name === projectName) {
-      if (opts.simple) {
-        return dirent.name
-      }
+    if (dirent.name === params.name) {
       return {
-        isBlockDevice: dirent.isBlockDevice(),
-        isCharacterDevice: dirent.isCharacterDevice(),
+        name: dirent.name,
         isDirectory: dirent.isDirectory(),
-        isFIFO: dirent.isFIFO(),
         isFile: dirent.isFile(),
-        isSocket: dirent.isSocket(),
-        isSymbolicLink: dirent.isSymbolicLink(),
-        name: dirent.name
+        isSymbolicLink: dirent.isSymbolicLink()
       }
     }
   }

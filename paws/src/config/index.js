@@ -1,7 +1,7 @@
 import path from 'path'
 
 export const protoLoaderOptions = {
-  keepCase: true,
+  keepCase: false,
   longs: String,
   enums: String,
   defaults: true,

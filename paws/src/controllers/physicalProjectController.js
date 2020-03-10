@@ -8,15 +8,9 @@ import {
   showPhysicalProject
 } from '../services/physicalProjectService'
 
-const projectDir = path.join($, '../projects')
+const PROJECT_DIR = path.join($, '../projects')
 
-export function listPhysicalProjectGrpc(call, cb) {
-  // wrap(async () => {
-  //   await listPhysicalProject(projectDir, {
-  //     simple: true
-  //   })
-  // }, cb)
-}
+export function listPhysicalProjectGrpc(call, cb) {}
 
 export function showPhysicalProjectGrpc(call, cb) {
   ;(async () => {
@@ -28,11 +22,10 @@ export function showPhysicalProjectGrpc(call, cb) {
     }
 
     try {
-      const projectName = call.request.name
-      const value = await showPhysicalProject(projectDir, projectName, {
-        simple: call.request.simple || false
+      const obj = await showPhysicalProject(PROJECT_DIR, {
+        name: call.request.name
       })
-      cb(null, { name: value })
+      cb(null, obj)
     } catch (err) {
       cb({
         code: grpc.status.INTERNAL,

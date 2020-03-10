@@ -4,31 +4,39 @@ beforeAll(async () => {
   await createGrcpConnection()
 })
 
-describe('physicalProjectController', () => {
-  test('showPhysicalProjectGrpc works on success', done => {
+describe('showPhysicalProjectGrpc', () => {
+  test('works with correct parameters', done => {
     const projectName = 'css-test'
     client.showPhysicalProject(
       {
-        name: projectName,
-        simple: true
+        name: projectName
       },
       (err, response) => {
         if (err) return console.error(err)
 
-        expect(response.name).toBe(projectName)
+        expect(response).toStrictEqual({
+          name: projectName,
+          isDirectory: true,
+          isFile: false,
+          isSymbolicLink: false
+        })
         done()
       }
     )
   })
-})
 
-describe('physicalProjectController', () => {
-  test('showPhysicalProjectGrpc fails on error', done => {
+  test('correct error code on no name', done => {
+    client.showPhysicalProject({}, (err, response) => {
+      expect(err).toBeInstanceOf(Error)
+      done()
+    })
+  })
+
+  test('fails on error', done => {
     const projectName = 'does-not-exist-abc'
     client.showPhysicalProject(
       {
-        name: projectName,
-        simple: true
+        name: projectName
       },
       (err, response) => {
         expect(err).toBeInstanceOf(Error)
