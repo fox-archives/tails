@@ -1,50 +1,34 @@
-import fs from 'fs'
 import path from 'path'
 
-import { getConfig } from '../util'
+import {
+  PhysicalProjectNotFoundError,
+  InvalidArgumentError
+} from '../util/errors'
+import { readProjectDirRaw } from '../util'
 
 export async function listPhysicalProject(projectDir) {
-  let cfg
-  try {
-    cfg = await getConfig(projectDir)
-  } catch (err) {
-    throw new Error('foo')
+  const unfilteredProjectDirs = await readProjectDirRaw(projectDir)
+
+  let projects = []
+  for (const project of unfilteredProjectDirs) {
+    // ignore files
+    if (!project.isDirectory()) continue
+
+    // if project does not begin with underscore push it
+    if (!(project.name.slice(0, 1) === '_')) {
+      projects.push(project)
+    }
+
+    // projects with underscores hold other projects. add them
+    const subdirPath = path.join(projectDir, project.name)
+    const subProjects = await readProjectDirRaw(subdirPath)
+
+    for (let subProject of subProjects) {
+      if (subProject.isDirectory()) {
+        projects.push(subProject)
+      }
+    }
   }
-  // if (params.name) {
-  //   console.log('hehefffffffffffff', projectDir)
-  //   throw new Error('must not name property')
-  //   return
-  // }
-
-  // if (params.name) throw new Error('must not name property')
-  let unfilteredProjectDirs
-  try {
-    unfilteredProjectDirs = await fs.promises.readdir(projectDir, {
-      encoding: 'utf8',
-      withFileTypes: true
-    })
-  } catch (err) {
-    throw new Error('famma')
-  }
-  let projects = unfilteredProjectDirs
-    .filter(dirent => dirent.isDirectory())
-    .filter(dirent => !cfg.files.folderGroups.includes(dirent.name))
-
-  const promises = []
-  for (let folderGroup of cfg.files.folderGroups) {
-    const promise = fs.promises.readdir(path.join(projectDir, folderGroup), {
-      encoding: 'utf8',
-      withFileTypes: true
-    })
-    promises.push(promise)
-  }
-
-  const unfilteredSubProjectDirs = await Promise.all(promises)
-  let subProjects = unfilteredSubProjectDirs
-    .flat()
-    .filter(dirent => dirent.isDirectory())
-
-  projects = [...projects, ...subProjects]
 
   return projects.map(dirent => {
     return {
@@ -57,54 +41,43 @@ export async function listPhysicalProject(projectDir) {
 }
 
 export async function showPhysicalProject(projectDir, params = {}) {
-  let cfg
-  try {
-    cfg = await getConfig(projectDir)
-  } catch (err) {
-    throw Error('could not read config file')
-  }
+  if (!params.name) throw InvalidArgumentError("'name' property missing")
 
-  if (!params.name) throw Error('must have name property')
+  const unfilteredProjectDirents = await readProjectDirRaw(projectDir)
 
-  const unfilteredProjectDirs = await fs.promises.readdir(projectDir, {
-    encoding: 'utf8',
-    withFileTypes: true
-  })
-  let projects = unfilteredProjectDirs.filter(dirent => dirent.isDirectory())
+  for (const dirent of unfilteredProjectDirents) {
+    // ignore files
+    if (!dirent.isDirectory()) continue
 
-  for (const dirent of projects) {
-    if (dirent.name === params.name) {
-      return {
-        name: dirent.name,
-        isDirectory: dirent.isDirectory(),
-        isFile: dirent.isFile(),
-        isSymbolicLink: dirent.isSymbolicLink(),
+    // if project does not begin with underscore, test if the folder matches name
+    if (!(dirent.name.slice(0, 1) === '_')) {
+      if (dirent.name === params.name) {
+        return {
+          name: dirent.name,
+          isDirectory: dirent.isDirectory(),
+          isFile: dirent.isFile(),
+          isSymbolicLink: dirent.isSymbolicLink()
+        }
+      }
+    }
+
+    // projects with underscores hold other projects. test for those
+    const subdirPath = path.join(projectDir, dirent.name)
+    const unfilteredSubProjectDirents = await readProjectDirRaw(subdirPath)
+
+    for (let subDirent of unfilteredSubProjectDirents) {
+      if (subDirent.isDirectory()) {
+        if (subDirent.name === params.name) {
+          return {
+            name: subDirent.name,
+            isDirectory: subDirent.isDirectory(),
+            isFile: subDirent.isFile(),
+            isSymbolicLink: subDirent.isSymbolicLink()
+          }
+        }
       }
     }
   }
 
-  const promises = []
-  for (let folderGroup of cfg.files.folderGroups) {
-    const promise = fs.promises.readdir(path.join(projectDir, folderGroup), {
-      encoding: 'utf8',
-      withFileTypes: true
-    })
-    promises.push(promise)
-  }
-  const unfilteredSubProjectDirs = await Promise.all(promises)
-  let subProjects = unfilteredSubProjectDirs
-    .flat()
-    .filter(dirent => dirent.isDirectory())
-  for (const dirent of subProjects) {
-    if (dirent.name === params.name) {
-      return {
-        name: dirent.name,
-        isDirectory: dirent.isDirectory(),
-        isFile: dirent.isFile(),
-        isSymbolicLink: dirent.isSymbolicLink()
-      }
-    }
-  }
-
-  throw new Error('folder not found')
+  throw new PhysicalProjectNotFoundError()
 }

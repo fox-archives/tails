@@ -1,19 +1,23 @@
-import { createGrcpConnection, client } from './grcpConnection'
+import grpc from 'grpc'
+
+import { createGrcpConnection, initPawsConfig, client } from './grcpConnection'
 
 beforeAll(async () => {
   await createGrcpConnection()
+  await initPawsConfig()
 })
 
 describe('showPhysicalProjectGrpc', () => {
-  test('works with correct parameters', done => {
+  it.only('works with correct parameters', done => {
     const projectName = 'css-test'
     client.showPhysicalProject(
       {
         name: projectName
       },
       (err, response) => {
-        if (err) return console.error(err)
+        if (err) console.error(err)
 
+        expect(err).toBeUndefined()
         expect(response).toStrictEqual({
           name: projectName,
           isDirectory: true,
@@ -25,14 +29,15 @@ describe('showPhysicalProjectGrpc', () => {
     )
   })
 
-  test('correct error code on no name', done => {
+  it('error code on no name', done => {
     client.showPhysicalProject({}, (err, response) => {
       expect(err).toBeInstanceOf(Error)
+      expect(err.code).toBe(grpc.status.INVALID_ARGUMENT)
       done()
     })
   })
 
-  test('fails on error', done => {
+  it('error code on non existing projectName', done => {
     const projectName = 'does-not-exist-abc'
     client.showPhysicalProject(
       {
@@ -40,8 +45,19 @@ describe('showPhysicalProjectGrpc', () => {
       },
       (err, response) => {
         expect(err).toBeInstanceOf(Error)
+        expect(err.code).toBe(grpc.status.NOT_FOUND)
         done()
       }
     )
+  })
+
+  // cant really do this cleanly. find way to restart application
+  describe('modify env', () => {
+    // projectDir is the file system directory containing all projects
+    // it('error code on bad projectDir', done => {
+      // beforeEach(() => {
+      //   const newProjectDir = path.join($, 'test/fixtures/read-test')
+      // })
+    // })
   })
 })

@@ -8,22 +8,43 @@ import { protoLoaderOptions, $ } from '../config'
 let serverInstance
 
 function GrpcServer() {}
-GrpcServer.prototype.create = function(services) {
+GrpcServer.prototype.create = async function(
+  physicalProjectServices,
+  configAPIServices
+) {
   if (!serverInstance) {
     // TODO: do not access out of dir
-    let packageDefinition = protoLoader.loadSync(
+    let physicalProjectAPIPackageDefinition = await protoLoader.load(
       path.join($, '../protobufs/paws/physical_project_api.proto'),
       protoLoaderOptions
     )
 
-    let mainProto = grpc.loadPackageDefinition(packageDefinition).tails.paws.v1
+    let configAPIPackageDefinition = await protoLoader.load(
+      path.join($, '../protobufs/paws/config_api.proto'),
+      protoLoaderOptions
+    )
+
+    let physicalProjectAPIPackageObject = grpc.loadPackageDefinition(
+      physicalProjectAPIPackageDefinition
+    ).tails.paws.v1
+    let configAPIPackageObject = grpc.loadPackageDefinition(
+      configAPIPackageDefinition
+    ).tails.paws.v1
 
     let server = new grpc.Server()
-    server.addService(mainProto.PhysicalProjectAPI.service, { ...services })
+    server.addService(
+      physicalProjectAPIPackageObject.PhysicalProjectAPI.service,
+      {
+        ...physicalProjectServices
+      }
+    )
+    server.addService(configAPIPackageObject.ConfigAPI.service, {
+      ...configAPIServices
+    })
     server.bind('0.0.0.0:50053', grpc.ServerCredentials.createInsecure())
     server.start()
 
-    this.server = server
+    serverInstance = server
   } else {
     throw new Error('GrpcClient already instantiated')
   }

@@ -1,7 +1,16 @@
-# editor
+# Paws
 
-edits files on the local file system. this is separate from `operator` because `operator` may be running on a separate machine, with the repository and files associated with it on a local machine. this `only` talks with `operator`. frontends are not intended to communicate with this `editor` directly
+`paws` edits files on the local file system. this is separate from `operator` because `operator` may be running on a separate machine. `paws` is always ran on a local machine and should only talk with `coordinator`
 
-- scaffolding
-- bootstrapping
-- configuring boilerplate
+more specifically, it is responsible for doing the following on the local filesystem
+
+- querying information about projects
+- creating / modifying projects
+- for any project, it may also do
+  - scaffolding
+  - bootstrapping
+  - boilerplate configuration
+
+## Scripts
+
+all scripts in `package.json`
