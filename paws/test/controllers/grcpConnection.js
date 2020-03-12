@@ -1,4 +1,7 @@
 import path from 'path'
+// import proto from 'google-protobuf'
+let proto = require('google-protobuf')
+let protobufjs = require('protobufjs')
 
 let grpc = require('grpc')
 // import * as grpc from 'grpc'
@@ -7,8 +10,10 @@ let protoLoader = require('@grpc/proto-loader')
 import { protoLoaderOptions, $ } from '../../src/config'
 
 let client
+let client2
+
 async function createGrcpConnection() {
-  const HOST = 'localhost'
+  const HOST = '0.0.0.0'
   const PORT = '50053'
 
   let physicalProjectAPIPackageDefinition = await protoLoader.load(
@@ -27,32 +32,40 @@ async function createGrcpConnection() {
     configAPIPackageDefinition
   ).tails.paws.v1
 
+  let channel = new grpc.Channel(
+    `${HOST}:${PORT}`,
+    grpc.credentials.createInsecure()
+  )
 
   let grpcClient1 = new physicalProjectAPIPackageObject.PhysicalProjectAPI(
-    `${HOST}:${PORT}`,
-    grpc.credentials.createInsecure()
+    undefined,
+    undefined, {
+      channelOverride: channel
+    }
   )
-  let grpcClient2 = configAPIPackageObject.ConfigAPI(
-    `${HOST}:${PORT}`,
-    grpc.credentials.createInsecure()
+  let grpcClient2 = new configAPIPackageObject.ConfigAPI(
+    undefined,
+    undefined, {
+      channelOverride: channel
+    }
   )
-  grcp.
+
   client = grpcClient1
+  client2 = grpcClient2
 }
 
 export { createGrcpConnection }
-export { client }
+export { client, client2 }
 
 export async function initPawsConfig() {
   await new Promise((resolve, reject) => {
-    client.setConfig(
+    client2.setConfig(
       {
         key: 'TAILS_PROJECT_DIR',
         value: path.join($, 'test/fixtures/read-test')
       },
       (err, response) => {
         if (err) console.error(err), reject(err)
-
         resolve(response)
       }
     )

@@ -1,4 +1,5 @@
 import grpc from 'grpc'
+import proto from 'google-protobuf'
 
 import { createGrcpConnection, initPawsConfig, client } from './grcpConnection'
 
@@ -8,16 +9,16 @@ beforeAll(async () => {
 })
 
 describe('showPhysicalProjectGrpc', () => {
-  it.only('works with correct parameters', done => {
-    const projectName = 'css-test'
+  it('works with correct parameters', done => {
+    const projectName = 'project-one'
     client.showPhysicalProject(
       {
         name: projectName
       },
       (err, response) => {
-        if (err) console.error(err)
+        // if (err) console.error(err)
 
-        expect(err).toBeUndefined()
+        expect(err).toBeNull()
         expect(response).toStrictEqual({
           name: projectName,
           isDirectory: true,

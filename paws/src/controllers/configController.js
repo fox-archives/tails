@@ -10,7 +10,7 @@ export function getConfigGrpc(call, cb) {
     })
   }
 
-  if (!RUNTIME_CONFIG.hasOwnProperty(key)) {
+  if (!RUNTIME_CONFIG.hasOwnProperty(call.request.key)) {
     return cb({
       code: grpc.status.INVALID_ARGUMENT,
       details: 'configuration key does not exist on configuration object'

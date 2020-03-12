@@ -21,7 +21,6 @@ export function showPhysicalProjectGrpc(call, cb) {
   ;(async () => {
     if (await requireRuntimeConfigInit(cb)) return
 
-    console.log('bar')
     if (!call.request.name) {
       return cb({
         code: grpc.status.INVALID_ARGUMENT,
