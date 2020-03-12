@@ -6,7 +6,6 @@ import { $ } from '../../src/config'
 import {
   PhysicalProjectStorageReadError,
   PhysicalProjectNotFoundError,
-  InvalidArgumentError
 } from '../../src/util/errors'
 import {
   listPhysicalProject,

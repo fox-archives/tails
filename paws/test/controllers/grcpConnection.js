@@ -1,11 +1,7 @@
 import path from 'path'
-// import proto from 'google-protobuf'
-let proto = require('google-protobuf')
-let protobufjs = require('protobufjs')
 
-let grpc = require('grpc')
-// import * as grpc from 'grpc'
-let protoLoader = require('@grpc/proto-loader')
+import * as grpc from 'grpc'
+import * as protoLoader from '@grpc/proto-loader'
 
 import { protoLoaderOptions, $ } from '../../src/config'
 
@@ -13,7 +9,7 @@ let client
 let client2
 
 async function createGrcpConnection() {
-  const HOST = '0.0.0.0'
+  const HOST = 'localhost'
   const PORT = '50053'
 
   let physicalProjectAPIPackageDefinition = await protoLoader.load(
