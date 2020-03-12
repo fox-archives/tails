@@ -2,7 +2,7 @@ let grpc = require('grpc')
 
 import { RUNTIME_CONFIG } from '../config'
 import {
-  PhysicalProjectStorageReadError,
+  StorageReadError,
   PhysicalProjectNotFoundError
 } from '../util/errors'
 import { requireRuntimeConfigInit } from '../util'
@@ -19,7 +19,7 @@ export function listPhysicalProjectGrpc(call, cb) {
       const obj = await listPhysicalProject(RUNTIME_CONFIG.TAILS_PROJECT_DIR)
       cb(null, obj)
     } catch (err) {
-      if (err instanceof PhysicalProjectStorageReadError) {
+      if (err instanceof StorageReadError) {
         return cb({
           code: grpc.status.INTERNAL,
           details:
@@ -59,7 +59,7 @@ export function showPhysicalProjectGrpc(call, cb) {
         })
       }
 
-      if (err instanceof PhysicalProjectStorageReadError) {
+      if (err instanceof StorageReadError) {
         return cb({
           code: grpc.status.INTERNAL,
           details:

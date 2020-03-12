@@ -5,7 +5,7 @@ import _ from 'lodash'
 import { $ } from '../../src/config'
 import { listNamespace, showNamespace } from '../../src/services/namespaceService'
 import {
-  PhysicalProjectStorageReadError,
+  StorageReadError,
   NamespaceNotFoundError
 } from '../../src/util/errors'
 
@@ -32,9 +32,9 @@ describe('listNamespace', () => {
     ]), 'name')
   })
 
-  it('throws PhysicalProjectStorageReadError on invalid project directory', async () => {
+  it('throws StorageReadError on invalid project directory', async () => {
     const invalid = '/invalid'
-    await expect(listNamespace(invalid)).rejects.toThrow(PhysicalProjectStorageReadError)
+    await expect(listNamespace(invalid)).rejects.toThrow(StorageReadError)
   })
 })
 
@@ -66,7 +66,7 @@ describe('showNamespace', () => {
 
     await expect(showNamespace(invalid, {
       name: CORRECT_NAMESPACE_DIR
-    })).rejects.toThrow(PhysicalProjectStorageReadError)
+    })).rejects.toThrow(StorageReadError)
   })
 })
 

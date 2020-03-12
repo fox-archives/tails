@@ -3,7 +3,7 @@ import fs from 'fs'
 import grpc from 'grpc'
 
 import { RUNTIME_CONFIG_STATUS, RUNTIME_CONFIG } from '../config'
-import { PhysicalProjectStorageReadError } from './errors'
+import { StorageReadError } from './errors'
 
 export async function readProjectDirRaw(projectDir) {
   try {

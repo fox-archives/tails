@@ -2,7 +2,8 @@ import path from 'path'
 
 import {
   PhysicalProjectNotFoundError,
-  InvalidArgumentError
+  InvalidArgumentError,
+  PhysicalProjectAlreadyExistsError
 } from '../util/errors'
 import { readProjectDirRaw } from '../util'
 
