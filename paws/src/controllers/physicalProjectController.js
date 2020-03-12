@@ -13,7 +13,25 @@ import {
 
 export function listPhysicalProjectGrpc(call, cb) {
   ;(async () => {
-    await requireRuntimeConfigInit(cb)
+    if (await requireRuntimeConfigInit(cb)) return
+
+    try {
+      const obj = await listPhysicalProject(RUNTIME_CONFIG.TAILS_PROJECT_DIR)
+      cb(null, obj)
+    } catch (err) {
+      if (err instanceof PhysicalProjectStorageReadError) {
+        return cb({
+          code: grpc.status.INTERNAL,
+          details:
+            'could not read the storage that contains all of your files (eg. the file system)'
+        })
+      }
+     
+      return cb({
+        code: grpc.status.INTERNAL,
+        details: `${__dirname}: unknown error. please check logs`
+      })
+    }
   })()
 }
 
@@ -35,19 +53,24 @@ export function showPhysicalProjectGrpc(call, cb) {
       cb(null, obj)
     } catch (err) {
       if (err instanceof PhysicalProjectNotFoundError) {
-        cb({
+        return cb({
           code: grpc.status.NOT_FOUND,
           details: 'project with the specified name not found'
         })
       }
 
       if (err instanceof PhysicalProjectStorageReadError) {
-        cb({
+        return cb({
           code: grpc.status.INTERNAL,
           details:
             'could not read the storage that contains all of your files (eg. the file system)'
         })
       }
+
+      return cb({
+        code: grpc.status.INTERNAL,
+        details: `${__dirname}: unknown error. please check logs`
+      })
     }
   })()
 }

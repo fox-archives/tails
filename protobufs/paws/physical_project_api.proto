@@ -2,8 +2,10 @@ syntax = "proto3";
 package tails.paws.v1;
 
 service PhysicalProjectAPI {
-  rpc ListPhysicalProject(ListPhysicalProjectRequest) returns (stream ListPhysicalProjectResponse);
-  rpc ShowPhysicalProject(ShowPhysicalProjectRequest) returns (ShowPhysicalProjectResponse);
+  rpc ListPhysicalProject(ListPhysicalProjectRequest)
+      returns (ListPhysicalProjectResponse);
+  rpc ShowPhysicalProject(ShowPhysicalProjectRequest)
+      returns (ShowPhysicalProjectResponse);
 }
 
 message ListPhysicalProjectRequest {}

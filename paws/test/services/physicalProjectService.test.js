@@ -123,7 +123,8 @@ describe('showPhysicalProject', () => {
     ).rejects.toThrow(PhysicalProjectNotFoundError)
   })
 
-  it('throws when we send invalid projectDir', async () => {
+  // should be same variable as RUNTIME_CONFIG.TAILS_PROJECT_DIR
+  it('throws when we send invalid project directory location (what would be)', async () => {
     const invalid = 'invalid-project-dir-abc-xyz'
     await expect(
       showPhysicalProject(invalid, {

@@ -2,13 +2,27 @@ import grpc from 'grpc'
 
 import { createGrcpConnection, initPawsConfig, client } from './grcpConnection'
 
+describe('listPhysicalProjectGrpc', () => {
+  beforeAll(async () => {
+    await createGrcpConnection()
+    await initPawsConfig()
+  })
+
+  it('succeeds grp call with correct parameters', done => {
+    client.listPhysicalProject({}, (err, response) => {
+      expect(err).toBeNull()
+      done()
+    })
+  })
+})
+
 describe('showPhysicalProjectGrpc', () => {
   beforeAll(async () => {
     await createGrcpConnection()
     await initPawsConfig()
   })
 
-  it('works with correct parameters', done => {
+  it('succeeds grcp call with correct parameters', done => {
     const projectName = 'project-one'
     client.showPhysicalProject(
       {
@@ -29,7 +43,7 @@ describe('showPhysicalProjectGrpc', () => {
     )
   })
 
-  it('error code on no name', done => {
+  it('fails with invalid parameters', done => {
     client.showPhysicalProject({}, (err, response) => {
       expect(err).toBeInstanceOf(Error)
       expect(err.code).toBe(grpc.status.INVALID_ARGUMENT)
@@ -37,7 +51,7 @@ describe('showPhysicalProjectGrpc', () => {
     })
   })
 
-  it('error code on non existing projectName', done => {
+  it('fails with invalid projectName', done => {
     const projectName = 'does-not-exist-abc'
     client.showPhysicalProject(
       {

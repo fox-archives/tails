@@ -1,13 +1,9 @@
 import fs from 'fs'
-import path from 'path'
 
-import toml from 'toml'
 import grpc from 'grpc'
 
 import { RUNTIME_CONFIG_STATUS, RUNTIME_CONFIG } from '../config'
 import { PhysicalProjectStorageReadError } from './errors'
-
-const dotFile = '.tails.toml'
 
 export async function readProjectDirRaw(projectDir) {
   try {

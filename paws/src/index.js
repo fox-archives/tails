@@ -1,3 +1,4 @@
+import './core/common'
 import { GrpcServer } from './core/grpc'
 import {
   listPhysicalProjectGrpc as listPhysicalProject,
