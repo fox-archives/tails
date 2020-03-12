@@ -1,0 +1,43 @@
+syntax = "proto3";
+package tails.paws.v1;
+
+service NamespaceAPI {
+  rpc ListNamespace(ListNamespaceRequest) returns (ListNamespaceResponse);
+  rpc ShowNamespace(ShowNamespaceRequest) returns (ShowNamespaceResponse);
+  rpc CreateNamespace(CreateNamespaceRequest) returns (CreateNamespaceResponse);
+  rpc DeleteNamespace(DeleteNamespaceRequest) returns (DeleteNamespaceRequest);
+}
+
+message ListNamespaceRequest {
+
+}
+
+message ListNamespaceResponse {
+  string name = 1;
+  string is_directory = 2;
+  string is_file = 3;
+  string is_symbolic_link = 4;
+}
+
+message ShowNamespaceRequest {
+  string name = 1;
+}
+
+message ShowNamespaceResponse {
+
+}
+
+message CreateNamespaceRequest {
+  string name = 1;
+}
+
+message CreateNamespaceResponse {
+
+}
+
+message DeleteNamespaceRequest {
+  string name = 1;
+}
+
+message DeleteNamespaceResponse {
+}
