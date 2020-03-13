@@ -10,10 +10,15 @@ service PhysicalProjectAPI {
 
 message ListPhysicalProjectRequest {}
 
-message ListPhysicalProjectResponse {
+message PhysicalProject {
   string name = 1;
-  string folder_name = 2;
-  string folder_contents = 3;
+  bool is_directory = 2;
+  bool is_file = 3;
+  bool is_symbolic_link = 4;
+}
+
+message ListPhysicalProjectResponse {
+  repeated PhysicalProject physical_project_list = 1;
 }
 
 message ShowPhysicalProjectRequest {

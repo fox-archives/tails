@@ -5,7 +5,14 @@ service NamespaceAPI {
   rpc ListNamespace(ListNamespaceRequest) returns (ListNamespaceResponse);
   rpc ShowNamespace(ShowNamespaceRequest) returns (ShowNamespaceResponse);
   rpc CreateNamespace(CreateNamespaceRequest) returns (CreateNamespaceResponse);
-  rpc DeleteNamespace(DeleteNamespaceRequest) returns (DeleteNamespaceRequest);
+  rpc DeleteNamespace(DeleteNamespaceRequest) returns (DeleteNamespaceResponse);
+}
+
+message Namespace {
+  string name = 1;
+  bool is_directory = 2;
+  bool is_file = 3;
+  bool is_symbolic_link = 4;
 }
 
 message ListNamespaceRequest {
@@ -13,10 +20,7 @@ message ListNamespaceRequest {
 }
 
 message ListNamespaceResponse {
-  string name = 1;
-  string is_directory = 2;
-  string is_file = 3;
-  string is_symbolic_link = 4;
+  repeated Namespace namespaces = 1;
 }
 
 message ShowNamespaceRequest {
@@ -24,7 +28,10 @@ message ShowNamespaceRequest {
 }
 
 message ShowNamespaceResponse {
-
+string name = 1;
+  bool is_directory = 2;
+  bool is_file = 3;
+  bool is_symbolic_link = 4;
 }
 
 message CreateNamespaceRequest {

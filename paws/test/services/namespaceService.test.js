@@ -4,6 +4,7 @@ import fs from 'fs-extra'
 import _ from 'lodash'
 
 import { $ } from '../../src/config'
+import * as C from '../constants'
 import {
   listNamespace,
   showNamespace,
@@ -17,23 +18,20 @@ import {
   NamespaceAlreadyExistsError
 } from '../../src/util/errors'
 
-const CORRECT_META_DIR = path.join($, './test/fixtures/read-test')
-const CORRECT_WRITE_TEST = path.join($, './test/fixtures/write-test')
 const CORRECT_NAMESPACE_DIR = 'project-grouping'
+
 let fixNamespaceFixtures = async () => {
   const src = path.join($, 'test/fixtures/write-test-copy')
   const dest = path.join($, 'test/fixtures/write-test')
   await fs.emptyDir(dest)
-  await fs.copy(src, dest, {
-    overwrite: true
-  })
+  await fs.copy(src, dest)
 }
 
 describe('listNamespace', () => {
   it('lists all namespaces parameters', async () => {
-    let namespaces = await listNamespace(CORRECT_META_DIR)
+    let obj = await listNamespace(C.TAILS_PROJECT_DIR_READ)
 
-    expect(namespaces).toStrictEqual(
+    expect(obj.namespaces).toStrictEqual(
       _.sortBy([
         {
           name: 'project-grouping',
@@ -60,7 +58,7 @@ describe('listNamespace', () => {
 
 describe('showNamespace', () => {
   it('returns correct data with proper parameters', async () => {
-    const namespace = await showNamespace(CORRECT_META_DIR, {
+    const namespace = await showNamespace(C.TAILS_PROJECT_DIR_READ, {
       name: CORRECT_NAMESPACE_DIR
     })
 
@@ -75,7 +73,7 @@ describe('showNamespace', () => {
   it('throw NamespaceNotFoundError when passing invalid namespace', async () => {
     const invalid = 'non-existent-namespace-abc'
     await expect(
-      showNamespace(CORRECT_META_DIR, {
+      showNamespace(C.TAILS_PROJECT_DIR_READ, {
         name: invalid
       })
     ).rejects.toThrow(NamespaceNotFoundError)
@@ -100,14 +98,14 @@ describe('createNamespace', () => {
     const namespace = 'namespace-foo'
 
     await expect(
-      createNamespace(CORRECT_WRITE_TEST, {
+      createNamespace(C.TAILS_PROJECT_DIR_WRITE, {
         name: namespace
       })
     ).resolves.not.toThrow()
   })
 
   it('throws InvalidArgumentError if does not contain all arguments', async () => {
-    await expect(createNamespace(CORRECT_WRITE_TEST)).rejects.toThrow(
+    await expect(createNamespace(C.TAILS_PROJECT_DIR_WRITE)).rejects.toThrow(
       InvalidArgumentError
     )
   })
@@ -116,7 +114,7 @@ describe('createNamespace', () => {
     const namespace = 'project-collection'
 
     await expect(
-      createNamespace(CORRECT_WRITE_TEST, {
+      createNamespace(C.TAILS_PROJECT_DIR_WRITE, {
         name: namespace
       })
     ).rejects.toThrow(NamespaceAlreadyExistsError)
@@ -131,14 +129,14 @@ describe('deleteNamespace', () => {
     const namespace = 'project-collection'
 
     await expect(
-      deleteNamespace(CORRECT_WRITE_TEST, {
+      deleteNamespace(C.TAILS_PROJECT_DIR_WRITE, {
         name: namespace
       })
     ).resolves.not.toThrow()
   })
 
   it('throws InvalidArgumentError if does not contain all arguments', async () => {
-    await expect(deleteNamespace(CORRECT_WRITE_TEST)).rejects.toThrow(
+    await expect(deleteNamespace(C.TAILS_PROJECT_DIR_WRITE)).rejects.toThrow(
       InvalidArgumentError
     )
   })
@@ -147,7 +145,7 @@ describe('deleteNamespace', () => {
     const invalid = 'non-existent-abc'
 
     await expect(
-      deleteNamespace(CORRECT_WRITE_TEST, {
+      deleteNamespace(C.TAILS_PROJECT_DIR_WRITE, {
         name: invalid
       })
     ).rejects.toThrow(NamespaceNotFoundError)

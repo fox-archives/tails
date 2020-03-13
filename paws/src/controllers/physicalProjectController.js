@@ -1,4 +1,4 @@
-let grpc = require('grpc')
+import * as grpc from 'grpc'
 
 import { RUNTIME_CONFIG } from '../config'
 import {

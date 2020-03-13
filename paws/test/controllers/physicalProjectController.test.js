@@ -1,14 +1,14 @@
 import grpc from 'grpc'
 
-import { createGrcpConnection, initPawsConfig, client } from './grcpConnection'
+import { createGrpcConnection, initPawsConfig, client } from './grpcConnection'
 
 describe('listPhysicalProjectGrpc', () => {
   beforeAll(async () => {
-    await createGrcpConnection()
+    await createGrpcConnection()
     await initPawsConfig()
   })
 
-  it('succeeds grp call with correct parameters', done => {
+  it('succeeds grpc call with correct parameters', done => {
     client.listPhysicalProject({}, (err, response) => {
       expect(err).toBeNull()
       done()
@@ -18,11 +18,11 @@ describe('listPhysicalProjectGrpc', () => {
 
 describe('showPhysicalProjectGrpc', () => {
   beforeAll(async () => {
-    await createGrcpConnection()
+    await createGrpcConnection()
     await initPawsConfig()
   })
 
-  it('succeeds grcp call with correct parameters', done => {
+  it('succeeds grpc call with correct parameters', done => {
     const projectName = 'project-one'
     client.showPhysicalProject(
       {

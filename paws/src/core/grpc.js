@@ -10,7 +10,8 @@ let serverInstance
 function GrpcServer() {}
 GrpcServer.prototype.create = async function(
   physicalProjectServices,
-  configAPIServices
+  configAPIServices,
+  services
 ) {
   if (!serverInstance) {
     // TODO: do not access out of dir
@@ -18,7 +19,10 @@ GrpcServer.prototype.create = async function(
       path.join($, '../protobufs/paws/physical_project_api.proto'),
       protoLoaderOptions
     )
-
+    let namespaceAPIPackageDefinition = await protoLoader.load(
+      path.join($, '../protobufs/paws/namespace_api.proto'),
+      protoLoaderOptions
+    )
     let configAPIPackageDefinition = await protoLoader.load(
       path.join($, '../protobufs/paws/config_api.proto'),
       protoLoaderOptions
@@ -26,6 +30,9 @@ GrpcServer.prototype.create = async function(
 
     let physicalProjectAPIPackageObject = grpc.loadPackageDefinition(
       physicalProjectAPIPackageDefinition
+    ).tails.paws.v1
+    let namespaceAPIPackageObject = grpc.loadPackageDefinition(
+      namespaceAPIPackageDefinition
     ).tails.paws.v1
     let configAPIPackageObject = grpc.loadPackageDefinition(
       configAPIPackageDefinition
@@ -38,6 +45,10 @@ GrpcServer.prototype.create = async function(
         ...physicalProjectServices
       }
     )
+    server.addService(namespaceAPIPackageObject.NamespaceAPI.service,
+      {
+        ...services.namespaceAPI
+      })
     server.addService(configAPIPackageObject.ConfigAPI.service, {
       ...configAPIServices
     })

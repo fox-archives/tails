@@ -6,14 +6,19 @@ import * as protoLoader from '@grpc/proto-loader'
 import { protoLoaderOptions, $ } from '../../src/config'
 
 let client
+let namespaceClient
 let client2
 
-async function createGrcpConnection() {
+async function createGrpcConnection() {
   const HOST = 'localhost'
   const PORT = '50053'
 
   let physicalProjectAPIPackageDefinition = await protoLoader.load(
     path.join($, '../protobufs/paws/physical_project_api.proto'),
+    protoLoaderOptions
+  )
+  let namespaceAPIPackageDefinition = await protoLoader.load(
+    path.join($, '../protobufs/paws/namespace_api.proto'),
     protoLoaderOptions
   )
   let configAPIPackageDefinition = await protoLoader.load(
@@ -24,6 +29,9 @@ async function createGrcpConnection() {
   let physicalProjectAPIPackageObject = grpc.loadPackageDefinition(
     physicalProjectAPIPackageDefinition
   ).tails.paws.v1
+  let namespaceApiPackageObject = grpc.loadPackageDefinition(
+    namespaceAPIPackageDefinition
+  ).tails.paws.v1
   let configAPIPackageObject = grpc.loadPackageDefinition(
     configAPIPackageDefinition
   ).tails.paws.v1
@@ -33,32 +41,32 @@ async function createGrcpConnection() {
     grpc.credentials.createInsecure()
   )
 
-  let grpcClient1 = new physicalProjectAPIPackageObject.PhysicalProjectAPI(
+  client = new physicalProjectAPIPackageObject.PhysicalProjectAPI(
     undefined,
-    undefined, {
+    undefined,
+    {
       channelOverride: channel
     }
   )
-  let grpcClient2 = new configAPIPackageObject.ConfigAPI(
+  namespaceClient = new namespaceApiPackageObject.NamespaceAPI(
     undefined,
-    undefined, {
-      channelOverride: channel
-    }
+    undefined,
+    { channelOverride: channel }
   )
-
-  client = grpcClient1
-  client2 = grpcClient2
+  client2 = new configAPIPackageObject.ConfigAPI(undefined, undefined, {
+    channelOverride: channel
+  })
 }
 
-export { createGrcpConnection }
-export { client, client2 }
+export { createGrpcConnection }
+export { client, namespaceClient, client2 }
 
-export async function initPawsConfig() {
+export async function initPawsConfig(tailsProjectDir) {
   await new Promise((resolve, reject) => {
     client2.setConfig(
       {
         key: 'TAILS_PROJECT_DIR',
-        value: path.join($, 'test/fixtures/read-test')
+        value: tailsProjectDir || path.join($, 'test/fixtures/read-test')
       },
       (err, response) => {
         if (err) console.error(err), reject(err)

@@ -3,8 +3,9 @@ import path from 'path'
 import _ from 'lodash'
 
 import { $ } from '../../src/config'
+import * as C from '../constants'
 import {
-  PhysicalProjectStorageReadError,
+  StorageReadError,
   PhysicalProjectNotFoundError,
 } from '../../src/util/errors'
 import {
@@ -12,84 +13,33 @@ import {
   showPhysicalProject
 } from '../../src/services/physicalProjectService'
 
-const CORRECT_META_DIR = path.join($, './test/fixtures/read-test')
-const CORRECT_PROJECT_DIR = 'project-one'
-const CORRECT_PROJECT_SUBDIR = 'project-alfa'
-const PROJECTS_FIXTURE = _.sortBy(
-  [
-    {
-      name: 'project-alfa',
-      isDirectory: true,
-      isFile: false,
-      isSymbolicLink: false
-    },
-    {
-      name: 'project-bravo',
-      isDirectory: true,
-      isFile: false,
-      isSymbolicLink: false
-    },
-    {
-      name: 'project-charlie',
-      isDirectory: true,
-      isFile: false,
-      isSymbolicLink: false
-    },
-    {
-      name: 'project-one',
-      isDirectory: true,
-      isFile: false,
-      isSymbolicLink: false
-    },
-    {
-      name: 'project-three',
-      isDirectory: true,
-      isFile: false,
-      isSymbolicLink: false
-    },
-    {
-      name: 'project-two',
-      isDirectory: true,
-      isFile: false,
-      isSymbolicLink: false
-    }
-  ],
-  'name'
-)
+const CORRECT_PROJECT_DIR = 'project-three'
+const CORRECT_PROJECT_SUBDIR = 'project-bravo'
 
 describe('listPhysicalProject', () => {
   it('lists all projects properly', async () => {
-    let projects = await listPhysicalProject(CORRECT_META_DIR, {})
+    let projects = await listPhysicalProject(C.TAILS_PROJECT_DIR_READ, {})
 
     projects = _.sortBy(projects, 'name')
-    expect(projects).toStrictEqual(PROJECTS_FIXTURE)
+    expect(projects).toStrictEqual(C.PROJECTS_FIXTURE)
   })
 
-  it('lists all projects properly with no option passed', async () => {
-    let projects = await listPhysicalProject(CORRECT_META_DIR)
-
-    projects = _.sortBy(projects, 'name')
-    expect(projects).toStrictEqual(PROJECTS_FIXTURE)
-  })
-
-  it('throws on invalid project directory', async () => {
+  it('throws StorageReadError on invalid project directory', async () => {
     const invalid = path.join($, 'src/test/fixtures/fake-read-test')
-    await expect(listPhysicalProject(invalid, {})).rejects.toThrow(
-      PhysicalProjectStorageReadError
+    await expect(listPhysicalProject(invalid)).rejects.toThrow(
+      StorageReadError
     )
   })
 
-  it('throws on invalid project directory 2', async () => {
-    const invalid = '/'
-    await expect(listPhysicalProject(invalid, {})).rejects.toThrow(
-      PhysicalProjectStorageReadError
-    )
+  it('throws StorageReadError on invalid project directory', async () => {
+    const invalid = '/invalid'
+    await expect(listPhysicalProject(invalid)).rejects.toThrow()
   })
 })
 
 describe('showPhysicalProject', () => {
   it('returns correct data with', async () => {
-    const project = await showPhysicalProject(CORRECT_META_DIR, {
+    const project = await showPhysicalProject(C.TAILS_PROJECT_DIR_READ, {
       name: CORRECT_PROJECT_DIR
     })
 
@@ -102,7 +52,7 @@ describe('showPhysicalProject', () => {
   })
 
   it('returns correct data for a subfolder', async () => {
-    const project = await showPhysicalProject(CORRECT_META_DIR, {
+    const project = await showPhysicalProject(C.TAILS_PROJECT_DIR_READ, {
       name: CORRECT_PROJECT_SUBDIR
     })
 
@@ -114,22 +64,26 @@ describe('showPhysicalProject', () => {
     })
   })
 
-  it('throws when we pass with invalid projectName', async () => {
+  it('throws PhysicalProjectNotFoundError when passing invalid projectName', async () => {
     const invalid = 'invalid-project-name-abc-xyz'
     await expect(
-      showPhysicalProject(CORRECT_META_DIR, {
+      showPhysicalProject(C.TAILS_PROJECT_DIR_READ, {
         name: invalid
       })
     ).rejects.toThrow(PhysicalProjectNotFoundError)
   })
 
   // should be same variable as RUNTIME_CONFIG.TAILS_PROJECT_DIR
-  it('throws when we send invalid project directory location (what would be)', async () => {
+  it('throws StorageReadError when passing invalid project directory location', async () => {
     const invalid = 'invalid-project-dir-abc-xyz'
     await expect(
       showPhysicalProject(invalid, {
-        name: CORRECT_PROJECT_DIR
+        name: C.TAILS_PROJECT_DIR_READ
       })
-    ).rejects.toThrow(PhysicalProjectStorageReadError)
+    ).rejects.toThrow(StorageReadError)
   })
 })
+
+// describe('createPhysicalProject', () => {
+//   it('edits correct data', async () => {})
+// })

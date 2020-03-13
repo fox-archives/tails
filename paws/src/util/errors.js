@@ -14,7 +14,6 @@ export class PhysicalProjectNotFoundError extends Error {}
 // exists on the file system
 export class PhysicalProjectAlreadyExistsError extends Error {}
 
-
 export class NamespaceNotFoundError extends Error {}
 export class NamespaceAlreadyExistsError extends Error{}
 
