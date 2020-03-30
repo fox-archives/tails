@@ -1,0 +1,20 @@
+{
+  "name": "tails-filesystem",
+  "version": "0.0.0",
+  "main": "index.js",
+  "license": "GPL-3.0",
+  "scripts": {
+    "serve": "nodemon -r esm src",
+    "start": "node -r esm src",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.9.0",
+    "cross-env": "^7.0.2",
+    "esm": "^3.2.25",
+    "fs-extra": "^9.0.0",
+    "jest": "^25.2.4",
+    "toml": "^3.0.0"
+  }
+}
