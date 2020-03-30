@@ -32,7 +32,7 @@ describe('listProject', () => {
   })
 })
 
-describe('showProject', () => {
+describe('showPhysicalProject', () => {
   it('success on correct arguments (project exists at root)', async () => {
     const project = await showPhysicalProject(C.TAILS_PROJECT_DIR_READ, {
       name: CORRECT_PROJECT_DIR

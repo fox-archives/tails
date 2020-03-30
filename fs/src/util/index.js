@@ -1,34 +1,41 @@
 import fs from 'fs-extra'
 import path from 'path'
 
-export async function readProjectDirRaw(projectDir) {
-  try {
-    return await fs.promises.readdir(projectDir, {
-      encoding: 'utf8',
-      withFileTypes: true
-    })
-  } catch (err) {
-    throw new Error(
-      `failed to read directory ${projectDir}. possibly check permissions`
-    )
-  }
+export function readDirRaw(projectDir) {
+  return fs.promises.readdir(projectDir, {
+    encoding: 'utf8',
+    withFileTypes: true
+  })
 }
 
-export async function fsCreateNamespace(projectDir, namespace) {
-  const namespaceFolder = path.join(projectDir, `${_}namespace`)
-  await fs.promises.mkdir(namespaceFolder, {
+export function createPhysicalNamespaceRaw(projectDir, namespace) {
+  const namespaceFolder = path.join(projectDir, `_${namespace}`)
+  return fs.promises.mkdir(namespaceFolder, {
     mode: 0o755
   })
+}
+
+export async function deleteNamespaceRawRaw(projectDir, namespace) {
+  // we include the stat because fs.remove from fs-extra does not
+  // error if the folder does not exist. fs.promises.stat does
+  const namespaceFolder = path.join(projectDir, `_${namespace}`)
+  await fs.promises.stat(namespaceFolder)
+  await fs.remove(namespaceFolder)
 }
 
 export async function fsCreateProject(projectDir, projectName, namespace) {
   if (namespace === 'default') {
     await fs.promises.mkdir
-  } 
+  }
 }
 
 export async function gatherProjects(projectDir, shouldGather) {
-  const unfilteredProjectDirents = await readProjectDirRaw(projectDir)
+  let unfilteredProjectDirents
+  try {
+    unfilteredProjectDirents = await readDirRaw(projectDir)
+  } catch (err) {
+    throw new Error(`failed to read directory ${projectDir}`)
+  }
 
   let projects = []
   for (const dirent of unfilteredProjectDirents) {
@@ -48,8 +55,13 @@ export async function gatherProjects(projectDir, shouldGather) {
 
     // projects with underscores hold other projects. test for those
     const subdirPath = path.join(projectDir, dirent.name)
-    const unfilteredSubProjectDirents = await readProjectDirRaw(subdirPath)
+    let unfilteredSubProjectDirents
 
+    try {
+      unfilteredSubProjectDirents = await readDirRaw(subdirPath)
+    } catch (err) {
+      throw new Error(`failed to read directory ${subdirPath}`)
+    }
     for (let subDirent of unfilteredSubProjectDirents) {
       // ignore non-directories
       if (!subDirent.isDirectory()) continue
@@ -67,7 +79,12 @@ export async function gatherProjects(projectDir, shouldGather) {
 }
 
 export async function pickProject(projectDir, shouldPick) {
-  const unfilteredProjectDirents = await readProjectDirRaw(projectDir)
+  let unfilteredProjectDirents
+  try {
+    unfilteredProjectDirents = await readDirRaw(projectDir)
+  } catch (err) {
+    throw new Error(`failed to read directory ${projectDir}`)
+  }
 
   for (const dirent of unfilteredProjectDirents) {
     // ignore non-directories
@@ -86,8 +103,12 @@ export async function pickProject(projectDir, shouldPick) {
 
     // projects with underscores hold other projects. test for those
     const subdirPath = path.join(projectDir, dirent.name)
-    const unfilteredSubProjectDirents = await readProjectDirRaw(subdirPath)
-
+    let unfilteredSubProjectDirents
+    try {
+      unfilteredSubProjectDirents = await readDirRaw(subdirPath)
+    } catch (err) {
+      throw new Error(`failed to read directory ${subdirPath}`)
+    }
     for (let subDirent of unfilteredSubProjectDirents) {
       // ignore non-directories
       if (!subDirent.isDirectory()) continue

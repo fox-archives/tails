@@ -1,18 +1,22 @@
 import path from 'path'
-import fs from 'fs-extra'
 
 import {
   DoesNotExistError,
   AlreadyExistsError,
   InvalidArgumentError
 } from './util/errors'
-import { readProjectDirRaw } from './util'
+import { readDirRaw, createPhysicalNamespaceRaw, deleteNamespaceRawRaw } from './util'
 
-export async function listNamespace(projectDir) {
-  let dirents = await readProjectDirRaw(projectDir)
+export async function listPhysicalNamespace(projectDir) {
+  let dirents
+  try {
+    dirents = await readDirRaw(projectDir)
+  } catch (err) {
+    throw new Error(`failed to read directory ${projectDir}`)
+  }
 
-  let namespaces = [];
-  for(let dirent of dirents) {
+  let namespaces = []
+  for (let dirent of dirents) {
     if (dirent.name.slice(0, 1) === '_') {
       namespaces.push({
         name: dirent.name.slice(1),
@@ -25,59 +29,60 @@ export async function listNamespace(projectDir) {
   return { namespaces }
 }
 
-export async function showNamespace(projectDir, args = {}) {
+export async function showPhysicalNamespace(projectDir, args = {}) {
   if (!args.name) throw new InvalidArgumentError("'name' property missing")
 
-  let dirents = await readProjectDirRaw(projectDir)
+  let dirents
+  try {
+    dirents = await readDirRaw(projectDir)
+  } catch (err) {
+    throw new Error(`failed to read directory ${projectDir}`)
+  }
 
   for (let dirent of dirents) {
     if (!dirent.name.slice(0, 1) === '_') continue
-     
+
     if (dirent.name.slice(1) === args.name) {
-      return({
+      return {
         name: dirent.name.slice(1),
         isDirectory: true,
         isFile: false,
         isSymbolicLink: false
-      })
+      }
     }
   }
-  
+
   throw new DoesNotExistError(`namespace ${args.name} not found`)
 }
 
-export async function createNamespace(projectDir, args = {}) {
+export async function createPhysicalNamespace(projectDir, args = {}) {
   if (!args.name) throw new InvalidArgumentError("'name' property missing")
-  
-  const namespaceFolder = path.join(projectDir, `_${args.name}`)
 
   try {
-    await fs.promises.mkdir(namespaceFolder, {
-      mode: 0o755
-    })
+    await createPhysicalNamespaceRaw(projectDir, args.name)
   } catch (err) {
     if (err.code === 'EEXIST') {
       throw new AlreadyExistsError(`namespace '${args.name}' already exists`)
     }
-    throw new Error(`${__dirname} an unknown error occurred when trying to create namespace ${args.name}`)
+    console.error(err)
+    throw new Error(
+      `${__dirname}: an unknown error occurred when trying to create namespace ${args.name} in ${projectDir}`
+    )
   }
 }
 
-export async function deleteNamespace(projectDir, args = {}) {
+export async function deleteNamespaceRaw(projectDir, args = {}) {
   if (!args.name) throw new InvalidArgumentError("'name' property missing")
 
-  const namespaceFolder = path.join(projectDir, `_${args.name}`)
-
   try {
-    // we include the stat because fs.remove from fs-extra does not
-    // error if the folder does not exist
-    await fs.promises.stat(namespaceFolder)
-    await fs.remove(namespaceFolder)
+    await deleteNamespaceRawRaw(projectDir, args.name)
   } catch (err) {
     if (err.code === 'ENOENT') {
       throw new DoesNotExistError(`namespace '${args.name}' does not exist`)
     }
     console.error(err)
-    throw new Error(`${__dirname}: an unknown error ocurred when trying to remove ${namespaceFolder}`)
+    throw new Error(
+      `${__dirname}: an unknown error ocurred when trying to remove namespace ${args.name} in ${projectDir}`
+    )
   }
 }

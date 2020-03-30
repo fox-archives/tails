@@ -6,10 +6,10 @@ import _ from 'lodash'
 import { $ } from '../src/config'
 import * as C from './constants'
 import {
-  listNamespace,
-  showNamespace,
-  createNamespace,
-  deleteNamespace
+  listPhysicalNamespace,
+  showPhysicalNamespace,
+  createPhysicalNamespace,
+  deleteNamespaceRaw
 } from '../src/namespace'
 import {
   DoesNotExistError,
@@ -36,9 +36,9 @@ let failsOnInvalidProjectDirectoryLocation = fn => {
   ).rejects.toThrow(Error)
 }
 
-describe('listNamespace', () => {
+describe('listPhysicalNamespace', () => {
   it('success on correct arguments', async () => {
-    let obj = await listNamespace(C.TAILS_PROJECT_DIR_READ)
+    let obj = await listPhysicalNamespace(C.TAILS_PROJECT_DIR_READ)
 
     expect(obj.namespaces).toStrictEqual(
       _.sortBy([
@@ -61,13 +61,13 @@ describe('listNamespace', () => {
 
   it('fails on invalid project directory by throwing Error', async () => {
     const invalid = 'invalid-namespace-folder-abc-xyz'
-    await expect(listNamespace(invalid)).rejects.toThrow(Error)
+    await expect(listPhysicalNamespace(invalid)).rejects.toThrow(Error)
   })
 })
 
-describe('showNamespace', () => {
+describe('showPhysicalNamespace', () => {
   it('succeeds on correct arguments', async () => {
-    const namespace = await showNamespace(C.TAILS_PROJECT_DIR_READ, {
+    const namespace = await showPhysicalNamespace(C.TAILS_PROJECT_DIR_READ, {
       name: CORRECT_NAMESPACE_DIR
     })
 
@@ -82,18 +82,18 @@ describe('showNamespace', () => {
   it('fails on non-existing namespace by throwing DoesNotExistError', async () => {
     const invalid = 'non-existent-namespace-abc'
     await expect(
-      showNamespace(C.TAILS_PROJECT_DIR_READ, {
+      showPhysicalNamespace(C.TAILS_PROJECT_DIR_READ, {
         name: invalid
       })
     ).rejects.toThrow(DoesNotExistError)
   })
 
   it('fails on invalid project directory location by throwing Error', async () => {
-    await failsOnInvalidProjectDirectoryLocation(showNamespace)
+    await failsOnInvalidProjectDirectoryLocation(showPhysicalNamespace)
   })
 })
 
-describe('createNamespace', () => {
+describe('createPhysicalNamespace', () => {
   beforeAll(fixNamespaceFixtures)
   afterEach(fixNamespaceFixtures)
 
@@ -101,14 +101,14 @@ describe('createNamespace', () => {
     const namespace = 'namespace-foo'
 
     await expect(
-      createNamespace(C.TAILS_PROJECT_DIR_WRITE, {
+      createPhysicalNamespace(C.TAILS_PROJECT_DIR_WRITE, {
         name: namespace
       })
     ).resolves.not.toThrow()
   })
 
   it('fails on invalid arguments by throwing InvalidArgumentError', async () => {
-    await expect(createNamespace(C.TAILS_PROJECT_DIR_WRITE)).rejects.toThrow(
+    await expect(createPhysicalNamespace(C.TAILS_PROJECT_DIR_WRITE)).rejects.toThrow(
       InvalidArgumentError
     )
   })
@@ -117,18 +117,18 @@ describe('createNamespace', () => {
     const namespace = 'project-collection'
 
     await expect(
-      createNamespace(C.TAILS_PROJECT_DIR_WRITE, {
+      createPhysicalNamespace(C.TAILS_PROJECT_DIR_WRITE, {
         name: namespace
       })
     ).rejects.toThrow(AlreadyExistsError)
   })
 
   it('tails on invalid project directory location by throwing Error', async () => {
-    await failsOnInvalidProjectDirectoryLocation(createNamespace)
+    await failsOnInvalidProjectDirectoryLocation(createPhysicalNamespace)
   })
 })
 
-describe('deleteNamespace', () => {
+describe('deleteNamespaceRaw', () => {
   beforeAll(fixNamespaceFixtures)
   afterEach(fixNamespaceFixtures)
 
@@ -136,14 +136,14 @@ describe('deleteNamespace', () => {
     const namespace = 'project-collection'
 
     await expect(
-      deleteNamespace(C.TAILS_PROJECT_DIR_WRITE, {
+      deleteNamespaceRaw(C.TAILS_PROJECT_DIR_WRITE, {
         name: namespace
       })
     ).resolves.not.toThrow()
   })
 
   it('fails on not enough arguments by throwing InvalidArgumentError', async () => {
-    await expect(deleteNamespace(C.TAILS_PROJECT_DIR_WRITE)).rejects.toThrow(
+    await expect(deleteNamespaceRaw(C.TAILS_PROJECT_DIR_WRITE)).rejects.toThrow(
       InvalidArgumentError
     )
   })
@@ -152,13 +152,13 @@ describe('deleteNamespace', () => {
     const invalid = 'non-existent-abc'
 
     await expect(
-      deleteNamespace(C.TAILS_PROJECT_DIR_WRITE, {
+      deleteNamespaceRaw(C.TAILS_PROJECT_DIR_WRITE, {
         name: invalid
       })
     ).rejects.toThrow(DoesNotExistError)
   })
 
   it('fails on invalid project directory location by throwing Error', async () => {
-    await failsOnInvalidProjectDirectoryLocation(deleteNamespace)
+    await failsOnInvalidProjectDirectoryLocation(deleteNamespaceRaw)
   })
 })
