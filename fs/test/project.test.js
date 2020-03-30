@@ -5,40 +5,35 @@ import _ from 'lodash'
 import { $ } from '../src/config'
 import * as C from './constants'
 import {
-  StorageReadError,
-  PhysicalProjectNotFoundError,
+  InvalidArgumentError,
+  AlreadyExistsError,
+  DoesNotExistError
 } from '../src/util/errors'
-import {
-  listPhysicalProject,
-  showPhysicalProject
-} from '../src/project'
+import { listPhysicalProject, showPhysicalProject } from '../src/project'
 
 const CORRECT_PROJECT_DIR = 'project-three'
 const CORRECT_PROJECT_SUBDIR = 'project-bravo'
 
-describe('listPhysicalProject', () => {
-  it('lists all projects properly', async () => {
+describe('listProject', () => {
+  it('success on correct arguments', async () => {
     let projects = await listPhysicalProject(C.TAILS_PROJECT_DIR_READ, {})
 
-    projects = _.sortBy(projects, 'name')
-    expect(projects).toStrictEqual(C.PROJECTS_FIXTURE)
+    expect(_.sortBy(projects, 'name')).toStrictEqual(C.PROJECTS_FIXTURE)
   })
 
-  it('throws StorageReadError on invalid project directory', async () => {
+  it('failure on invalid project directory by throwing Error (1)', async () => {
     const invalid = path.join($, 'src/test/fixtures/fake-read-test')
-    await expect(listPhysicalProject(invalid)).rejects.toThrow(
-      StorageReadError
-    )
+    await expect(listPhysicalProject(invalid)).rejects.toThrow(Error)
   })
 
-  it('throws StorageReadError on invalid project directory', async () => {
-    const invalid = '/invalid'
-    await expect(listPhysicalProject(invalid)).rejects.toThrow()
+  it('failure on invalid project directory by throwing Error (2)', async () => {
+    const invalid = 'invalid-namespace-folder-abc-xyz'
+    await expect(listPhysicalProject(invalid)).rejects.toThrow(Error)
   })
 })
 
-describe('showPhysicalProject', () => {
-  it('returns correct data with', async () => {
+describe('showProject', () => {
+  it('success on correct arguments (project exists at root)', async () => {
     const project = await showPhysicalProject(C.TAILS_PROJECT_DIR_READ, {
       name: CORRECT_PROJECT_DIR
     })
@@ -51,7 +46,7 @@ describe('showPhysicalProject', () => {
     })
   })
 
-  it('returns correct data for a subfolder', async () => {
+  it('success on correct arguments (project exists in subfolder)', async () => {
     const project = await showPhysicalProject(C.TAILS_PROJECT_DIR_READ, {
       name: CORRECT_PROJECT_SUBDIR
     })
@@ -64,23 +59,22 @@ describe('showPhysicalProject', () => {
     })
   })
 
-  it('throws PhysicalProjectNotFoundError when passing invalid projectName', async () => {
+  it('fails on invalid projectname by throwing DoesNotExistError', async () => {
     const invalid = 'invalid-project-name-abc-xyz'
     await expect(
       showPhysicalProject(C.TAILS_PROJECT_DIR_READ, {
         name: invalid
       })
-    ).rejects.toThrow(PhysicalProjectNotFoundError)
+    ).rejects.toThrow(DoesNotExistError)
   })
 
-  // should be same variable as RUNTIME_CONFIG.TAILS_PROJECT_DIR
-  it('throws StorageReadError when passing invalid project directory location', async () => {
+  it('fails on invalid directory location by throwing Error', async () => {
     const invalid = 'invalid-project-dir-abc-xyz'
     await expect(
       showPhysicalProject(invalid, {
         name: C.TAILS_PROJECT_DIR_READ
       })
-    ).rejects.toThrow(StorageReadError)
+    ).rejects.toThrow(Error)
   })
 })
 

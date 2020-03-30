@@ -1,9 +1,6 @@
 import fs from 'fs-extra'
 import path from 'path'
 
-import { RUNTIME_CONFIG_STATUS, RUNTIME_CONFIG } from '../config'
-import { StorageReadError } from './errors'
-
 export async function readProjectDirRaw(projectDir) {
   try {
     return await fs.promises.readdir(projectDir, {
@@ -11,8 +8,8 @@ export async function readProjectDirRaw(projectDir) {
       withFileTypes: true
     })
   } catch (err) {
-    throw new StorageReadError(
-      `failed to read directory ${projectDir}`
+    throw new Error(
+      `failed to read directory ${projectDir}. possibly check permissions`
     )
   }
 }

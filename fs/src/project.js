@@ -1,7 +1,7 @@
 import {
-  PhysicalProjectNotFoundError,
   InvalidArgumentError,
-  PhysicalProjectAlreadyExistsError
+  AlreadyExistsError,
+  DoesNotExistError
 } from './util/errors'
 import { gatherProjects, pickProject } from './util'
 
@@ -17,7 +17,7 @@ export async function showPhysicalProject(projectDir, args = {}) {
   })
   if (project) return project
 
-  throw new PhysicalProjectNotFoundError()
+  throw new DoesNotExistError()
 }
 
 // todo: implement namespaces first
@@ -40,6 +40,5 @@ export async function deletePhysicalProject(projectDir, args = {}) {
 
 export async function mutatePhysicalProject(projectDir, args = {}) {
   if (!args.name) throw InvalidArgumentError("'name' property missing")
-
   if (!args.present) throw InvalidArgumentError("'present' property missing")
 }

@@ -12,10 +12,9 @@ import {
   deleteNamespace
 } from '../src/namespace'
 import {
-  StorageReadError,
-  InvalidArgumentError,
-  NamespaceNotFoundError,
-  NamespaceAlreadyExistsError
+  DoesNotExistError,
+  AlreadyExistsError,
+  InvalidArgumentError
 } from '../src/util/errors'
 
 const CORRECT_NAMESPACE_DIR = 'project-grouping'
@@ -27,8 +26,18 @@ let fixNamespaceFixtures = async () => {
   await fs.copy(src, dest)
 }
 
+let failsOnInvalidProjectDirectoryLocation = fn => {
+  const invalid = 'invalid-namespace-folder-abc-xyz'
+
+  return expect(
+    fn(invalid, {
+      name: CORRECT_NAMESPACE_DIR
+    })
+  ).rejects.toThrow(Error)
+}
+
 describe('listNamespace', () => {
-  it('lists all namespaces parameters', async () => {
+  it('success on correct arguments', async () => {
     let obj = await listNamespace(C.TAILS_PROJECT_DIR_READ)
 
     expect(obj.namespaces).toStrictEqual(
@@ -50,14 +59,14 @@ describe('listNamespace', () => {
     )
   })
 
-  it('throws StorageReadError on invalid project directory', async () => {
-    const invalid = '/invalid'
-    await expect(listNamespace(invalid)).rejects.toThrow(StorageReadError)
+  it('fails on invalid project directory by throwing Error', async () => {
+    const invalid = 'invalid-namespace-folder-abc-xyz'
+    await expect(listNamespace(invalid)).rejects.toThrow(Error)
   })
 })
 
 describe('showNamespace', () => {
-  it('returns correct data with proper parameters', async () => {
+  it('succeeds on correct arguments', async () => {
     const namespace = await showNamespace(C.TAILS_PROJECT_DIR_READ, {
       name: CORRECT_NAMESPACE_DIR
     })
@@ -70,23 +79,17 @@ describe('showNamespace', () => {
     })
   })
 
-  it('throw NamespaceNotFoundError when passing invalid namespace', async () => {
+  it('fails on non-existing namespace by throwing DoesNotExistError', async () => {
     const invalid = 'non-existent-namespace-abc'
     await expect(
       showNamespace(C.TAILS_PROJECT_DIR_READ, {
         name: invalid
       })
-    ).rejects.toThrow(NamespaceNotFoundError)
+    ).rejects.toThrow(DoesNotExistError)
   })
 
-  it('throw NamespaceStorageReadError when passing invalid project directory location', async () => {
-    const invalid = 'invalid-namespace-folder-abc'
-
-    await expect(
-      showNamespace(invalid, {
-        name: CORRECT_NAMESPACE_DIR
-      })
-    ).rejects.toThrow(StorageReadError)
+  it('fails on invalid project directory location by throwing Error', async () => {
+    await failsOnInvalidProjectDirectoryLocation(showNamespace)
   })
 })
 
@@ -94,7 +97,7 @@ describe('createNamespace', () => {
   beforeAll(fixNamespaceFixtures)
   afterEach(fixNamespaceFixtures)
 
-  it('creates namespace successfully', async () => {
+  it('succeeds on correct arguments', async () => {
     const namespace = 'namespace-foo'
 
     await expect(
@@ -104,20 +107,24 @@ describe('createNamespace', () => {
     ).resolves.not.toThrow()
   })
 
-  it('throws InvalidArgumentError if does not contain all arguments', async () => {
+  it('fails on invalid arguments by throwing InvalidArgumentError', async () => {
     await expect(createNamespace(C.TAILS_PROJECT_DIR_WRITE)).rejects.toThrow(
       InvalidArgumentError
     )
   })
 
-  it('throws NamespaceAlreadyExistsError when creating folder on invalid (already-existing) namespace', async () => {
+  it('fails on already existing namespace by throwing AlreadyExistsError', async () => {
     const namespace = 'project-collection'
 
     await expect(
       createNamespace(C.TAILS_PROJECT_DIR_WRITE, {
         name: namespace
       })
-    ).rejects.toThrow(NamespaceAlreadyExistsError)
+    ).rejects.toThrow(AlreadyExistsError)
+  })
+
+  it('tails on invalid project directory location by throwing Error', async () => {
+    await failsOnInvalidProjectDirectoryLocation(createNamespace)
   })
 })
 
@@ -125,7 +132,7 @@ describe('deleteNamespace', () => {
   beforeAll(fixNamespaceFixtures)
   afterEach(fixNamespaceFixtures)
 
-  it('deletes namespaces successfully', async () => {
+  it('succeeds on correct arguments', async () => {
     const namespace = 'project-collection'
 
     await expect(
@@ -135,19 +142,23 @@ describe('deleteNamespace', () => {
     ).resolves.not.toThrow()
   })
 
-  it('throws InvalidArgumentError if does not contain all arguments', async () => {
+  it('fails on not enough arguments by throwing InvalidArgumentError', async () => {
     await expect(deleteNamespace(C.TAILS_PROJECT_DIR_WRITE)).rejects.toThrow(
       InvalidArgumentError
     )
   })
 
-  it('throws NamespaceNotFoundError when creating folder on invalid (non-existing) namespace', async () => {
+  it('fails on non-existing namespace by throwing DoesNotExistError', async () => {
     const invalid = 'non-existent-abc'
 
     await expect(
       deleteNamespace(C.TAILS_PROJECT_DIR_WRITE, {
         name: invalid
       })
-    ).rejects.toThrow(NamespaceNotFoundError)
+    ).rejects.toThrow(DoesNotExistError)
+  })
+
+  it('fails on invalid project directory location by throwing Error', async () => {
+    await failsOnInvalidProjectDirectoryLocation(deleteNamespace)
   })
 })

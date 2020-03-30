@@ -2,8 +2,8 @@ import path from 'path'
 import fs from 'fs-extra'
 
 import {
-  NamespaceNotFoundError,
-  NamespaceAlreadyExistsError,
+  DoesNotExistError,
+  AlreadyExistsError,
   InvalidArgumentError
 } from './util/errors'
 import { readProjectDirRaw } from './util'
@@ -43,7 +43,7 @@ export async function showNamespace(projectDir, args = {}) {
     }
   }
   
-  throw new NamespaceNotFoundError()
+  throw new DoesNotExistError(`namespace ${args.name} not found`)
 }
 
 export async function createNamespace(projectDir, args = {}) {
@@ -57,9 +57,9 @@ export async function createNamespace(projectDir, args = {}) {
     })
   } catch (err) {
     if (err.code === 'EEXIST') {
-      throw new NamespaceAlreadyExistsError()
+      throw new AlreadyExistsError(`namespace '${args.name}' already exists`)
     }
-    throw new Error(`${__dirname} an unknown error occurred when trying to create ${namespaceFolder}`)
+    throw new Error(`${__dirname} an unknown error occurred when trying to create namespace ${args.name}`)
   }
 }
 
@@ -75,7 +75,7 @@ export async function deleteNamespace(projectDir, args = {}) {
     await fs.remove(namespaceFolder)
   } catch (err) {
     if (err.code === 'ENOENT') {
-      throw new NamespaceNotFoundError()
+      throw new DoesNotExistError(`namespace '${args.name}' does not exist`)
     }
     console.error(err)
     throw new Error(`${__dirname}: an unknown error ocurred when trying to remove ${namespaceFolder}`)
