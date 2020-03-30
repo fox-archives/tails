@@ -1,21 +1,22 @@
-import client from '../core/grpc'
+import { Namespace } from '../core/grpc'
 
-exports.command = 'project <command>'
-exports.desc = 'show or edit project information'
+const namespace = (new Namespace).instance
+
+exports.command = 'namespace <command>'
+exports.desc = 'show or edit namespace information'
 exports.builder = function(yargs) {
-  yargs.command('list', 'list all projects', () => {
-    const projects = ['eat', 'eat', 'charlie']
-    console.log(`your eats: ${projects}`)
+  yargs.command('list', 'list all namespaces', () => {
+    console.log(namespace)
   })
 
   yargs.command(
-    'show [project]',
-    'show a particular project',
+    'show [namespace]',
+    'show a particular namespace',
     yargs => {
       yargs.positional('project', {
         type: 'string',
-        default: 'myProject',
-        describe: 'project name'
+        default: 'myNamespace',
+        describe: 'namespace name'
       })
     },
     argv => {
