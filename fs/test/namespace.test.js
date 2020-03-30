@@ -9,7 +9,7 @@ import {
   listPhysicalNamespace,
   showPhysicalNamespace,
   createPhysicalNamespace,
-  deleteNamespaceRaw
+  deletePhysicalNamespace
 } from '../src/namespace'
 import {
   DoesNotExistError,
@@ -136,29 +136,29 @@ describe('deleteNamespaceRaw', () => {
     const namespace = 'project-collection'
 
     await expect(
-      deleteNamespaceRaw(C.TAILS_PROJECT_DIR_WRITE, {
+      deletePhysicalNamespace(C.TAILS_PROJECT_DIR_WRITE, {
         name: namespace
       })
     ).resolves.not.toThrow()
   })
 
   it('fails on not enough arguments by throwing InvalidArgumentError', async () => {
-    await expect(deleteNamespaceRaw(C.TAILS_PROJECT_DIR_WRITE)).rejects.toThrow(
-      InvalidArgumentError
-    )
+    await expect(
+      deletePhysicalNamespace(C.TAILS_PROJECT_DIR_WRITE)
+    ).rejects.toThrow(InvalidArgumentError)
   })
 
   it('fails on non-existing namespace by throwing DoesNotExistError', async () => {
     const invalid = 'non-existent-abc'
 
     await expect(
-      deleteNamespaceRaw(C.TAILS_PROJECT_DIR_WRITE, {
+      deletePhysicalNamespace(C.TAILS_PROJECT_DIR_WRITE, {
         name: invalid
       })
     ).rejects.toThrow(DoesNotExistError)
   })
 
   it('fails on invalid project directory location by throwing Error', async () => {
-    await failsOnInvalidProjectDirectoryLocation(deleteNamespaceRaw)
+    await failsOnInvalidProjectDirectoryLocation(deletePhysicalNamespace)
   })
 })

@@ -1,6 +1,10 @@
 import fs from 'fs-extra'
 import path from 'path'
 
+export function getNamespaceFolder(projectDir, namespace) {
+  return path.join(projectDir, `_${namespace}`)
+}
+
 export function readDirRaw(projectDir) {
   return fs.promises.readdir(projectDir, {
     encoding: 'utf8',
@@ -9,16 +13,16 @@ export function readDirRaw(projectDir) {
 }
 
 export function createPhysicalNamespaceRaw(projectDir, namespace) {
-  const namespaceFolder = path.join(projectDir, `_${namespace}`)
+  const namespaceFolder = getNamespaceFolder(projectDir, namespace)
   return fs.promises.mkdir(namespaceFolder, {
     mode: 0o755
   })
 }
 
-export async function deleteNamespaceRawRaw(projectDir, namespace) {
+export async function deletePhysicalNamespaceRaw(projectDir, namespace) {
   // we include the stat because fs.remove from fs-extra does not
   // error if the folder does not exist. fs.promises.stat does
-  const namespaceFolder = path.join(projectDir, `_${namespace}`)
+  const namespaceFolder = getNamespaceFolder(projectDir, namespace)
   await fs.promises.stat(namespaceFolder)
   await fs.remove(namespaceFolder)
 }

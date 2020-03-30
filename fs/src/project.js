@@ -3,10 +3,18 @@ import {
   AlreadyExistsError,
   DoesNotExistError
 } from './util/errors'
-import { gatherProjects, pickProject } from './util'
+import { getNamespaceFolder, gatherProjects, pickProject } from './util'
 
-export async function listPhysicalProject(projectDir) {
-  return gatherProjects(projectDir, () => true)
+// TODO: option to list within namespace
+export async function listPhysicalProject(projectDir, {
+  namespace
+}) {
+  if (!namespace) return gatherProjects(projectDir, () => true)
+
+  const namespaceFolder = getNamespaceFolder(projectDir, namespace)
+
+  
+
 }
 
 export async function showPhysicalProject(projectDir, args = {}) {

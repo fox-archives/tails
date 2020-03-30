@@ -5,7 +5,11 @@ import {
   AlreadyExistsError,
   InvalidArgumentError
 } from './util/errors'
-import { readDirRaw, createPhysicalNamespaceRaw, deleteNamespaceRawRaw } from './util'
+import {
+  readDirRaw,
+  createPhysicalNamespaceRaw,
+  deletePhysicalNamespaceRaw
+} from './util'
 
 export async function listPhysicalNamespace(projectDir) {
   let dirents
@@ -71,11 +75,11 @@ export async function createPhysicalNamespace(projectDir, args = {}) {
   }
 }
 
-export async function deleteNamespaceRaw(projectDir, args = {}) {
+export async function deletePhysicalNamespace(projectDir, args = {}) {
   if (!args.name) throw new InvalidArgumentError("'name' property missing")
 
   try {
-    await deleteNamespaceRawRaw(projectDir, args.name)
+    await deletePhysicalNamespaceRaw(projectDir, args.name)
   } catch (err) {
     if (err.code === 'ENOENT') {
       throw new DoesNotExistError(`namespace '${args.name}' does not exist`)
