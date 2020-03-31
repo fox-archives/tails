@@ -17,7 +17,6 @@ async function deleteStore() {
   await fs.remove(CONFIG_FILE)
 }
 
-
 async function readStore() {
   try {
     return await fs.readJson(CONFIG_FILE)
@@ -43,14 +42,15 @@ async function storeExists() {
   }
 }
 
-
 // core
 async function showConfig() {
   if (await storeExists()) {
     const store = await readStore()
     console.log(store)
   } else {
-    console.log('error: config non-existent. create one with `tails config create`')
+    console.log(
+      'error: config non-existent. create one with `tails config create`'
+    )
   }
 }
 
@@ -77,7 +77,7 @@ async function getKey(key) {
 
   let json = await readStore()
 
-  if(!json[key]) return console.log('error: key does not exist')
+  if (!json[key]) return console.log('error: key does not exist')
 
   console.log(`key '${key}' has value '${json[key]}'`)
 }
@@ -89,13 +89,15 @@ async function setKey(key, value, isForce) {
     if (isForce) {
       value = undefined
     } else {
-      console.log('error: value cannot be blank. pass `-f` to overwrite, deleting the key')
+      console.log(
+        'error: value cannot be blank. pass `-f` to overwrite, deleting the key'
+      )
       return
     }
   }
 
   let json = await readStore()
-  if (value === undefined)  {
+  if (value === undefined) {
     delete json[key]
     await writeStore(json)
     console.log('key deleted')
@@ -105,7 +107,6 @@ async function setKey(key, value, isForce) {
     console.log(`key '${key}' set with value '${json[key]}'`)
   }
 }
-
 
 export class Config {
   static async show() {
