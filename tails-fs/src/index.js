@@ -1,7 +1,6 @@
 import './core/common'
 
-export * from './namespace'
-export * from './project'
-export * from './store'
-export * from './util/errors'
-export { CONFIG } from './config'
+export * as  Namespace from './namespace'
+export * as Project from './project'
+export { Config, TAILS_CONFIG_FILE } from './config'
+export * as TAILS_ERROR from './util/errors'

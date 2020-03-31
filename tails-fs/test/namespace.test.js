@@ -3,7 +3,7 @@ import fs from 'fs-extra'
 
 import _ from 'lodash'
 
-import { $ } from '../src/config'
+import { $ } from '../src/constants'
 import * as C from './constants'
 import {
   listPhysicalNamespace,

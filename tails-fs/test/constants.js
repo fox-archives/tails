@@ -2,7 +2,7 @@ import path from 'path'
 
 import _ from 'lodash'
 
-import { $ } from '../src/config'
+import { $ } from '../src/constants'
 
 export const TAILS_PROJECT_DIR_READ = path.join($, 'test/fixtures/read-test')
 export const TAILS_PROJECT_DIR_WRITE = path.join($, 'test/fixtures/write-test')

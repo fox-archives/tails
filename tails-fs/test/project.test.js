@@ -2,7 +2,7 @@ import path from 'path'
 
 import _ from 'lodash'
 
-import { $ } from '../src/config'
+import { $ } from '../src/constants'
 import * as C from './constants'
 import {
   InvalidArgumentError,

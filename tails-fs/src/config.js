@@ -6,20 +6,20 @@ const XDG_CONFIG_HOME =
   process.env.XDG_CONFIG_HOME || path.join(HOME, '.config')
 const TAILS_CONFIG_DIR = path.join(XDG_CONFIG_HOME, 'tails')
 
-const CONFIG_FILE = path.join(TAILS_CONFIG_DIR, 'tails.json')
+export const TAILS_CONFIG_FILE = path.join(TAILS_CONFIG_DIR, 'tails.json')
 
 // helper
 async function createStore() {
-  await fs.outputJson(CONFIG_FILE, {})
+  await fs.outputJson(TAILS_CONFIG_FILE, {})
 }
 
 async function deleteStore() {
-  await fs.remove(CONFIG_FILE)
+  await fs.remove(TAILS_CONFIG_FILE)
 }
 
 async function readStore() {
   try {
-    return await fs.readJson(CONFIG_FILE)
+    return await fs.readJson(TAILS_CONFIG_FILE)
   } catch (err) {
     console.error(err)
   }
@@ -27,7 +27,7 @@ async function readStore() {
 
 async function writeStore(obj) {
   try {
-    return await fs.writeJson(CONFIG_FILE, obj)
+    return await fs.writeJson(TAILS_CONFIG_FILE, obj)
   } catch (err) {
     console.error(err)
   }
@@ -35,7 +35,7 @@ async function writeStore(obj) {
 
 async function storeExists() {
   try {
-    await fs.stat(CONFIG_FILE)
+    await fs.stat(TAILS_CONFIG_FILE)
     return true
   } catch (err) {
     return false

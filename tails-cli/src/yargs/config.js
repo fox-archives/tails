@@ -1,4 +1,4 @@
-import { Config } from '../store'
+import { Config } from 'tails-fs'
 
 export const command = 'config <command>'
 export const desc = 'show or edit tails configuration items'

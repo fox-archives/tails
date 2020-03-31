@@ -8,9 +8,7 @@
     "start": "node -r esm src/index"
   },
   "dependencies": {
-    "@grpc/proto-loader": "^0.5.3",
     "esm": "^3.2.25",
-    "grpc": "^1.24.2",
     "tails-fs": "^0.1.0",
     "yargs": "^15.3.0"
   }

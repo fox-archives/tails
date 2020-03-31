@@ -3,11 +3,11 @@
   "useWorkspaces": false,
   "npmClient": "yarn",
   "packages": [
-    "cli",
     "coordinator",
     "dashboard-mpa",
-    "fs",
-    "paws"
+    "paws",
+    "tails-cli",
+    "tails-fs"
   ],
   "bootstrap": {
     "npmClientArgs": ["--no-package-lock"]
