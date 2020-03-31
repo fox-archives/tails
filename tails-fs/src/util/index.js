@@ -1,6 +1,7 @@
 import fs from 'fs-extra'
 import path from 'path'
 
+// TODO: REFACTOR THIS OUT
 export function getNamespaceFolder(projectDir, namespace) {
   return path.join(projectDir, `_${namespace}`)
 }

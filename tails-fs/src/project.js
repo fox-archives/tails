@@ -2,7 +2,7 @@ import {
   InvalidArgumentError,
   AlreadyExistsError,
   DoesNotExistError
-} from './util/errors'
+} from './errors'
 import {
   getNamespaceFolder,
   doesNamespaceExist,

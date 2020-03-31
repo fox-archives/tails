@@ -1,10 +1,19 @@
 import fs from 'fs-extra'
 import path from 'path'
 
-const HOME = process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE
-const XDG_CONFIG_HOME =
-  process.env.XDG_CONFIG_HOME || path.join(HOME, '.config')
-const TAILS_CONFIG_DIR = path.join(XDG_CONFIG_HOME, 'tails')
+import * as ERROR from './errors'
+
+let TAILS_CONFIG_DIR
+
+if (process.env.TAILS_CONFIG_DIR) {
+  TAILS_CONFIG_DIR = process.env.TAILS_CONFIG_DIR
+} else if (process.env.XDG_CONFIG_HOME) {
+  TAILS_CONFIG_DIR = path.join(XDG_CONFIG_HOME, 'tails')
+} else {
+  const home =
+    process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE
+  TAILS_CONFIG_DIR = path.join(home, '.config/tails')
+}
 
 export const TAILS_CONFIG_FILE = path.join(TAILS_CONFIG_DIR, 'tails.json')
 
@@ -44,88 +53,72 @@ async function storeExists() {
 
 // core
 async function showConfig() {
-  if (await storeExists()) {
-    const store = await readStore()
-    console.log(store)
-  } else {
-    console.log(
-      'error: config non-existent. create one with `tails config create`'
-    )
-  }
+  if (!(await storeExists())) throw new ERROR.DoesNotExistError('config')
+
+  return readStore()
 }
 
 async function createConfig() {
-  if (await storeExists()) {
-    console.log('error: config already exists')
-    return
-  }
-  await createStore()
-  console.log('config created')
+  if (await storeExists()) throw new ERROR.AlreadyExistsError('config')
+
+  return createStore()
 }
 
 async function deleteConfig() {
-  if (await storeExists()) {
-    await deleteStore()
-    console.log('config deleted')
-    return
-  }
-  console.log('error: config does not exist')
+  if (!(await storeExists())) throw new ERROR.DoesNotExistError('config')
+
+  return deleteStore()
 }
 
-async function getKey(key) {
-  if (!key) return console.log('error: key cannot be blank')
+async function getConfigKey(key) {
+  if (!(await storeExists())) throw new ERROR.DoesNotExistError('config')
+  if (!key) throw ERROR.InvalidArgumentError('key')
 
   let json = await readStore()
 
-  if (!json[key]) return console.log('error: key does not exist')
+  if (!json[key]) throw new ERROR.DoesNotExistError('key')
 
-  console.log(`key '${key}' has value '${json[key]}'`)
+  return json[key]
 }
 
-async function setKey(key, value, isForce) {
-  if (!key) return console.log('error: key cannot be blank')
+async function setConfigKey(key, value, isForce) {
+  if (!(await storeExists())) throw new ERROR.DoesNotExistError('config')
+  if (!key) throw new ERROR.InvalidArgumentError('key')
+  if (!value && !isForce) throw new ERROR.InvalidArgumentError('force')
 
-  if (!value) {
-    if (isForce) {
-      value = undefined
-    } else {
-      console.log(
-        'error: value cannot be blank. pass `-f` to overwrite, deleting the key'
-      )
-      return
-    }
-  }
+  if (isForce) value = undefined
 
   let json = await readStore()
+
+  if (!json[key]) throw new ERROR.DoesNotExistError('key')
+
   if (value === undefined) {
     delete json[key]
     await writeStore(json)
-    console.log('key deleted')
   } else {
     json[key] = value
     await writeStore(json)
-    console.log(`key '${key}' set with value '${json[key]}'`)
   }
 }
 
 export class Config {
-  static async show() {
-    await showConfig()
+  static show() {
+    return showConfig()
   }
 
-  static async create() {
-    await createConfig()
+  static create() {
+    return createConfig()
   }
 
-  static async delete() {
-    await deleteConfig()
+  static delete() {
+    return deleteConfig()
   }
 
-  static async get(key) {
-    await getKey(key)
+  static get(key) {
+    return getConfigKey(key)
   }
 
-  static async set(key, value, isForce) {
-    await setKey(key, value, isForce)
+  static set(key, value, isForce) {
+    return setConfigKey(key, value, isForce)
   }
 }

@@ -4,7 +4,7 @@ import {
   DoesNotExistError,
   AlreadyExistsError,
   InvalidArgumentError
-} from './util/errors'
+} from './errors'
 import {
   readDirRaw,
   createPhysicalNamespaceRaw,
