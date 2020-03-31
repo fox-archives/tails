@@ -1,18 +1,15 @@
 {
   "version": "0.0.0",
+  "useWorkspaces": false,
   "npmClient": "yarn",
   "packages": [
+    "cli",
+    "coordinator",
     "dashboard-mpa",
-    "editor",
-    "operator",
-    "documentation/site"
+    "fs",
+    "paws"
   ],
   "bootstrap": {
     "npmClientArgs": ["--no-package-lock"]
-  },
-  "command": {
-    "run": {
-      "npmClient": "yarn"
-    }
   }
 }

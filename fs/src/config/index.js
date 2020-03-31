@@ -1,6 +1,6 @@
 import path from 'path'
 
-export const CONFIG = {
+export let CONFIG = {
   TAILS_PROJECT_DIR: null
 }
 

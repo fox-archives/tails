@@ -785,6 +785,11 @@ strip-json-comments@~2.0.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
+tails-fs@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/tails-fs/-/tails-fs-0.1.0.tgz#84344a6a9643f03d63491ad029481f538f162364"
+  integrity sha512-lhUXoAcmR0NT7tx8HYedIJzJyrLUYAF7LeFRcq9TJm/gH809PZjXqPsleg1gZX0byZTcxNIb+l/YmITCEm0T2Q==
+
 tar@^4.4.2:
   version "4.4.13"
   resolved "https://registry.yarnpkg.com/tar/-/tar-4.4.13.tgz#43b364bc52888d555298637b10d60790254ab525"

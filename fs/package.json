@@ -1,7 +1,7 @@
 {
-  "name": "tails-filesystem",
-  "version": "0.0.0",
-  "main": "index.js",
+  "name": "tails-fs",
+  "version": "0.1.0",
+  "main": "src/index.js",
   "license": "GPL-3.0",
   "scripts": {
     "serve": "nodemon -r esm src",
