@@ -9,10 +9,18 @@ import {
   AlreadyExistsError,
   DoesNotExistError
 } from '../src/util/errors'
-import { listPhysicalProject, showPhysicalProject } from '../src/project'
+import {
+  listPhysicalProject,
+  showPhysicalProject,
+  createPhysicalProject,
+  deletePhysicalProject
+} from '../src/project'
+import { deletePhysicalProjectRaw } from '../src/util'
 
+// mixture of `read-test` and `write-test` "correct" values
 const CORRECT_PROJECT_DIR = 'project-three'
 const CORRECT_PROJECT_SUBDIR = 'project-bravo'
+const CORRECT_NAMESPACE_WRITE = 'project-collection-2'
 
 describe('listProject', () => {
   it('success on correct arguments', async () => {
@@ -59,7 +67,7 @@ describe('showPhysicalProject', () => {
     })
   })
 
-  it('fails on invalid projectname by throwing DoesNotExistError', async () => {
+  it('fails on invalid projectName by throwing DoesNotExistError', async () => {
     const invalid = 'invalid-project-name-abc-xyz'
     await expect(
       showPhysicalProject(C.TAILS_PROJECT_DIR_READ, {
@@ -78,6 +86,41 @@ describe('showPhysicalProject', () => {
   })
 })
 
-// describe('createPhysicalProject', () => {
-//   it('edits correct data', async () => {})
-// })
+describe('createPhysicalProject', () => {
+  it('succeeds on correct parameters (no namespace)', async () => {
+    const correct = 'some-physical-project'
+    await expect(createPhysicalProject(C.TAILS_PROJECT_DIR_WRITE, {
+      name: correct
+    })).resolves.not.toThrow()
+  })
+
+  it('succeeds on correct parameters (with namespace)', async () => {
+    const correct = 'name-does-not-matter'
+    await expect(createPhysicalProject(C.TAILS_PROJECT_DIR_WRITE, {
+      namespace: CORRECT_NAMESPACE_WRITE,
+      name: correct
+    })).resolves.not.toThrow()
+  })
+
+  it('fails on incorrect (non-existing) namespace by throwing DoesNotExistError', async () => {
+    const invalidNamespace = 'project-collection-200'
+    const correctProjectName = 'name-does-not-matter'
+    await expect(
+      createPhysicalProject(C.TAILS_PROJECT_DIR_WRITE, {
+        namespace: invalidNamespace,
+        name: correctProjectName
+      })
+    ).rejects.toThrow(DoesNotExistError)
+  })
+})
+
+describe('deletePhysicalProject', () => {
+  it('succeeds on correct parameters (no namespace)', async () => {
+    const correct = 'project-first'
+    await expect(
+      deletePhysicalProject(C.TAILS_PROJECT_DIR_WRITE, {
+        name: correct
+      })
+    ).resolves.not.toThrow()
+  })
+})

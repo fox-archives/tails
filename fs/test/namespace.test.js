@@ -128,7 +128,7 @@ describe('createPhysicalNamespace', () => {
   })
 })
 
-describe('deleteNamespaceRaw', () => {
+describe('deletePhysicalNamespace', () => {
   beforeAll(fixNamespaceFixtures)
   afterEach(fixNamespaceFixtures)
 

@@ -5,6 +5,16 @@ export function getNamespaceFolder(projectDir, namespace) {
   return path.join(projectDir, `_${namespace}`)
 }
 
+export async function doesNamespaceExist(projectDir, namespace) {
+  const namespaceFolder = path.join(projectDir, `_${namespace}`)
+  try {
+    await fs.promises.stat(namespaceFolder)
+  } catch {
+    return false
+  }
+  return true
+}
+
 export function readDirRaw(projectDir) {
   return fs.promises.readdir(projectDir, {
     encoding: 'utf8',
@@ -27,10 +37,36 @@ export async function deletePhysicalNamespaceRaw(projectDir, namespace) {
   await fs.remove(namespaceFolder)
 }
 
-export async function fsCreateProject(projectDir, projectName, namespace) {
-  if (namespace === 'default') {
-    await fs.promises.mkdir
+export function createPhysicalProjectRaw(projectDir, {
+  namespace,
+  projectName
+}) {
+  let actualProjectDir = projectDir
+  if (namespace) {
+    actualProjectDir = getNamespaceFolder(projectDir, namespace)
   }
+
+  const finalProjectDir = path.join(actualProjectDir, projectName)
+  return fs.promises.mkdir(finalProjectDir, {
+    mode: 0o755
+  })
+}
+
+export async function deletePhysicalProjectRaw(projectDir, {
+  namespace, projectName
+}) {
+  console.log(namespace, projectName, projectDir)
+
+  let actualProjectDir = projectDir
+  if (namespace) {
+    actualProjectDir = getNamespaceFolder(projectDir, namespace)
+  }
+
+  // we include the stat because fs.remove from fs-extra does not
+  // error if the folder does not exist. fs.promises.stat does
+  const projectFolder = path.join(actualProjectDir, projectName)
+  await fs.promises.stat(projectFolder)
+  await fs.remove(projectFolder)
 }
 
 export async function gatherProjects(projectDir, shouldGather) {
