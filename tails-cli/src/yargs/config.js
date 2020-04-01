@@ -6,7 +6,7 @@ const CONFIG_NO_EXISTS_CREATE_ONE =
 export const command = 'config <command>'
 export const desc = 'show or edit tails configuration items'
 export const builder = function(yargs) {
-  yargs.command('show', 'shows the config', async () => {
+  yargs.command('show', 'shows the whole config', async () => {
     try {
       let config = await Config.show()
       console.log(`config: ${JSON.stringify(config)}`)
@@ -32,7 +32,7 @@ export const builder = function(yargs) {
     }
   })
 
-  yargs.command('delete', 'delete the config', async () => {
+  yargs.command('delete', 'delete the whole config', async () => {
     try {
       await Config.delete()
       console.log('config deleted')
@@ -47,7 +47,7 @@ export const builder = function(yargs) {
 
   yargs.command(
     'get',
-    'get key from config',
+    'get key in config',
     yargs => {
       yargs.positional('key', {
         type: 'string',

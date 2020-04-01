@@ -34,6 +34,7 @@ export async function deletePhysicalNamespaceRaw(projectDir, namespace) {
   // we include the stat because fs.remove from fs-extra does not
   // error if the folder does not exist. fs.promises.stat does
   const namespaceFolder = getNamespaceFolder(projectDir, namespace)
+  console.log(namespaceFolder)
   await fs.promises.stat(namespaceFolder)
   await fs.remove(namespaceFolder)
 }

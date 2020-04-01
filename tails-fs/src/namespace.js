@@ -1,17 +1,14 @@
-import path from 'path'
+import * as ERROR from './errors'
 
-import {
-  DoesNotExistError,
-  AlreadyExistsError,
-  InvalidArgumentError
-} from './errors'
 import {
   readDirRaw,
   createPhysicalNamespaceRaw,
   deletePhysicalNamespaceRaw
 } from './util'
 
-export async function listPhysicalNamespace(projectDir) {
+const projectDir = '/home/edwin/docs/programming/repos/tails/projects'
+
+export async function listPhysicalNamespace() {
   let dirents
   try {
     dirents = await readDirRaw(projectDir)
@@ -33,8 +30,8 @@ export async function listPhysicalNamespace(projectDir) {
   return { namespaces }
 }
 
-export async function showPhysicalNamespace(projectDir, args = {}) {
-  if (!args.name) throw new InvalidArgumentError("'name' property missing")
+export async function showPhysicalNamespace(name) {
+  if (!name) throw new ERROR.InvalidArgumentError('name')
 
   let dirents
   try {
@@ -46,7 +43,7 @@ export async function showPhysicalNamespace(projectDir, args = {}) {
   for (let dirent of dirents) {
     if (!dirent.name.slice(0, 1) === '_') continue
 
-    if (dirent.name.slice(1) === args.name) {
+    if (dirent.name.slice(1) === name) {
       return {
         name: dirent.name.slice(1),
         isDirectory: true,
@@ -56,37 +53,61 @@ export async function showPhysicalNamespace(projectDir, args = {}) {
     }
   }
 
-  throw new DoesNotExistError(`namespace ${args.name} not found`)
+  throw new ERROR.DoesNotExistError(`namespace ${name} not found`)
 }
 
-export async function createPhysicalNamespace(projectDir, args = {}) {
-  if (!args.name) throw new InvalidArgumentError("'name' property missing")
+export async function createPhysicalNamespace(name) {
+  if (!name)
+    throw new ERROR.InvalidArgumentError('name')
 
   try {
-    await createPhysicalNamespaceRaw(projectDir, args.name)
+    await createPhysicalNamespaceRaw(projectDir, name)
   } catch (err) {
     if (err.code === 'EEXIST') {
-      throw new AlreadyExistsError(`namespace '${args.name}' already exists`)
+      throw new ERROR.AlreadyExistsError(
+        `namespace '${name}' already exists`
+      )
     }
     console.error(err)
     throw new Error(
-      `${__dirname}: an unknown error occurred when trying to create namespace ${args.name} in ${projectDir}`
+      `${__dirname}: an unknown error occurred when trying to create namespace ${args} in ${projectDir}`
     )
   }
 }
 
-export async function deletePhysicalNamespace(projectDir, args = {}) {
-  if (!args.name) throw new InvalidArgumentError("'name' property missing")
+export async function deletePhysicalNamespace(name) {
+  if (!name)
+    throw new ERROR.InvalidArgumentError('name')
 
   try {
-    await deletePhysicalNamespaceRaw(projectDir, args.name)
+    await deletePhysicalNamespaceRaw(projectDir, name)
   } catch (err) {
     if (err.code === 'ENOENT') {
-      throw new DoesNotExistError(`namespace '${args.name}' does not exist`)
+      throw new ERROR.DoesNotExistError(
+        `namespace '${name}' does not exist`
+      )
     }
     console.error(err)
     throw new Error(
-      `${__dirname}: an unknown error ocurred when trying to remove namespace ${args.name} in ${projectDir}`
+      `${__dirname}: an unknown error ocurred when trying to remove namespace ${args} in ${projectDir}`
     )
+  }
+}
+
+export class PhysicalNamespace {
+  static list() {
+    return listPhysicalNamespace()
+  }
+
+  static show(name) {
+    return showPhysicalNamespace(name)
+  }
+
+  static create(name) {
+    return createPhysicalNamespace(name)
+  }
+
+  static delete(name) {
+    return deletePhysicalNamespace(name)
   }
 }

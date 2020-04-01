@@ -72,7 +72,7 @@ async function deleteConfig() {
 
 async function getConfigKey(key) {
   if (!(await storeExists())) throw new ERROR.DoesNotExistError('config')
-  if (!key) throw ERROR.InvalidArgumentError('key')
+  if (!key) throw new ERROR.InvalidArgumentError('key')
 
   let json = await readStore()
 
@@ -89,8 +89,6 @@ async function setConfigKey(key, value, isForce) {
   if (isForce) value = undefined
 
   let json = await readStore()
-
-  if (!json[key]) throw new ERROR.DoesNotExistError('key')
 
   if (value === undefined) {
     delete json[key]
