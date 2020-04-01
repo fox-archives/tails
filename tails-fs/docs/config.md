@@ -53,7 +53,7 @@ can throw:
 
 returns:
 
-- promise that resolves to value of key
+- promise that resolves to *string*, value of key
 
 can throw:
 

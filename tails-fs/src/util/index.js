@@ -2,12 +2,12 @@ import fs from 'fs-extra'
 import path from 'path'
 
 // TODO: REFACTOR THIS OUT
-export function getNamespaceFolder(projectDir, namespace) {
-  return path.join(projectDir, `_${namespace}`)
+export function getNamespaceFolder(tailsRootDir, namespace) {
+  return path.join(tailsRootDir, `_${namespace}`)
 }
 
-export async function doesNamespaceExist(projectDir, namespace) {
-  const namespaceFolder = path.join(projectDir, `_${namespace}`)
+export async function doesNamespaceExist(tailsRootDir, namespace) {
+  const namespaceFolder = path.join(tailsRootDir, `_${namespace}`)
   try {
     await fs.promises.stat(namespaceFolder)
   } catch {
@@ -16,36 +16,36 @@ export async function doesNamespaceExist(projectDir, namespace) {
   return true
 }
 
-export function readDirRaw(projectDir) {
-  return fs.promises.readdir(projectDir, {
+export function readDirRaw(tailsRootDir) {
+  return fs.promises.readdir(tailsRootDir, {
     encoding: 'utf8',
     withFileTypes: true
   })
 }
 
-export function createPhysicalNamespaceRaw(projectDir, namespace) {
-  const namespaceFolder = getNamespaceFolder(projectDir, namespace)
+export function createPhysicalNamespaceRaw(tailsRootDir, namespace) {
+  const namespaceFolder = getNamespaceFolder(tailsRootDir, namespace)
   return fs.promises.mkdir(namespaceFolder, {
     mode: 0o755
   })
 }
 
-export async function deletePhysicalNamespaceRaw(projectDir, namespace) {
+export async function deletePhysicalNamespaceRaw(tailsRootDir, namespace) {
   // we include the stat because fs.remove from fs-extra does not
   // error if the folder does not exist. fs.promises.stat does
-  const namespaceFolder = getNamespaceFolder(projectDir, namespace)
+  const namespaceFolder = getNamespaceFolder(tailsRootDir, namespace)
   console.log(namespaceFolder)
   await fs.promises.stat(namespaceFolder)
   await fs.remove(namespaceFolder)
 }
 
-export function createPhysicalProjectRaw(projectDir, {
+export function createPhysicalProjectRaw(tailsRootDir, {
   namespace,
   projectName
 }) {
-  let actualProjectDir = projectDir
+  let actualProjectDir = tailsRootDir
   if (namespace) {
-    actualProjectDir = getNamespaceFolder(projectDir, namespace)
+    actualProjectDir = getNamespaceFolder(tailsRootDir, namespace)
   }
 
   const finalProjectDir = path.join(actualProjectDir, projectName)
@@ -54,14 +54,14 @@ export function createPhysicalProjectRaw(projectDir, {
   })
 }
 
-export async function deletePhysicalProjectRaw(projectDir, {
+export async function deletePhysicalProjectRaw(tailsRootDir, {
   namespace, projectName
 }) {
-  console.log(namespace, projectName, projectDir)
+  console.log(namespace, projectName, tailsRootDir)
 
-  let actualProjectDir = projectDir
+  let actualProjectDir = tailsRootDir
   if (namespace) {
-    actualProjectDir = getNamespaceFolder(projectDir, namespace)
+    actualProjectDir = getNamespaceFolder(tailsRootDir, namespace)
   }
 
   // we include the stat because fs.remove from fs-extra does not
@@ -71,12 +71,12 @@ export async function deletePhysicalProjectRaw(projectDir, {
   await fs.remove(projectFolder)
 }
 
-export async function gatherProjects(projectDir, shouldGather) {
+export async function gatherProjects(tailsRootDir, shouldGather) {
   let unfilteredProjectDirents
   try {
-    unfilteredProjectDirents = await readDirRaw(projectDir)
+    unfilteredProjectDirents = await readDirRaw(tailsRootDir)
   } catch (err) {
-    throw new Error(`failed to read directory ${projectDir}`)
+    throw new Error(`failed to read directory ${tailsRootDir}`)
   }
 
   let projects = []
@@ -96,7 +96,7 @@ export async function gatherProjects(projectDir, shouldGather) {
     }
 
     // projects with underscores hold other projects. test for those
-    const subdirPath = path.join(projectDir, dirent.name)
+    const subdirPath = path.join(tailsRootDir, dirent.name)
     let unfilteredSubProjectDirents
 
     try {
@@ -120,12 +120,12 @@ export async function gatherProjects(projectDir, shouldGather) {
   return projects
 }
 
-export async function pickProject(projectDir, shouldPick) {
+export async function pickProject(tailsRootDir, shouldPick) {
   let unfilteredProjectDirents
   try {
-    unfilteredProjectDirents = await readDirRaw(projectDir)
+    unfilteredProjectDirents = await readDirRaw(tailsRootDir)
   } catch (err) {
-    throw new Error(`failed to read directory ${projectDir}`)
+    throw new Error(`failed to read directory ${tailsRootDir}`)
   }
 
   for (const dirent of unfilteredProjectDirents) {
@@ -144,7 +144,7 @@ export async function pickProject(projectDir, shouldPick) {
     }
 
     // projects with underscores hold other projects. test for those
-    const subdirPath = path.join(projectDir, dirent.name)
+    const subdirPath = path.join(tailsRootDir, dirent.name)
     let unfilteredSubProjectDirents
     try {
       unfilteredSubProjectDirents = await readDirRaw(subdirPath)

@@ -1,19 +1,22 @@
-import * as ERROR from './errors'
+import { Config } from './config'
 
+import * as ERROR from './errors'
 import {
   readDirRaw,
   createPhysicalNamespaceRaw,
   deletePhysicalNamespaceRaw
 } from './util'
 
-const projectDir = '/home/edwin/docs/programming/repos/tails/projects'
+const TAILS_ROOT_DIR = 'TAILS_ROOT_DIR'
 
 export async function listPhysicalNamespace() {
+  const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
+
   let dirents
   try {
-    dirents = await readDirRaw(projectDir)
+    dirents = await readDirRaw(tailsRootDir)
   } catch (err) {
-    throw new Error(`failed to read directory ${projectDir}`)
+    throw new Error(`failed to read directory ${tailsRootDir}`)
   }
 
   let namespaces = []
@@ -33,11 +36,13 @@ export async function listPhysicalNamespace() {
 export async function showPhysicalNamespace(name) {
   if (!name) throw new ERROR.InvalidArgumentError('name')
 
+  const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
+
   let dirents
   try {
-    dirents = await readDirRaw(projectDir)
+    dirents = await readDirRaw(tailsRootDir)
   } catch (err) {
-    throw new Error(`failed to read directory ${projectDir}`)
+    throw new Error(`failed to read directory ${tailsRootDir}`)
   }
 
   for (let dirent of dirents) {
@@ -60,8 +65,10 @@ export async function createPhysicalNamespace(name) {
   if (!name)
     throw new ERROR.InvalidArgumentError('name')
 
+  const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
+
   try {
-    await createPhysicalNamespaceRaw(projectDir, name)
+    await createPhysicalNamespaceRaw(tailsRootDir, name)
   } catch (err) {
     if (err.code === 'EEXIST') {
       throw new ERROR.AlreadyExistsError(
@@ -70,7 +77,7 @@ export async function createPhysicalNamespace(name) {
     }
     console.error(err)
     throw new Error(
-      `${__dirname}: an unknown error occurred when trying to create namespace ${args} in ${projectDir}`
+      `${__dirname}: an unknown error occurred when trying to create namespace ${args} in ${tailsRootDir}`
     )
   }
 }
@@ -79,8 +86,10 @@ export async function deletePhysicalNamespace(name) {
   if (!name)
     throw new ERROR.InvalidArgumentError('name')
 
+  const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
+
   try {
-    await deletePhysicalNamespaceRaw(projectDir, name)
+    await deletePhysicalNamespaceRaw(tailsRootDir, name)
   } catch (err) {
     if (err.code === 'ENOENT') {
       throw new ERROR.DoesNotExistError(
@@ -89,7 +98,7 @@ export async function deletePhysicalNamespace(name) {
     }
     console.error(err)
     throw new Error(
-      `${__dirname}: an unknown error ocurred when trying to remove namespace ${args} in ${projectDir}`
+      `${__dirname}: an unknown error ocurred when trying to remove namespace ${args} in ${tailsRootDir}`
     )
   }
 }

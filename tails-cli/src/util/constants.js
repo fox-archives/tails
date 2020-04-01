@@ -1,1 +1,0 @@
-export const TAILS_ROOT_DIR_KEY_NAME = 'TAILS_ROOT_DIR'

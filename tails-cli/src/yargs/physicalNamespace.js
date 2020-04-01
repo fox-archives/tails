@@ -1,21 +1,21 @@
-import { PhysicalNamespace, Config, TAILS_ERROR } from 'tails-fs'
+import { PhysicalNamespace, TAILS_ERROR } from 'tails-fs'
 
-import { isTailsRootDirSet } from '../util'
-
-const TEXT_ROOT_DIR_NOT_SET = 'error: tails root directory not set'
+const CONFIG_NO_EXIST =
+  'error: config file cannot be read. ensure it is created and is valid'
 
 export const command = 'physicalNamespace <command>'
 export const desc = 'show or edit physicalNamespace information'
 export const builder = function(yargs) {
   yargs.command('list', 'list all namespaces', async () => {
     try {
-      if (!(await isTailsRootDirSet()))
-        return console.log(TEXT_ROOT_DIR_NOT_SET)
-
       let namespaces = await PhysicalNamespace.list()
       console.log(namespaces)
     } catch (err) {
-      console.log(err)
+      if (err instanceof TAILS_ERROR.InvalidConfigError) {
+        console.log(CONFIG_NO_EXIST)
+      } else {
+        console.error(err)
+      }
     }
   })
 
@@ -32,9 +32,6 @@ export const builder = function(yargs) {
       const name = argv.name
 
       try {
-        if (!(await isTailsRootDirSet()))
-          return console.log(TEXT_ROOT_DIR_NOT_SET)
-
         let namespace = await PhysicalNamespace.show(name)
         console.log(namespace)
       } catch (err) {
@@ -44,6 +41,8 @@ export const builder = function(yargs) {
           } else {
             console.error(err)
           }
+        } else if (err instanceof TAILS_ERROR.InvalidConfigError) {
+          console.log(CONFIG_NO_EXIST)
         } else {
           console.error(err)
         }
@@ -64,9 +63,6 @@ export const builder = function(yargs) {
       const name = argv.name
 
       try {
-        if (!(await isTailsRootDirSet()))
-          return console.log(TEXT_ROOT_DIR_NOT_SET)
-
         await PhysicalNamespace.create(name)
         console.log(`created namespace: ${name}`)
       } catch (err) {
@@ -76,6 +72,8 @@ export const builder = function(yargs) {
           } else {
             console.error(err)
           }
+        } else if (err instanceof TAILS_ERROR.InvalidConfigError) {
+          console.log(CONFIG_NO_EXIST)
         } else {
           console.error(err)
         }
@@ -96,9 +94,6 @@ export const builder = function(yargs) {
       const name = argv.name
 
       try {
-        if (!(await isTailsRootDirSet()))
-          return console.log(TEXT_ROOT_DIR_NOT_SET)
-
         await PhysicalNamespace.delete(name)
         console.log(`deleted namespace: ${name}`)
       } catch (err) {
@@ -108,6 +103,8 @@ export const builder = function(yargs) {
           } else {
             console.error(err)
           }
+        } else if (err instanceof TAILS_ERROR.InvalidConfigError) {
+          console.log(CONFIG_NO_EXIST)
         } else {
           console.error(err)
         }
