@@ -8,7 +8,7 @@ let TAILS_CONFIG_DIR
 if (process.env.TAILS_CONFIG_DIR) {
   TAILS_CONFIG_DIR = process.env.TAILS_CONFIG_DIR
 } else if (process.env.XDG_CONFIG_HOME) {
-  TAILS_CONFIG_DIR = path.join(XDG_CONFIG_HOME, 'tails')
+  TAILS_CONFIG_DIR = path.join(process.env.XDG_CONFIG_HOME, 'tails')
 } else {
   const home =
     process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE
