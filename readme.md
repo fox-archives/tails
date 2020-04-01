@@ -80,5 +80,6 @@ project still in (heavy) early development (pre-alpha)
 git clone --recurse-submodules https://github.com/eankeen/tails
 yarn install
 yarn lerna bootstrap
+yarn lerna link
 make start
 ```
