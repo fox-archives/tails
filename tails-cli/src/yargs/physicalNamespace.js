@@ -41,9 +41,12 @@ export const builder = function(yargs) {
         if (err instanceof TAILS_ERROR.InvalidArgumentError) {
           if (err.message === 'name') {
             console.log(`error: invalid argument name '${name}'`)
+          } else {
+            console.error(err)
           }
+        } else {
+          console.error(err)
         }
-        console.error(err)
       }
     }
   )
@@ -70,6 +73,8 @@ export const builder = function(yargs) {
         if (err instanceof TAILS_ERROR.InvalidArgumentError) {
           if (err.message === 'name') {
             console.log(`error: invalid argument name '${name}'`)
+          } else {
+            console.error(err)
           }
         } else {
           console.error(err)
@@ -100,6 +105,8 @@ export const builder = function(yargs) {
         if (err instanceof TAILS_ERROR.InvalidArgumentError) {
           if (err.message === 'name') {
             console.log(`error: invalid argument name '${name}'`)
+          } else {
+            console.error(err)
           }
         } else {
           console.error(err)

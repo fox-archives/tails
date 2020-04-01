@@ -73,6 +73,8 @@ export const builder = function(yargs) {
           }
           if (err.message === 'key') {
             console.log(`error: key '${key}' does not exist`)
+          } else {
+            console.error(err)
           }
         } else {
           console.error(err)
@@ -126,6 +128,8 @@ export const builder = function(yargs) {
             console.log(CONFIG_NO_EXISTS_CREATE_ONE)
           } else if (err.message === 'key') {
             console.log(`error: key '${key}' does not exist`)
+          } else {
+            console.error(err)
           }
         } else {
           console.error(err)

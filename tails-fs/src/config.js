@@ -82,9 +82,7 @@ async function getConfigKey(key) {
 }
 
 async function setConfigKey(key, value, isForce) {
-  if (!(await storeExists())) throw new ERROR.DoesNotExistError('config')
-  if (!key) throw new ERROR.InvalidArgumentError('key')
-  if (!value && !isForce) throw new ERROR.InvalidArgumentError('force')
+  if (!(await storeExists())) throw new ERROR.DoesNotExiInvalidArgumentErrorumentError('force')
 
   if (isForce) value = undefined
 
