@@ -9,7 +9,7 @@ import {
 
 const TAILS_ROOT_DIR = 'TAILS_ROOT_DIR'
 
-export async function listPhysicalNamespace() {
+export async function listPhysicalNamespaces() {
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
   let dirents
@@ -62,8 +62,7 @@ export async function showPhysicalNamespace(name) {
 }
 
 export async function createPhysicalNamespace(name) {
-  if (!name)
-    throw new ERROR.InvalidArgumentError('name')
+  if (!name) throw new ERROR.InvalidArgumentError('name')
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
@@ -71,9 +70,7 @@ export async function createPhysicalNamespace(name) {
     await createPhysicalNamespaceRaw(tailsRootDir, name)
   } catch (err) {
     if (err.code === 'EEXIST') {
-      throw new ERROR.AlreadyExistsError(
-        `namespace '${name}' already exists`
-      )
+      throw new ERROR.AlreadyExistsError(`namespace '${name}' already exists`)
     }
     console.error(err)
     throw new Error(
@@ -83,8 +80,7 @@ export async function createPhysicalNamespace(name) {
 }
 
 export async function deletePhysicalNamespace(name) {
-  if (!name)
-    throw new ERROR.InvalidArgumentError('name')
+  if (!name) throw new ERROR.InvalidArgumentError('name')
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
@@ -92,9 +88,7 @@ export async function deletePhysicalNamespace(name) {
     await deletePhysicalNamespaceRaw(tailsRootDir, name)
   } catch (err) {
     if (err.code === 'ENOENT') {
-      throw new ERROR.DoesNotExistError(
-        `namespace '${name}' does not exist`
-      )
+      throw new ERROR.DoesNotExistError(`namespace '${name}' does not exist`)
     }
     console.error(err)
     throw new Error(
@@ -105,7 +99,7 @@ export async function deletePhysicalNamespace(name) {
 
 export class PhysicalNamespace {
   static list() {
-    return listPhysicalNamespace()
+    return listPhysicalNamespaces()
   }
 
   static show(name) {

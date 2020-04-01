@@ -19,14 +19,14 @@ export async function doesNamespaceExist(tailsRootDir, namespace) {
 export function readDirRaw(tailsRootDir) {
   return fs.promises.readdir(tailsRootDir, {
     encoding: 'utf8',
-    withFileTypes: true
+    withFileTypes: true,
   })
 }
 
 export function createPhysicalNamespaceRaw(tailsRootDir, namespace) {
   const namespaceFolder = getNamespaceFolder(tailsRootDir, namespace)
   return fs.promises.mkdir(namespaceFolder, {
-    mode: 0o755
+    mode: 0o755,
   })
 }
 
@@ -39,10 +39,10 @@ export async function deletePhysicalNamespaceRaw(tailsRootDir, namespace) {
   await fs.remove(namespaceFolder)
 }
 
-export function createPhysicalProjectRaw(tailsRootDir, {
-  namespace,
-  projectName
-}) {
+export function createPhysicalProjectRaw(
+  tailsRootDir,
+  { namespace, projectName }
+) {
   let actualProjectDir = tailsRootDir
   if (namespace) {
     actualProjectDir = getNamespaceFolder(tailsRootDir, namespace)
@@ -50,15 +50,14 @@ export function createPhysicalProjectRaw(tailsRootDir, {
 
   const finalProjectDir = path.join(actualProjectDir, projectName)
   return fs.promises.mkdir(finalProjectDir, {
-    mode: 0o755
+    mode: 0o755,
   })
 }
 
-export async function deletePhysicalProjectRaw(tailsRootDir, {
-  namespace, projectName
-}) {
-  console.log(namespace, projectName, tailsRootDir)
-
+export async function deletePhysicalProjectRaw(
+  tailsRootDir,
+  { namespace, projectName }
+) {
   let actualProjectDir = tailsRootDir
   if (namespace) {
     actualProjectDir = getNamespaceFolder(tailsRootDir, namespace)
@@ -91,7 +90,7 @@ export async function gatherProjects(tailsRootDir, shouldGather) {
           name: dirent.name,
           isDirectory: dirent.isDirectory(),
           isFile: dirent.isFile(),
-          isSymbolicLink: dirent.isSymbolicLink()
+          isSymbolicLink: dirent.isSymbolicLink(),
         })
     }
 
@@ -113,7 +112,7 @@ export async function gatherProjects(tailsRootDir, shouldGather) {
           name: subDirent.name,
           isDirectory: subDirent.isDirectory(),
           isFile: subDirent.isFile(),
-          isSymbolicLink: subDirent.isSymbolicLink()
+          isSymbolicLink: subDirent.isSymbolicLink(),
         })
     }
   }
@@ -139,7 +138,7 @@ export async function pickProject(tailsRootDir, shouldPick) {
           name: dirent.name,
           isDirectory: dirent.isDirectory(),
           isFile: dirent.isFile(),
-          isSymbolicLink: dirent.isSymbolicLink()
+          isSymbolicLink: dirent.isSymbolicLink(),
         }
     }
 
@@ -160,7 +159,7 @@ export async function pickProject(tailsRootDir, shouldPick) {
           name: subDirent.name,
           isDirectory: subDirent.isDirectory(),
           isFile: subDirent.isFile(),
-          isSymbolicLink: subDirent.isSymbolicLink()
+          isSymbolicLink: subDirent.isSymbolicLink(),
         }
     }
   }
