@@ -1,0 +1,62 @@
+{
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "impliedStrict": true
+    },
+    "env": {
+      "node": true,
+      "es2020": true,
+      "jest": true,
+      "jest/globals": true
+    }
+  },
+
+  "env": {
+    "es6": true,
+    "node": true
+  },
+
+  "plugins": [
+    "babel",
+    "simple-import-sort",
+    "no-use-extend-native",
+    "no-secrets",
+    "prettier"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:promise/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:jest/recommended",
+    "plugin:jest/style"
+  ],
+  "rules": {
+    "babel/new-cap": "warn",
+    "babel/camelcase": "warn",
+    "babel/no-invalid-this": "warn",
+    "babel/object-curly-spacing": "warn",
+    "babel/quotes": "warn",
+    "babel/semi": "warn",
+    "babel/no-unused-expressions": "warn",
+    "babel/valid-typeof": "warn",
+
+    "simple-import-sort/sort": "error",
+    "sort-imports": "off",
+    "import/order": "off",
+
+    "no-use-extend-native/no-use-extend-native": "error",
+
+    "no-secrets/no-secrets": [
+      "error",
+      {
+        "tolerance": 4
+      }
+    ],
+
+    "prettier/prettier": "warn"
+  }
+}
