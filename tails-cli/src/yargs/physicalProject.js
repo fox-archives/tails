@@ -1,7 +1,6 @@
-import { PhysicalProject, TAILS_ERROR } from 'tails-fs'
+import { PhysicalProject } from 'tails-fs'
 
-const CONFIG_NO_EXIST =
-  'error: config file cannot be read. ensure it is created and is valid'
+import { handleError } from '../util'
 
 export const command = 'physicalProject <command>'
 export const desc = 'show or edit physicalProject information'
@@ -22,11 +21,7 @@ export const builder = function (yargs) {
         let projects = await PhysicalProject.list(namespace)
         console.log(projects)
       } catch (err) {
-        if (err instanceof TAILS_ERROR.InvalidConfigError) {
-          console.log(CONFIG_NO_EXISTS)
-        } else {
-          console.error(err)
-        }
+        handleError(err, argv)
       }
     }
   )
@@ -53,26 +48,7 @@ export const builder = function (yargs) {
         let project = await PhysicalProject.show(name, namespace)
         console.log(project)
       } catch (err) {
-        if (err instanceof TAILS_ERROR.InvalidConfigError) {
-          console.log(CONFIG_NO_EXISTS)
-        } else if (err instanceof TAILS_ERROR.InvalidArgumentError) {
-          if (err.message === 'name') {
-            console.error(`error: invalid argument: name '${name}'`)
-          } else {
-            console.error(err)
-          }
-        } else if (err instanceof TAILS_ERROR.DoesNotExistError) {
-          if (err.message === 'name') {
-            console.error(`error: name '${name}' does not exist`)
-          } else if (err.message === 'namespace') {
-            console.error(`error: namespace '${namespace}' does not exist`)
-          } else {
-            console.error(err)
-          }
-        } else {
-          console.log('dd')
-          console.error(err)
-        }
+        handleError(err, argv)
       }
     }
   )
@@ -99,26 +75,7 @@ export const builder = function (yargs) {
         await PhysicalProject.create(name, namespace)
         console.log(`created project ${name}`)
       } catch (err) {
-        if (err instanceof TAILS_ERROR.InvalidConfigError) {
-          console.log(CONFIG_NO_EXISTS)
-        } else if (err instanceof TAILS_ERROR.InvalidArgumentError) {
-          if (err.message === 'name') {
-            console.error(`error: invalid argument: name '${name}'`)
-          } else {
-            console.error(err)
-          }
-        } else if (err instanceof TAILS_ERROR.DoesNotExistError) {
-          if (err.message === 'name') {
-            console.error(`error: name '${name}' does not exist`)
-          } else if (err.message === 'namespace') {
-            console.error(`error: namespace '${namespace}' does not exist`)
-          } else {
-            console.error(err)
-          }
-        } else {
-          console.log('dd')
-          console.error(err)
-        }
+        handleError(err, argv)
       }
     }
   )
@@ -145,25 +102,7 @@ export const builder = function (yargs) {
         await PhysicalProject.delete(name, namespace)
         console.log(`deleted project ${name}`)
       } catch (err) {
-        if (err instanceof TAILS_ERROR.InvalidConfigError) {
-          console.log(CONFIG_NO_EXISTS)
-        } else if (err instanceof TAILS_ERROR.InvalidArgumentError) {
-          if (err.message === 'name') {
-            console.error(`error: invalid argument: name '${name}'`)
-          } else {
-            console.error(err)
-          }
-        } else if (err instanceof TAILS_ERROR.DoesNotExistError) {
-          if (err.message === 'name') {
-            console.error(`error: name '${name}' does not exist`)
-          } else if (err.message === 'namespace') {
-            console.error(`error: namespace '${namespace}' does not exist`)
-          } else {
-            console.error(err)
-          }
-        } else {
-          console.error(err)
-        }
+        handleError(err, argv)
       }
     }
   )

@@ -8,6 +8,7 @@
     "start": "node -r esm src/index"
   },
   "dependencies": {
+    "ansi-colors": "^4.1.1",
     "esm": "^3.2.25",
     "tails-fs": "^0.1.0",
     "yargs": "^15.3.0"

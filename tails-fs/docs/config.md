@@ -7,10 +7,7 @@ not sure if this extends to `namespace.js` and `project.js`; i haven't written d
 ## exported items
 
 ```js
-import {
-  Config,
-  TAILS_CONFIG_FILE
-} from 'tails-fs'
+import { Config, TAILS_CONFIG_FILE } from 'tails-fs'
 ```
 
 ### Config
@@ -53,7 +50,7 @@ can throw:
 
 returns:
 
-- promise that resolves to *string*, value of key
+- promise that resolves to _string_, value of key
 
 can throw:
 
@@ -79,4 +76,4 @@ exported constant variable that gives location of tails config file. here is how
 
 1. if `process.env.TAILS_CONFIG_DIR` is set, relative to that, it resolves to `./tails.json`
 1. if `process.env.XDG_CONFIG_HOME` is set, relative to that, it resolves to `./tails/tails.json`
-2. if `process.env.XDG_CONFIG_HOME` is not set, relative to `process.env.HOME|HOMEPATH|USERPROFILE`, it resolves to `./.config/tails/tails.json`
+1. if `process.env.XDG_CONFIG_HOME` is not set, relative to `process.env.HOME|HOMEPATH|USERPROFILE`, it resolves to `./.config/tails/tails.json`

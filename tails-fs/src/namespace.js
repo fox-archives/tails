@@ -1,11 +1,8 @@
 import { Config } from './config'
 
 import * as ERROR from './errors'
-import {
-  readDirRaw,
-  createPhysicalNamespaceRaw,
-  deletePhysicalNamespaceRaw
-} from './util'
+import { readDirRaw } from './util'
+import * as helper from './namespace.helper'
 
 const TAILS_ROOT_DIR = 'TAILS_ROOT_DIR'
 
@@ -26,7 +23,7 @@ export async function listPhysicalNamespaces() {
         name: dirent.name.slice(1),
         isDirectory: true,
         isFile: false,
-        isSymbolicLink: false
+        isSymbolicLink: false,
       })
     }
   }
@@ -53,7 +50,7 @@ export async function showPhysicalNamespace(name) {
         name: dirent.name.slice(1),
         isDirectory: true,
         isFile: false,
-        isSymbolicLink: false
+        isSymbolicLink: false,
       }
     }
   }
@@ -67,7 +64,7 @@ export async function createPhysicalNamespace(name) {
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
   try {
-    await createPhysicalNamespaceRaw(tailsRootDir, name)
+    await helper.createPhysicalNamespaceRaw(tailsRootDir, name)
   } catch (err) {
     if (err.code === 'EEXIST') {
       throw new ERROR.AlreadyExistsError(`namespace '${name}' already exists`)
@@ -85,7 +82,7 @@ export async function deletePhysicalNamespace(name) {
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
   try {
-    await deletePhysicalNamespaceRaw(tailsRootDir, name)
+    await helper.deletePhysicalNamespaceRaw(tailsRootDir, name)
   } catch (err) {
     if (err.code === 'ENOENT') {
       throw new ERROR.DoesNotExistError(`namespace '${name}' does not exist`)

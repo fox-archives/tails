@@ -1,24 +1,18 @@
 import { Config } from './config'
 import * as ERROR from './errors'
-import {
-  getNamespaceFolder,
-  doesNamespaceExist,
-  createPhysicalProjectRaw,
-  gatherProjects,
-  pickProject,
-  deletePhysicalProjectRaw,
-} from './util'
+import { getNamespaceFolder, doesNamespaceExist } from './util'
+import * as helper from './project.helper'
 
 const TAILS_ROOT_DIR = 'TAILS_ROOT_DIR'
 
 export async function listPhysicalProject(namespace) {
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
-  if (!namespace) return gatherProjects(tailsRootDir, () => true)
+  if (!namespace) return helper.gatherProjects(tailsRootDir, () => true)
 
   const namespaceFolder = getNamespaceFolder(tailsRootDir, namespace)
   console.log(namespaceFolder)
-  return gatherProjects(namespaceFolder, () => true)
+  return helper.gatherProjects(namespaceFolder, () => true)
 }
 
 export async function showPhysicalProject(name, namespace) {
@@ -26,7 +20,7 @@ export async function showPhysicalProject(name, namespace) {
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
-  let project = await pickProject(tailsRootDir, (dirent) => {
+  let project = await helper.pickProject(tailsRootDir, (dirent) => {
     return dirent.name === name
   })
   if (project) return project
@@ -44,21 +38,16 @@ export async function createPhysicalProject(name, namespace) {
   }
 
   try {
-    await createPhysicalProjectRaw(tailsRootDir, {
-      namespace: namespace,
+    await helper.createPhysicalProjectRaw(tailsRootDir, {
+      namespace,
       projectName: name,
     })
   } catch (err) {
     if (err.code === 'EEXIST') {
-      console.error(err)
-      throw new ERROR.DoesNotExistError(
-        `${__dirname}: failed to create project at '${name}' in namespace '${namespace}'`
-      )
+      throw new ERROR.AlreadyExistsError('name')
+    } else {
+      throw new Error(err)
     }
-
-    throw new Error(
-      `unknown error occurred when creating physicalProject at projectDir '${namespace}' in namespace ${namespace}`
-    )
   }
 }
 
@@ -68,7 +57,7 @@ export async function deletePhysicalProject(name, namespace) {
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
   try {
-    await deletePhysicalProjectRaw(tailsRootDir, {
+    await helper.deletePhysicalProjectRaw(tailsRootDir, {
       namespace,
       projectName: name,
     })
@@ -76,9 +65,7 @@ export async function deletePhysicalProject(name, namespace) {
     if (err.code === 'ENOENT') {
       throw new ERROR.DoesNotExistError('name')
     }
-    throw new Error(
-      `${__dirname}: an unknown error occurred when trying to deletePhysicalProject '${name}' in namespace '${namespace}`
-    )
+    throw new Error(err)
   }
 }
 
