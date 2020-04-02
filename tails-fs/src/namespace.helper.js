@@ -1,3 +1,7 @@
+import fs from 'fs-extra'
+
+import { getNamespaceFolder } from './util'
+
 export function createPhysicalNamespaceRaw(tailsRootDir, namespace) {
   const namespaceFolder = getNamespaceFolder(tailsRootDir, namespace)
   return fs.promises.mkdir(namespaceFolder, {

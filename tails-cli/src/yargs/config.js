@@ -87,4 +87,14 @@ export const builder = function (yargs) {
       }
     }
   )
+
+  yargs.command('find', 'find tails config file location', async (argv) => {
+    try {
+      const location = await Config.find()
+      console.log(location)
+    } catch (err) {
+      console.log('err')
+      handleError(err, argv)
+    }
+  })
 }

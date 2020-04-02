@@ -20,7 +20,6 @@
   },
 
   "plugins": [
-    "babel",
     "simple-import-sort",
     "no-use-extend-native",
     "no-secrets",
@@ -35,15 +34,6 @@
     "plugin:jest/style"
   ],
   "rules": {
-    "babel/new-cap": "warn",
-    "babel/camelcase": "warn",
-    "babel/no-invalid-this": "warn",
-    "babel/object-curly-spacing": "warn",
-    "babel/quotes": "warn",
-    "babel/semi": "warn",
-    "babel/no-unused-expressions": "warn",
-    "babel/valid-typeof": "warn",
-
     "simple-import-sort/sort": "error",
     "sort-imports": "off",
     "import/order": "off",

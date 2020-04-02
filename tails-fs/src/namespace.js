@@ -39,7 +39,7 @@ export async function showPhysicalNamespace(name) {
   try {
     dirents = await readDirRaw(tailsRootDir)
   } catch (err) {
-    throw new Error(`failed to read directory ${tailsRootDir}`)
+    throw new Error(`failed to read directory '${tailsRootDir}'`)
   }
 
   for (let dirent of dirents) {
@@ -55,7 +55,7 @@ export async function showPhysicalNamespace(name) {
     }
   }
 
-  throw new ERROR.DoesNotExistError(`namespace ${name} not found`)
+  throw new ERROR.DoesNotExistError('namespace')
 }
 
 export async function createPhysicalNamespace(name) {
@@ -67,12 +67,10 @@ export async function createPhysicalNamespace(name) {
     await helper.createPhysicalNamespaceRaw(tailsRootDir, name)
   } catch (err) {
     if (err.code === 'EEXIST') {
-      throw new ERROR.AlreadyExistsError(`namespace '${name}' already exists`)
+      throw new ERROR.AlreadyExistsError('name')
     }
     console.error(err)
-    throw new Error(
-      `${__dirname}: an unknown error occurred when trying to create namespace ${args} in ${tailsRootDir}`
-    )
+    throw new Error(err)
   }
 }
 
@@ -85,12 +83,10 @@ export async function deletePhysicalNamespace(name) {
     await helper.deletePhysicalNamespaceRaw(tailsRootDir, name)
   } catch (err) {
     if (err.code === 'ENOENT') {
-      throw new ERROR.DoesNotExistError(`namespace '${name}' does not exist`)
+      throw new ERROR.DoesNotExistError('name')
     }
     console.error(err)
-    throw new Error(
-      `${__dirname}: an unknown error ocurred when trying to remove namespace ${args} in ${tailsRootDir}`
-    )
+    throw new Error(err)
   }
 }
 

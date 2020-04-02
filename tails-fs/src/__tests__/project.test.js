@@ -7,13 +7,13 @@ import * as C from './constants'
 import {
   InvalidArgumentError,
   AlreadyExistsError,
-  DoesNotExistError
+  DoesNotExistError,
 } from '../src/util/errors'
 import {
   listPhysicalProject,
   showPhysicalProject,
   createPhysicalProject,
-  deletePhysicalProject
+  deletePhysicalProject,
 } from '../src/project'
 import { deletePhysicalProjectRaw } from '../src/util'
 
@@ -43,27 +43,27 @@ describe('listProject', () => {
 describe('showPhysicalProject', () => {
   it('success on correct arguments (project exists at root)', async () => {
     const project = await showPhysicalProject(C.TAILS_PROJECT_DIR_READ, {
-      name: CORRECT_PROJECT_DIR
+      name: CORRECT_PROJECT_DIR,
     })
 
     expect(project).toStrictEqual({
       name: CORRECT_PROJECT_DIR,
       isDirectory: true,
       isFile: false,
-      isSymbolicLink: false
+      isSymbolicLink: false,
     })
   })
 
   it('success on correct arguments (project exists in subfolder)', async () => {
     const project = await showPhysicalProject(C.TAILS_PROJECT_DIR_READ, {
-      name: CORRECT_PROJECT_SUBDIR
+      name: CORRECT_PROJECT_SUBDIR,
     })
 
     expect(project).toStrictEqual({
       name: CORRECT_PROJECT_SUBDIR,
       isDirectory: true,
       isFile: false,
-      isSymbolicLink: false
+      isSymbolicLink: false,
     })
   })
 
@@ -71,7 +71,7 @@ describe('showPhysicalProject', () => {
     const invalid = 'invalid-project-name-abc-xyz'
     await expect(
       showPhysicalProject(C.TAILS_PROJECT_DIR_READ, {
-        name: invalid
+        name: invalid,
       })
     ).rejects.toThrow(DoesNotExistError)
   })
@@ -80,7 +80,7 @@ describe('showPhysicalProject', () => {
     const invalid = 'invalid-project-dir-abc-xyz'
     await expect(
       showPhysicalProject(invalid, {
-        name: C.TAILS_PROJECT_DIR_READ
+        name: C.TAILS_PROJECT_DIR_READ,
       })
     ).rejects.toThrow(Error)
   })
@@ -89,17 +89,21 @@ describe('showPhysicalProject', () => {
 describe('createPhysicalProject', () => {
   it('succeeds on correct parameters (no namespace)', async () => {
     const correct = 'some-physical-project'
-    await expect(createPhysicalProject(C.TAILS_PROJECT_DIR_WRITE, {
-      name: correct
-    })).resolves.not.toThrow()
+    await expect(
+      createPhysicalProject(C.TAILS_PROJECT_DIR_WRITE, {
+        name: correct,
+      })
+    ).resolves.not.toThrow()
   })
 
   it('succeeds on correct parameters (with namespace)', async () => {
     const correct = 'name-does-not-matter'
-    await expect(createPhysicalProject(C.TAILS_PROJECT_DIR_WRITE, {
-      namespace: CORRECT_NAMESPACE_WRITE,
-      name: correct
-    })).resolves.not.toThrow()
+    await expect(
+      createPhysicalProject(C.TAILS_PROJECT_DIR_WRITE, {
+        namespace: CORRECT_NAMESPACE_WRITE,
+        name: correct,
+      })
+    ).resolves.not.toThrow()
   })
 
   it('fails on incorrect (non-existing) namespace by throwing DoesNotExistError', async () => {
@@ -108,7 +112,7 @@ describe('createPhysicalProject', () => {
     await expect(
       createPhysicalProject(C.TAILS_PROJECT_DIR_WRITE, {
         namespace: invalidNamespace,
-        name: correctProjectName
+        name: correctProjectName,
       })
     ).rejects.toThrow(DoesNotExistError)
   })
@@ -119,7 +123,7 @@ describe('deletePhysicalProject', () => {
     const correct = 'project-first'
     await expect(
       deletePhysicalProject(C.TAILS_PROJECT_DIR_WRITE, {
-        name: correct
+        name: correct,
       })
     ).resolves.not.toThrow()
   })

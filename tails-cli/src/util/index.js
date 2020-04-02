@@ -60,6 +60,8 @@ export function handleError(err, argv) {
     }
     return
   }
+
+  console.error(err)
 }
 
 export function handlePhysicalNamespaceError(err) {}
