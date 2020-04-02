@@ -1,5 +1,5 @@
 import path from 'path'
-import fs from 'fs'
+import fs from 'fs-extra'
 
 import { getNamespaceFolder, readDirRaw } from './util'
 
@@ -13,7 +13,7 @@ export function createPhysicalProjectRaw(
   }
 
   const finalProjectDir = path.join(actualProjectDir, projectName)
-  return fs.promises.mkdir(finalProjectDir, {
+  return fs.mkdir(finalProjectDir, {
     mode: 0o755,
   })
 }
@@ -28,9 +28,9 @@ export async function deletePhysicalProjectRaw(
   }
 
   // we include the stat because fs.remove from fs-extra does not
-  // error if the folder does not exist. fs.promises.stat does
+  // error if the folder does not exist. fs.stat does
   const projectFolder = path.join(actualProjectDir, projectName)
-  await fs.promises.stat(projectFolder)
+  await fs.stat(projectFolder)
   await fs.remove(projectFolder)
 }
 

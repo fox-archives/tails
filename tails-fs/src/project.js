@@ -34,7 +34,7 @@ export async function createPhysicalProject(name, namespace) {
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
   if (namespace && !(await doesNamespaceExist(tailsRootDir, namespace))) {
-    throw new DoesNotExistError('namespace')
+    throw new ERROR.DoesNotExistError('namespace')
   }
 
   try {
@@ -44,6 +44,7 @@ export async function createPhysicalProject(name, namespace) {
     })
   } catch (err) {
     if (err.code === 'EEXIST') {
+      console.log(err)
       throw new ERROR.AlreadyExistsError('name')
     } else {
       throw new Error(err)

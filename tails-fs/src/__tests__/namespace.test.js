@@ -2,14 +2,8 @@ import fs from 'fs-extra'
 
 import _ from 'lodash'
 
+import { fixNamespaceFixtures } from './testUtils'
 import * as TC from './testConstants'
-
-let fixNamespaceFixtures = async () => {
-  const src = TC.TEST_TAILS_ROOT_DIR_WRITE_BACKUP
-  const dest = TC.TEST_TAILS_ROOT_DIR_WRITE
-  await fs.emptyDir(dest)
-  await fs.copy(src, dest)
-}
 
 /*
   i would prefer to keep testUtil and TAILS_ERROR static imports, but
