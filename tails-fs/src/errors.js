@@ -18,8 +18,8 @@ export class DoesNotExistError extends Error {
 export class AlreadyExistsError extends Error {
   constructor(categoryOfThing, valueOfThing) {
     let message
-    if (categoryOfThing) {
-      message = `your operation on a '${categoryOfThing}, specifically the ${valueOfThing}' ${categoryOfThing} failed because it already exists`
+    if (valueOfThing) {
+      message = `your operation on a '${categoryOfThing}, specifically the '${valueOfThing}' ${categoryOfThing} failed because it already exists`
     } else {
       message = `your operation on the '${categoryOfThing}' failed because it does not exist`
     }

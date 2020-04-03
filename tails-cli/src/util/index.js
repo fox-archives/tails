@@ -21,13 +21,13 @@ export function handleError(err, argv) {
   }
 
   if (err instanceof TAILS_ERROR.InvalidArgumentError) {
-    if (err.message === 'key') {
+    if (err.category === 'key') {
       printError(`error: invalid argument value '${key}'`)
-    } else if (err.message === 'force') {
+    } else if (err.category === 'force') {
       printError(
         `error: invalid argument. when setting key with no value, pass '-f`
       )
-    } else if (err.message === 'name') {
+    } else if (err.category === 'name') {
       printError(`error: invalid argument name '${name}'`)
     } else {
       console.error(err)
@@ -36,9 +36,9 @@ export function handleError(err, argv) {
   }
 
   if (err instanceof TAILS_ERROR.AlreadyExistsError) {
-    if (err.message === 'config') {
+    if (err.category === 'config') {
       printError('error: config already exists')
-    } else if (err.message === 'name') {
+    } else if (err.category === 'name') {
       printError(`error: name ${name} already exists`)
     } else {
       console.error(err)
@@ -47,13 +47,13 @@ export function handleError(err, argv) {
   }
 
   if (err instanceof TAILS_ERROR.DoesNotExistError) {
-    if (err.message === 'config') {
+    if (err.category === 'config') {
       printError("error: config file. create one with 'tails config create'")
-    } else if (err.message === 'name') {
+    } else if (err.category === 'name') {
       printError(`error: name '${name}' does not exist`)
-    } else if (err.message === 'key') {
+    } else if (err.category === 'key') {
       printError(`error: key '${key}' does not exist`)
-    } else if (err.message === 'namespace') {
+    } else if (err.category === 'namespace') {
       printError(`error: namespace '${namespace}' does not exist`)
     } else {
       printError(err)
