@@ -35,7 +35,7 @@ async function deleteConfig() {
 
 async function getConfigKey(key) {
   if (!(await helper.storeExists())) throw new ERROR.DoesNotExistError('config')
-  if (!key) throw new ERROR.InvalidArgumentError('key')
+  if (!key) throw new ERROR.InvalidArgumentError('key', key)
 
   let json
   try {
@@ -44,14 +44,14 @@ async function getConfigKey(key) {
     throw new Error(err)
   }
 
-  if (!json[key]) throw new ERROR.DoesNotExistError('key')
+  if (!json[key]) throw new ERROR.DoesNotExistError('key', key)
 
   return json[key]
 }
 
 async function setConfigKey(key, value, isForce) {
   if (!(await helper.storeExists())) throw new ERROR.DoesNotExistError('config')
-  if (!value && !isForce) throw new ERROR.InvalidArgumentError('force')
+  if (!value && !isForce) throw new ERROR.InvalidArgumentError('force', isForce)
 
   try {
     let json = await helper.readStore()

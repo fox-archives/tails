@@ -16,7 +16,7 @@ export async function listPhysicalProject(namespace) {
 }
 
 export async function showPhysicalProject(name, namespace) {
-  if (!name) throw new ERROR.InvalidArgumentError('name')
+  if (!name) throw new ERROR.InvalidArgumentError('name', name)
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
@@ -25,16 +25,16 @@ export async function showPhysicalProject(name, namespace) {
   })
   if (project) return project
 
-  throw new ERROR.DoesNotExistError('name')
+  throw new ERROR.DoesNotExistError('name', name)
 }
 
 export async function createPhysicalProject(name, namespace) {
-  if (!name) throw new ERROR.InvalidArgumentError('name')
+  if (!name) throw new ERROR.InvalidArgumentError('name', name)
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
   if (namespace && !(await doesNamespaceExist(tailsRootDir, namespace))) {
-    throw new ERROR.DoesNotExistError('namespace')
+    throw new ERROR.DoesNotExistError('namespace', namespace)
   }
 
   try {
@@ -45,7 +45,7 @@ export async function createPhysicalProject(name, namespace) {
   } catch (err) {
     if (err.code === 'EEXIST') {
       console.log(err)
-      throw new ERROR.AlreadyExistsError('name')
+      throw new ERROR.AlreadyExistsError('name', name)
     } else {
       throw new Error(err)
     }
@@ -53,7 +53,7 @@ export async function createPhysicalProject(name, namespace) {
 }
 
 export async function deletePhysicalProject(name, namespace) {
-  if (!name) throw new ERROR.InvalidArgumentError('name')
+  if (!name) throw new ERROR.InvalidArgumentError('name', name)
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
@@ -64,7 +64,7 @@ export async function deletePhysicalProject(name, namespace) {
     })
   } catch (err) {
     if (err.code === 'ENOENT') {
-      throw new ERROR.DoesNotExistError('name')
+      throw new ERROR.DoesNotExistError('name', name)
     }
     throw new Error(err)
   }

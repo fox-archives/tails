@@ -31,7 +31,7 @@ export async function listPhysicalNamespaces() {
 }
 
 export async function showPhysicalNamespace(name) {
-  if (!name) throw new ERROR.InvalidArgumentError('name')
+  if (!name) throw new ERROR.InvalidArgumentError('name', name)
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
@@ -55,11 +55,11 @@ export async function showPhysicalNamespace(name) {
     }
   }
 
-  throw new ERROR.DoesNotExistError('namespace')
+  throw new ERROR.DoesNotExistError('namespace', name)
 }
 
 export async function createPhysicalNamespace(name) {
-  if (!name) throw new ERROR.InvalidArgumentError('name')
+  if (!name) throw new ERROR.InvalidArgumentError('name', name)
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
@@ -67,7 +67,7 @@ export async function createPhysicalNamespace(name) {
     await helper.createPhysicalNamespaceRaw(tailsRootDir, name)
   } catch (err) {
     if (err.code === 'EEXIST') {
-      throw new ERROR.AlreadyExistsError('name')
+      throw new ERROR.AlreadyExistsError('name', name)
     }
     console.error(err)
     throw new Error(err)
@@ -75,7 +75,7 @@ export async function createPhysicalNamespace(name) {
 }
 
 export async function deletePhysicalNamespace(name) {
-  if (!name) throw new ERROR.InvalidArgumentError('name')
+  if (!name) throw new ERROR.InvalidArgumentError('name', name)
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
@@ -83,7 +83,7 @@ export async function deletePhysicalNamespace(name) {
     await helper.deletePhysicalNamespaceRaw(tailsRootDir, name)
   } catch (err) {
     if (err.code === 'ENOENT') {
-      throw new ERROR.DoesNotExistError('name')
+      throw new ERROR.DoesNotExistError('name', name)
     }
     console.error(err)
     throw new Error(err)

@@ -6,7 +6,10 @@
   "scripts": {
     "serve": "nodemon -r esm src",
     "start": "node -r esm src",
-    "test": "jest"
+    "test": "jest --config .jestrc.json -i"
+  },
+  "engines": {
+    "node": ">= 12.10.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
