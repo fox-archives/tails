@@ -11,7 +11,6 @@ export async function listPhysicalProject(namespace) {
   if (!namespace) return helper.gatherProjects(tailsRootDir, () => true)
 
   const namespaceFolder = getNamespaceFolder(tailsRootDir, namespace)
-  console.log(namespaceFolder)
   return helper.gatherProjects(namespaceFolder, () => true)
 }
 
@@ -44,7 +43,6 @@ export async function createPhysicalProject(name, namespace) {
     })
   } catch (err) {
     if (err.code === 'EEXIST') {
-      console.log(err)
       throw new ERROR.AlreadyExistsError('name', name)
     } else {
       throw new Error(err)

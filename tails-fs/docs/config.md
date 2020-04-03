@@ -1,79 +1,99 @@
 # config
 
-documentation for the `tails-fs` cli module. this is meant to be a low level api (ex. it throws errors that can be automatically dealt with on their own (eg. writing a key to a non-existing tails config does not automatically create the config file))
-
-not sure if this extends to `namespace.js` and `project.js`; i haven't written documentation for that
+this is meant to be a low level api (ex. it throws errors, that even if they could be dealt with on their own, aren't)
 
 ## exported items
 
 ```js
-import { Config, TAILS_CONFIG_FILE } from 'tails-fs'
+import { Config } from 'tails-fs'
+```
+
+## related
+
+you may also find useful
+
+```js
+// see common.md
+import { TAILS_CONFIG_FILE, TAILS_ERROR } from 'tails-fs'
 ```
 
 ### Config
 
 #### `Config.show()`
 
-returns:
+##### scenario
+
+shows config in its entirety
+
+##### returns
 
 - promise that resolves to object that represents the config file
 
-can throw:
+#### can throw
 
-- `DoesNotExistError` with `err.message` as `config`
+- `DoesNotExistError` with `err.category` as `config`
+- `Error`
 
 #### `Config.create()`
 
+##### scenario
+
 creates config with empty json object
 
-returns:
+##### returns
 
 - promise that resolves to `undefined`
 
-can throw:
+#### can throw
 
-- `AlreadyExistsError` with `err.message` as `config`
+- `AlreadyExistsError` with `err.category` as `config`
+- `Error`
 
 #### `Config.delete()`
 
+##### scenario
+
 deletes config
 
-returns:
+##### returns
 
 - promise that resolves to `undefined`
 
-can throw:
+#### can throw
 
-- `DoesNotExistError` with `err.message` as `config`
+- `DoesNotExistError` with `err.category` as `config`
+- `Error`
 
 #### `Config.get(key)`
 
-returns:
+##### scenario
+
+gets key from config
+
+##### returns
 
 - promise that resolves to _string_, value of key
 
-can throw:
+#### can throw
 
-- `DoesNotExistError` with `err.message` as `config`
-- `InvalidArgumentError` with `err.message` as `key`
+- `DoesNotExistError` with `err.category` as `config`
+- `InvalidArgumentError` with `err.category` as `key`
+- `Error`
 
 #### `Config.set(key, value, isForce)`
 
-returns:
+##### scenario
+
+set key in config
+
+##### returns
 
 - promise that resolves to `undefined`
 
-can throw:
+#### can throw
 
-- `DoesNotExistError` with `err.message` as `config`
-- `DoesNotExistError` with `err.message` as `key`
-- `InvalidArgumentError` with `err.message` as `key`
-- `InvalidArgumentError` with `err.message` as `force`
-
-### `TAILS_CONFIG_FILE`
-
-exported constant variable that gives location of tails config file. here is how it resolves:
-
-1. if `process.env.TAILS_CONFIG_DIR` is set, relative to that, it resolves to `./tails.json`
-1. if `process.env.XDG_CONFIG_HOME` is set, relative to that, it resolves to `./tails/tails.json`
-1. if `process.env.XDG_CONFIG_HOME` is not set, relative to `process.env.HOME|HOMEPATH|USERPROFILE`, it resolves to `./.config/tails/tails.json`
+- `DoesNotExistError` with `err.category` as `config`
+- `DoesNotExistError` with `err.category` as `key`
+- `InvalidArgumentError` with `err.category` as `key`
+- `InvalidArgumentError` with `err.category` as `force`
+- `Error`

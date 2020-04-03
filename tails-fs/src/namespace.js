@@ -69,7 +69,6 @@ export async function createPhysicalNamespace(name) {
     if (err.code === 'EEXIST') {
       throw new ERROR.AlreadyExistsError('name', name)
     }
-    console.error(err)
     throw new Error(err)
   }
 }
@@ -85,7 +84,6 @@ export async function deletePhysicalNamespace(name) {
     if (err.code === 'ENOENT') {
       throw new ERROR.DoesNotExistError('name', name)
     }
-    console.error(err)
     throw new Error(err)
   }
 }

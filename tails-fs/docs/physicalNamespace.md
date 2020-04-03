@@ -1,61 +1,81 @@
 # physicalNamespace
 
-documentation for the `tails-fs` cli module. this is meant to be a low level api
+this is meant to be a low level api (ex. it throws errors, that even if they could be dealt with on their own, aren't)
 
 ## exported items
 
 ```js
-import {
-  PhysicalNamespace
-} from 'tails-fs'
+import { PhysicalNamespace } from 'tails-fs'
+```
+
+## related
+
+you may also find useful
+
+```js
+// see common.md
+import { TAILS_CONFIG_FILE, TAILS_ERROR } from 'tails-fs'
 ```
 
 ### `PhysicalNamespace`
 
 #### `PhysicalNamespace.list()`
 
+##### scenario
+
 lists all project namespaces
 
-returns:
+##### returns
 
-- promise that resolves to *array*, containing objects for each namespace folder
+- promise that resolves to _array_, containing objects for each namespace folder
 
-can throw:
+##### can throw
 
-- ``
+- `Error`
 
-#### `PhysicalNamespace.show()`
+#### `PhysicalNamespace.show(name)`
+
+##### scenario
 
 shows a project namespace
 
-returns:
+##### returns
 
-- a promise that resolves to an *object*, the namespace folder
+- a promise that resolves to an _object_, the namespace folder
 
-can throw:
+##### can throw
 
-- ``
+- `InvalidArgumentError` with `err.category` as `name`
+- `DoesNotExistError` with `err.category` as `name`
+- `Error`
 
-#### `PhysicalNamespace.create()`
+#### `PhysicalNamespace.create(name)`
+
+##### scenario
 
 creates a project namespace
 
-returns:
+##### returns
 
 - a promise that resolves to `undefined`
 
-can throw:
+#### can throw
 
-- ``
+- `InvalidArgumentError` with `err.category` as `name`
+- `AlreadyExistsError` with `err.category` as `name`
+- `Error`
 
-#### `PhysicalNamespace.delete()`
+#### `PhysicalNamespace.delete(name)`
+
+##### scenario
 
 deletes a project namespace
 
-returns:
+##### returns
 
 - a promise that resolves to `undefined`
 
-can throw:
+#### can throw
 
-- ``
+- `InvalidArgumentError` with `err.category` as `name`
+- `DoesNotExistError` with `err.category` as `name`
