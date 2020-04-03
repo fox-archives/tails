@@ -3,6 +3,7 @@ import fs from 'fs-extra'
 
 import { getNamespaceFolder, readDirRaw } from './util'
 
+
 export function createPhysicalProjectRaw(
   tailsRootDir,
   { namespace, projectName }
@@ -17,6 +18,7 @@ export function createPhysicalProjectRaw(
     mode: 0o755,
   })
 }
+
 
 export async function deletePhysicalProjectRaw(
   tailsRootDir,
@@ -33,6 +35,7 @@ export async function deletePhysicalProjectRaw(
   await fs.stat(projectFolder)
   await fs.remove(projectFolder)
 }
+
 
 export async function gatherProjects(tailsRootDir, shouldGather) {
   let unfilteredProjectDirents
@@ -82,6 +85,7 @@ export async function gatherProjects(tailsRootDir, shouldGather) {
   }
   return projects
 }
+
 
 export async function pickProject(tailsRootDir, shouldPick) {
   let unfilteredProjectDirents

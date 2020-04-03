@@ -1,4 +1,4 @@
-# physicalNamespace
+# `PhysicalNamespace`
 
 this is meant to be a low level api (ex. it throws errors, that even if they could be dealt with on their own, aren't)
 
@@ -45,11 +45,11 @@ shows a project namespace
 
 ##### can throw
 
-- `InvalidArgumentError` with `err.category` as `name`
-- `DoesNotExistError` with `err.category` as `name`
+- `InvalidArgumentError` with `err.category` as `namespace`
+- `DoesNotExistError` with `err.category` as `namespace`
 - `Error`
 
-#### `PhysicalNamespace.create(name)`
+#### `PhysicalNamespace.create(namespace)`
 
 ##### scenario
 
@@ -61,11 +61,11 @@ creates a project namespace
 
 #### can throw
 
-- `InvalidArgumentError` with `err.category` as `name`
-- `AlreadyExistsError` with `err.category` as `name`
+- `InvalidArgumentError` with `err.category` as `namespace`
+- `AlreadyExistsError` with `err.category` as `namespace`
 - `Error`
 
-#### `PhysicalNamespace.delete(name)`
+#### `PhysicalNamespace.delete(namespace)`
 
 ##### scenario
 
@@ -77,5 +77,5 @@ deletes a project namespace
 
 #### can throw
 
-- `InvalidArgumentError` with `err.category` as `name`
-- `DoesNotExistError` with `err.category` as `name`
+- `InvalidArgumentError` with `err.category` as `namespace`
+- `DoesNotExistError` with `err.category` as `namespace`

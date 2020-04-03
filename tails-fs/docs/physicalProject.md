@@ -1,4 +1,4 @@
-# physicalProject
+# `PhysicalProject`
 
 this is meant to be a low level api (ex. it throws errors, that even if they could be dealt with on their own, aren't)
 
@@ -31,11 +31,11 @@ list all projects, or within a namespace
 
 ##### can throw
 
-- `InvalidArgumentError` with `err.category` as `name`
-- `DoesNotExistError` with `err.category` as `name`
+- `InvalidArgumentError` with `err.category` as `project`
+- `DoesNotExistError` with `err.category` as `project`
 - `Error`
 
-#### `PhysicalProject.show(name, namespace)`
+#### `PhysicalProject.show(project, namespace)`
 
 ##### scenario
 
@@ -47,11 +47,11 @@ when you want to show info about a project, (ex. if its a symlink)
 
 ##### can throw
 
-- `InvalidArgumentError` with `err.category` as `name`
-- `DoesNotExistError` with `err.category` as `name`
+- `InvalidArgumentError` with `err.category` as `project`
+- `DoesNotExistError` with `err.category` as `project`
 - `Error`
 
-#### `PhysicalProject.create(name, namespace)`
+#### `PhysicalProject.create(project, namespace)`
 
 ##### scenario
 
@@ -63,12 +63,12 @@ when you want to create a project (eg. a project folder)
 
 ##### can throw
 
-- `InvalidArgumentError` with `err.category` as `name`
+- `InvalidArgumentError` with `err.category` as `project`
 - `DoesNotExistError` with `err.category` as `namespace`
-- `AlreadyExistsError` with `err.category` as `name`
+- `AlreadyExistsError` with `err.category` as `project`
 - `Error`
 
-#### `PhysicalProject.delete(name, namespace)`
+#### `PhysicalProject.delete(project, namespace)`
 
 ##### scenario
 
@@ -80,6 +80,6 @@ when you want to delete a project (eg. a project folder)
 
 ##### can throw
 
-- `InvalidArgumentError` with `err.category` as `name`
-- `DoesNotExistError` with `err.category` as `name`
+- `InvalidArgumentError` with `err.category` as `project`
+- `DoesNotExistError` with `err.category` as `project`
 - `Error`

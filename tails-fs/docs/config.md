@@ -1,4 +1,4 @@
-# config
+# `Config`
 
 this is meant to be a low level api (ex. it throws errors, that even if they could be dealt with on their own, aren't)
 
