@@ -20,8 +20,8 @@
 - to automatically setup babel, postcss, stylelint, editorconfig, typescript configs, and manage them in a unified interface, non-repetative for your projects
 - a framework, utility, and ide agnostic tool
 - a super extensible, allowing you to plugin whatever drivers and modules you need to extend the feature set
-- a automated, kubernetes-based one-click deploy solution, for *exactly* the proejcts you want to make public
-- a super cute fully e2e customizable paas for *all* of your personal projects
+- a automated, kubernetes-based one-click deploy solution, for _exactly_ the proejcts you want to make public
+- a super cute fully e2e customizable paas for _all_ of your personal projects
 
 it may sound like a pipedream, but thats what this project is trying to do
 
@@ -30,11 +30,11 @@ what it looks like (so far)
 
 ## goals
 
-- main idea: paas for running *trusted* code (small-medium-sized codebases)
+- main idea: paas for running _trusted_ code (small-medium-sized codebases)
 - use your standard ide tools to edit these projects
 - view projects directly in browser
 - browse through, label, sort, and manage all your projects within the web interface
-- start projects on demand, *quickly*
+- start projects on demand, _quickly_
 - have nice urls during development (no localhost and port crap, all managed for you)
 
 ## details

@@ -1,5 +1,3 @@
 {
-  "plugins": [
-    "@babel/transform-modules-commonjs"
-  ]
+  "plugins": ["@babel/transform-modules-commonjs"]
 }

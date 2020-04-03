@@ -1,0 +1,3 @@
+{
+  "**/*.{json,yaml,yml,vue,css,md,mdx,toml}": ["lint:misc:fix"]
+}

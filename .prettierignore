@@ -1,0 +1,5 @@
+projects/
+node_modules/
+web_modules/
+*.js
+*.ts

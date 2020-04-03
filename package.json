@@ -3,7 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "license": "GPL-3.0",
+  "scripts": {
+    "lint:misc": "prettier --check \"**/*.{json,yaml,yml,vue,css,md,mdx,toml}\"",
+    "lint:misc:fix": "prettier --write \"**/*.{json,yaml,yml,vue,css,md,mdx,toml}\""
+  },
   "devDependencies": {
-    "lerna": "^3.19.0"
+    "lerna": "^3.19.0",
+    "lint-staged": "^10.1.1",
+    "prettier": "^2.0.2",
+    "prettier-plugin-toml": "^0.3.1"
   }
 }
