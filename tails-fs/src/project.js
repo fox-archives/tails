@@ -30,6 +30,7 @@ export async function showPhysicalProject(project, namespace) {
 
 export async function createPhysicalProject(project, namespace) {
   if (!project) throw new ERROR.InvalidArgumentError('project', project);
+  if (project.indexOf('_') === 0) throw new ERROR.InvalidArgumentError('project', project, 'project names cannot start with an underscore')
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR);
 
