@@ -6,7 +6,7 @@ export default {
   inlineDynamicImports: true,
   output: {
     file: 'dist/index.js',
-    format: 'esm',
+    format: 'cjs',
   },
   plugins: [json(), terser()],
 }

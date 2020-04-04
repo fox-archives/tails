@@ -1,0 +1,47 @@
+{
+  // general
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true,
+    "source.fixAll": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+
+  "prettier.configPath": ".prettierrc.json",
+
+  // dbaeumer.vscode-eslint
+  "eslint.quiet": false,
+  "eslint.workingDirectories": [
+    {
+      "directory": "./coordinator",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "./dashboard-mpa",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "./eslint-config-tails",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "./paws",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "./tails-cli",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "./tails-fs",
+      "changeProcessCWD": true
+    }
+  ]
+}
