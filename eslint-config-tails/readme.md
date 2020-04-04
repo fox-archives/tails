@@ -6,5 +6,10 @@ contains project-wide eslint config
 
 ```sh
 yarn add -D eslint-config-tails
+```
 
+```json
+{
+  "extends": ["tails"]
+}
 ```
