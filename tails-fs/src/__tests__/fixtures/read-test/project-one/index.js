@@ -1,4 +1,4 @@
 console.table({
   a: 'alfa',
-  b: 'bravo'
+  b: 'bravo',
 })

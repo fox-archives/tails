@@ -13,13 +13,6 @@ export function handleError(err, argv) {
   const name = argv.name
   const namespace = argv.namespace
 
-  if (err instanceof TAILS_ERROR.InvalidConfigError) {
-    printError(
-      "config does not exist. ensure you have created one with 'tails config create'"
-    )
-    return
-  }
-
   if (err instanceof TAILS_ERROR.InvalidArgumentError) {
     if (err.category === 'key') {
       printError(`error: invalid argument value '${key}'`)

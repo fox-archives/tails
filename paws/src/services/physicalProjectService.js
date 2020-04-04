@@ -1,7 +1,7 @@
 import {
   PhysicalProjectNotFoundError,
   InvalidArgumentError,
-  PhysicalProjectAlreadyExistsError
+  PhysicalProjectAlreadyExistsError,
 } from '../util/errors'
 import { gatherProjects, pickProject } from '../util'
 
@@ -12,7 +12,7 @@ export async function listPhysicalProject(projectDir) {
 export async function showPhysicalProject(projectDir, args = {}) {
   if (!args.name) throw InvalidArgumentError("'name' property missing")
 
-  let project = await pickProject(projectDir, dirent => {
+  let project = await pickProject(projectDir, (dirent) => {
     return dirent.name === args.name
   })
   if (project) return project
@@ -24,12 +24,11 @@ export async function showPhysicalProject(projectDir, args = {}) {
 export async function createPhysicalProject(projectDir, args = {}) {
   if (!args.name) throw InvalidArgumentError("'name' property missing")
 
-  let project = await pickProject(projectDir, dirent => {
+  let project = await pickProject(projectDir, (dirent) => {
     return dirent.name === args.name
   })
   if (project) throw new PhysicalProjectAlreadyExistsError()
 
-  
   // if (args.namespace) {
   // }
 }

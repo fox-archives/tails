@@ -4,21 +4,21 @@ import fs from 'fs-extra'
 import {
   NamespaceNotFoundError,
   NamespaceAlreadyExistsError,
-  InvalidArgumentError
+  InvalidArgumentError,
 } from '../util/errors'
 import { readProjectDirRaw } from '../util'
 
 export async function listNamespace(projectDir) {
   let dirents = await readProjectDirRaw(projectDir)
 
-  let namespaces = [];
-  for(let dirent of dirents) {
+  let namespaces = []
+  for (let dirent of dirents) {
     if (dirent.name.slice(0, 1) === '_') {
       namespaces.push({
         name: dirent.name.slice(1),
         isDirectory: true,
         isFile: false,
-        isSymbolicLink: false
+        isSymbolicLink: false,
       })
     }
   }
@@ -32,34 +32,36 @@ export async function showNamespace(projectDir, args = {}) {
 
   for (let dirent of dirents) {
     if (!dirent.name.slice(0, 1) === '_') continue
-     
+
     if (dirent.name.slice(1) === args.name) {
-      return({
+      return {
         name: dirent.name.slice(1),
         isDirectory: true,
         isFile: false,
-        isSymbolicLink: false
-      })
+        isSymbolicLink: false,
+      }
     }
   }
-  
+
   throw new NamespaceNotFoundError()
 }
 
 export async function createNamespace(projectDir, args = {}) {
   if (!args.name) throw new InvalidArgumentError("'name' property missing")
-  
+
   const namespaceFolder = path.join(projectDir, `_${args.name}`)
 
   try {
     await fs.promises.mkdir(namespaceFolder, {
-      mode: 0o755
+      mode: 0o755,
     })
   } catch (err) {
     if (err.code === 'EEXIST') {
       throw new NamespaceAlreadyExistsError()
     }
-    throw new Error(`${__dirname} an unknown error occurred when trying to create ${namespaceFolder}`)
+    throw new Error(
+      `${__dirname} an unknown error occurred when trying to create ${namespaceFolder}`
+    )
   }
 }
 
@@ -78,6 +80,8 @@ export async function deleteNamespace(projectDir, args = {}) {
       throw new NamespaceNotFoundError()
     }
     console.error(err)
-    throw new Error(`${__dirname}: an unknown error ocurred when trying to remove ${namespaceFolder}`)
+    throw new Error(
+      `${__dirname}: an unknown error ocurred when trying to remove ${namespaceFolder}`
+    )
   }
 }

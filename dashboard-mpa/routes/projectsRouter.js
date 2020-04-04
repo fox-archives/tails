@@ -5,7 +5,7 @@ import {
   createProjectControllerGet,
   createProjectControllerPost,
   editProjectControllerGet,
-  editProjectControllerPost
+  editProjectControllerPost,
 } from '../controllers/projectsController'
 
 const router = Router()

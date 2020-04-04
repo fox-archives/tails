@@ -3,7 +3,7 @@ import { Router } from 'express'
 import {
   settingsController,
   generateScreenshots,
-  generateProjects
+  generateProjects,
 } from '../controllers/settingsController'
 
 const router = Router()

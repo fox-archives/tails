@@ -15,7 +15,7 @@ export class PhysicalProjectNotFoundError extends Error {}
 export class PhysicalProjectAlreadyExistsError extends Error {}
 
 export class NamespaceNotFoundError extends Error {}
-export class NamespaceAlreadyExistsError extends Error{}
+export class NamespaceAlreadyExistsError extends Error {}
 
 // throws anytime invalid arguments or insufficient arguments are passed
 // into a function. if this function is being called by a grpc, it should

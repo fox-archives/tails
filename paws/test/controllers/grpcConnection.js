@@ -45,7 +45,7 @@ async function createGrpcConnection() {
     undefined,
     undefined,
     {
-      channelOverride: channel
+      channelOverride: channel,
     }
   )
   namespaceClient = new namespaceApiPackageObject.NamespaceAPI(
@@ -54,7 +54,7 @@ async function createGrpcConnection() {
     { channelOverride: channel }
   )
   client2 = new configAPIPackageObject.ConfigAPI(undefined, undefined, {
-    channelOverride: channel
+    channelOverride: channel,
   })
 }
 
@@ -66,7 +66,7 @@ export async function initPawsConfig(tailsProjectDir) {
     client2.setConfig(
       {
         key: 'TAILS_PROJECT_DIR',
-        value: tailsProjectDir || path.join($, 'test/fixtures/read-test')
+        value: tailsProjectDir || path.join($, 'test/fixtures/read-test'),
       },
       (err, response) => {
         if (err) console.error(err), reject(err)

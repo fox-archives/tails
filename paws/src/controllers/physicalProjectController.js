@@ -1,14 +1,11 @@
 import * as grpc from 'grpc'
 
 import { RUNTIME_CONFIG } from '../config'
-import {
-  StorageReadError,
-  PhysicalProjectNotFoundError
-} from '../util/errors'
+import { StorageReadError, PhysicalProjectNotFoundError } from '../util/errors'
 import { requireRuntimeConfigInit } from '../util'
 import {
   listPhysicalProject,
-  showPhysicalProject
+  showPhysicalProject,
 } from '../services/physicalProjectService'
 
 export function listPhysicalProjectGrpc(call, cb) {
@@ -23,13 +20,13 @@ export function listPhysicalProjectGrpc(call, cb) {
         return cb({
           code: grpc.status.INTERNAL,
           details:
-            'could not read the storage that contains all of your files (eg. the file system)'
+            'could not read the storage that contains all of your files (eg. the file system)',
         })
       }
-     
+
       return cb({
         code: grpc.status.INTERNAL,
-        details: `${__dirname}: unknown error. please check logs`
+        details: `${__dirname}: unknown error. please check logs`,
       })
     }
   })()
@@ -42,20 +39,20 @@ export function showPhysicalProjectGrpc(call, cb) {
     if (!call.request.name) {
       return cb({
         code: grpc.status.INVALID_ARGUMENT,
-        details: "must have a property called 'name'"
+        details: "must have a property called 'name'",
       })
     }
 
     try {
       const obj = await showPhysicalProject(RUNTIME_CONFIG.TAILS_PROJECT_DIR, {
-        name: call.request.name
+        name: call.request.name,
       })
       cb(null, obj)
     } catch (err) {
       if (err instanceof PhysicalProjectNotFoundError) {
         return cb({
           code: grpc.status.NOT_FOUND,
-          details: 'project with the specified name not found'
+          details: 'project with the specified name not found',
         })
       }
 
@@ -63,13 +60,13 @@ export function showPhysicalProjectGrpc(call, cb) {
         return cb({
           code: grpc.status.INTERNAL,
           details:
-            'could not read the storage that contains all of your files (eg. the file system)'
+            'could not read the storage that contains all of your files (eg. the file system)',
         })
       }
 
       return cb({
         code: grpc.status.INTERNAL,
-        details: `${__dirname}: unknown error. please check logs`
+        details: `${__dirname}: unknown error. please check logs`,
       })
     }
   })()

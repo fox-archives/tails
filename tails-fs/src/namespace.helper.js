@@ -9,7 +9,6 @@ export function createPhysicalNamespaceRaw(tailsRootDir, namespace) {
   })
 }
 
-
 export async function deletePhysicalNamespaceRaw(tailsRootDir, namespace) {
   // we include the stat because fs.remove from fs-extra does not
   // error if the folder does not exist. fs.promises.stat does

@@ -3,22 +3,25 @@ import { operatorReq } from '../core/fetch'
 
 export async function projectsController(req, res, next) {
   try {
-    nats.request('tails.project.list', {
-      specversion: '1.0',
-      type: 'tails.project.list',
-      source: 'dashboard-mpa',
-      id: 'actualid',
-      time: 'actualtime'
-    }, natsres => {
-
-      res.render('pages/projects', {
-        hero: {
-          header: 'welcome to tails',
-          body: "let's get started"
-        },
-        projects: natsres.projects
-      })
-    })
+    nats.request(
+      'tails.project.list',
+      {
+        specversion: '1.0',
+        type: 'tails.project.list',
+        source: 'dashboard-mpa',
+        id: 'actualid',
+        time: 'actualtime',
+      },
+      (natsres) => {
+        res.render('pages/projects', {
+          hero: {
+            header: 'welcome to tails',
+            body: "let's get started",
+          },
+          projects: natsres.projects,
+        })
+      }
+    )
   } catch (err) {
     console.error(err)
     next(new Error('failed to get projects'))
@@ -28,8 +31,8 @@ export async function projectsController(req, res, next) {
 export function createProjectControllerGet(req, res) {
   res.render('forms/createProjectForm', {
     hero: {
-      header: 'create new project'
-    }
+      header: 'create new project',
+    },
   })
 }
 
@@ -42,8 +45,8 @@ export async function createProjectControllerPost(req, res) {
   const project = await operatorReq.post('/api/project/create', {
     body: JSON.stringify({
       name,
-      type
-    })
+      type,
+    }),
   })
 
   res.json(project)
@@ -59,9 +62,9 @@ export async function editProjectControllerGet(req, res) {
   res.render('forms/editProjectForm', {
     hero: {
       header: 'edit existing project',
-      body: `edit the ${projectName} project`
+      body: `edit the ${projectName} project`,
     },
-    project
+    project,
   })
 }
 

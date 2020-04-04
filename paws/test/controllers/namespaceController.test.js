@@ -9,7 +9,7 @@ import * as C from '../constants'
 import {
   createGrpcConnection,
   initPawsConfig,
-  namespaceClient
+  namespaceClient,
 } from './grpcConnection'
 
 const CORRECT_NAMESPACE_DIR = 'project-collection'
@@ -27,7 +27,7 @@ describe('listNamespaceGrpc', () => {
     await initPawsConfig(C.TAILS_PROJECT_DIR_READ)
   })
 
-  it('correct listNamespace with correct parameters', done => {
+  it('correct listNamespace with correct parameters', (done) => {
     namespaceClient.listNamespace({}, (err, response) => {
       expect(err).toBeNull()
       expect(_.sortBy(response.namespaces, 'name')).toEqual(
@@ -37,14 +37,14 @@ describe('listNamespaceGrpc', () => {
               name: 'project-grouping-2',
               isDirectory: true,
               isFile: false,
-              isSymbolicLink: false
+              isSymbolicLink: false,
             },
             {
               name: 'project-grouping',
               isDirectory: true,
               isFile: false,
-              isSymbolicLink: false
-            }
+              isSymbolicLink: false,
+            },
           ],
           'name'
         )
@@ -60,10 +60,10 @@ describe('showNamespaceGrpc', () => {
     await initPawsConfig(C.TAILS_PROJECT_DIR_WRITE)
   })
 
-  it('shows a namespace properly', done => {
+  it('shows a namespace properly', (done) => {
     namespaceClient.showNamespace(
       {
-        name: CORRECT_NAMESPACE_DIR
+        name: CORRECT_NAMESPACE_DIR,
       },
       (err, response) => {
         expect(err).toBeNull()
@@ -71,14 +71,14 @@ describe('showNamespaceGrpc', () => {
           name: CORRECT_NAMESPACE_DIR,
           isDirectory: true,
           isFile: false,
-          isSymbolicLink: false
+          isSymbolicLink: false,
         })
         done()
       }
     )
   })
 
-  it('fails with invalid arguments', done => {
+  it('fails with invalid arguments', (done) => {
     namespaceClient.showNamespace({}, (err, response) => {
       expect(err).toBeInstanceOf(Error)
       expect(err.code).toBe(grpc.status.INVALID_ARGUMENT)
@@ -86,11 +86,11 @@ describe('showNamespaceGrpc', () => {
     })
   })
 
-  it('fails with invalid namespace', done => {
+  it('fails with invalid namespace', (done) => {
     const invalid = 'invalid-namespace-abc'
     namespaceClient.showNamespace(
       {
-        name: invalid
+        name: invalid,
       },
       (err, response) => {
         expect(err).toBeInstanceOf(Error)
@@ -109,10 +109,10 @@ describe('createNamespaceGrpc', () => {
   })
   afterEach(async () => await fixNamespaceFixtures())
 
-  it('succeeds with valid arguments', done => {
+  it('succeeds with valid arguments', (done) => {
     namespaceClient.createNamespace(
       {
-        name: 'some-namespace-name'
+        name: 'some-namespace-name',
       },
       async (err, response) => {
         expect(err).toBeNull()
@@ -121,7 +121,7 @@ describe('createNamespaceGrpc', () => {
     )
   })
 
-  it('fails with invalid arguments', done => {
+  it('fails with invalid arguments', (done) => {
     namespaceClient.createNamespace({}, (err, response) => {
       expect(err).toBeInstanceOf(Error)
       expect(err.code).toBe(grpc.status.INVALID_ARGUMENT)
@@ -138,7 +138,7 @@ describe('deleteNamespaceGrpc', () => {
   })
   afterEach(async () => await fixNamespaceFixtures())
 
-  it('fails with invalid arguments', done => {
+  it('fails with invalid arguments', (done) => {
     namespaceClient.deleteNamespace({}, (err, response) => {
       expect(err).toBeInstanceOf(Error)
       expect(err.code).toBe(grpc.status.INVALID_ARGUMENT)
@@ -146,10 +146,10 @@ describe('deleteNamespaceGrpc', () => {
     })
   })
 
-  it('fails when namespace already deleted', done => {
+  it('fails when namespace already deleted', (done) => {
     namespaceClient.deleteNamespace(
       {
-        name: 'already-deleted-namespace'
+        name: 'already-deleted-namespace',
       },
       (err, response) => {
         expect(err).toBeInstanceOf(Error)

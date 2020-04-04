@@ -1,5 +1,3 @@
 {
-  "extends": [
-    "tails"
-  ]
+  "extends": ["tails"]
 }

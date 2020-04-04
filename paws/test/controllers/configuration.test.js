@@ -11,11 +11,11 @@ describe.skip('configurationGeneral', () => {
     await createGrpcConnection()
   })
 
-  it('fails to execute grpc call when config has not been setup', done => {
+  it('fails to execute grpc call when config has not been setup', (done) => {
     const projectName = 'project-one'
     client.showPhysicalProject(
       {
-        name: projectName
+        name: projectName,
       },
       (err, response) => {
         if (response) console.log(response)

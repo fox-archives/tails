@@ -8,7 +8,7 @@ import { protoLoaderOptions, $ } from '../config'
 let serverInstance
 
 function GrpcServer() {}
-GrpcServer.prototype.create = async function(
+GrpcServer.prototype.create = async function (
   physicalProjectServices,
   configAPIServices,
   services
@@ -42,15 +42,14 @@ GrpcServer.prototype.create = async function(
     server.addService(
       physicalProjectAPIPackageObject.PhysicalProjectAPI.service,
       {
-        ...physicalProjectServices
+        ...physicalProjectServices,
       }
     )
-    server.addService(namespaceAPIPackageObject.NamespaceAPI.service,
-      {
-        ...services.namespaceAPI
-      })
+    server.addService(namespaceAPIPackageObject.NamespaceAPI.service, {
+      ...services.namespaceAPI,
+    })
     server.addService(configAPIPackageObject.ConfigAPI.service, {
-      ...configAPIServices
+      ...configAPIServices,
     })
     server.bind('0.0.0.0:50053', grpc.ServerCredentials.createInsecure())
     server.start()

@@ -20,7 +20,7 @@ hbs.registerPartials('views/partials')
 hbs.registerPartials('views/components')
 hbs.registerPartials('views/forms')
 hbs.localsAsTemplateData(app)
-hbs.registerHelper('ifEquals', function(arg1, arg2, opts) {
+hbs.registerHelper('ifEquals', function (arg1, arg2, opts) {
   return arg1 == arg2 ? opts.fn(this) : opts.inverse(this)
 })
 

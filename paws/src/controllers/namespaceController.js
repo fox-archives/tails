@@ -4,7 +4,7 @@ import {
   listNamespace,
   showNamespace,
   createNamespace,
-  deleteNamespace
+  deleteNamespace,
 } from '../services/namespaceService'
 import { requireRuntimeConfigInit } from '../util'
 import { RUNTIME_CONFIG } from '../config'
@@ -22,13 +22,13 @@ export function listNamespaceGrpc(call, cb) {
         return cb({
           code: grpc.status.INTERNAL,
           details:
-            'could not read the storage that contains all of your files (eg. the file system)'
+            'could not read the storage that contains all of your files (eg. the file system)',
         })
       }
 
       return cb({
         code: grpc.status.INTERNAL,
-        details: `${__dirname}: unknown error. please check logs`
+        details: `${__dirname}: unknown error. please check logs`,
       })
     }
   })()
@@ -41,20 +41,20 @@ export function showNamespaceGrpc(call, cb) {
     if (!call.request.name) {
       return cb({
         code: grpc.status.INVALID_ARGUMENT,
-        details: "must have a property called 'name'"
+        details: "must have a property called 'name'",
       })
     }
 
     try {
       const obj = await showNamespace(RUNTIME_CONFIG.TAILS_PROJECT_DIR, {
-        name: call.request.name
+        name: call.request.name,
       })
       cb(null, obj)
     } catch (err) {
       if (err instanceof NamespaceNotFoundError) {
         return cb({
           code: grpc.status.NOT_FOUND,
-          details: 'project with the specified name not found'
+          details: 'project with the specified name not found',
         })
       }
 
@@ -62,13 +62,13 @@ export function showNamespaceGrpc(call, cb) {
         return cb({
           code: grpc.status.INTERNAL,
           details:
-            'could not read the storage that contains all of your files (eg. the file system)'
+            'could not read the storage that contains all of your files (eg. the file system)',
         })
       }
 
       return cb({
         code: grpc.status.INTERNAL,
-        details: `${__dirname}: unknown error. please check logs`
+        details: `${__dirname}: unknown error. please check logs`,
       })
     }
   })()
@@ -81,20 +81,20 @@ export function createNamespaceGrpc(call, cb) {
     if (!call.request.name) {
       return cb({
         code: grpc.status.INVALID_ARGUMENT,
-        details: "must have a property called 'name'"
+        details: "must have a property called 'name'",
       })
     }
 
     try {
       const obj = await createNamespace(RUNTIME_CONFIG.TAILS_PROJECT_DIR, {
-        name: call.request.name
+        name: call.request.name,
       })
       cb(null, obj)
     } catch (err) {
       if (err instanceof NamespaceNotFoundError) {
         return cb({
           code: grpc.status.NOT_FOUND,
-          details: 'project with the specified name not found'
+          details: 'project with the specified name not found',
         })
       }
 
@@ -102,13 +102,13 @@ export function createNamespaceGrpc(call, cb) {
         return cb({
           code: grpc.status.INTERNAL,
           details:
-            'could not read the storage that contains all of your files (eg. the file system)'
+            'could not read the storage that contains all of your files (eg. the file system)',
         })
       }
 
       return cb({
         code: grpc.status.INTERNAL,
-        details: `${__dirname}: unknown error. please check logs`
+        details: `${__dirname}: unknown error. please check logs`,
       })
     }
   })()
@@ -121,20 +121,20 @@ export function deleteNamespaceGrpc(call, cb) {
     if (!call.request.name) {
       return cb({
         code: grpc.status.INVALID_ARGUMENT,
-        details: "must have a property called 'name'"
+        details: "must have a property called 'name'",
       })
     }
 
     try {
       const obj = deleteNamespace(RUNTIME_CONFIG.TAILS_PROJECT_DIR, {
-        name: call.request.name
+        name: call.request.name,
       })
       cb(null, obj)
     } catch (err) {
       if (err instanceof NamespaceNotFoundError) {
         return cb({
           code: grpc.status.NOT_FOUND,
-          details: 'project with the specified name not found'
+          details: 'project with the specified name not found',
         })
       }
 
@@ -142,13 +142,13 @@ export function deleteNamespaceGrpc(call, cb) {
         return cb({
           code: grpc.status.INTERNAL,
           details:
-            'could not read the storage that contains all of your files (eg. the file system)'
+            'could not read the storage that contains all of your files (eg. the file system)',
         })
       }
 
       return cb({
         code: grpc.status.INTERNAL,
-        details: `${__dirname}: unknown error. please check logs`
+        details: `${__dirname}: unknown error. please check logs`,
       })
     }
   })()

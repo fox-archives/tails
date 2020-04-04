@@ -10,7 +10,7 @@ import {
 } from '../../src/util/errors'
 import {
   listPhysicalProject,
-  showPhysicalProject
+  showPhysicalProject,
 } from '../../src/services/physicalProjectService'
 
 const CORRECT_PROJECT_DIR = 'project-three'
@@ -26,9 +26,7 @@ describe('listPhysicalProject', () => {
 
   it('throws StorageReadError on invalid project directory', async () => {
     const invalid = path.join($, 'src/test/fixtures/fake-read-test')
-    await expect(listPhysicalProject(invalid)).rejects.toThrow(
-      StorageReadError
-    )
+    await expect(listPhysicalProject(invalid)).rejects.toThrow(StorageReadError)
   })
 
   it('throws StorageReadError on invalid project directory', async () => {
@@ -40,27 +38,27 @@ describe('listPhysicalProject', () => {
 describe('showPhysicalProject', () => {
   it('returns correct data with', async () => {
     const project = await showPhysicalProject(C.TAILS_PROJECT_DIR_READ, {
-      name: CORRECT_PROJECT_DIR
+      name: CORRECT_PROJECT_DIR,
     })
 
     expect(project).toStrictEqual({
       name: CORRECT_PROJECT_DIR,
       isDirectory: true,
       isFile: false,
-      isSymbolicLink: false
+      isSymbolicLink: false,
     })
   })
 
   it('returns correct data for a subfolder', async () => {
     const project = await showPhysicalProject(C.TAILS_PROJECT_DIR_READ, {
-      name: CORRECT_PROJECT_SUBDIR
+      name: CORRECT_PROJECT_SUBDIR,
     })
 
     expect(project).toStrictEqual({
       name: CORRECT_PROJECT_SUBDIR,
       isDirectory: true,
       isFile: false,
-      isSymbolicLink: false
+      isSymbolicLink: false,
     })
   })
 
@@ -68,7 +66,7 @@ describe('showPhysicalProject', () => {
     const invalid = 'invalid-project-name-abc-xyz'
     await expect(
       showPhysicalProject(C.TAILS_PROJECT_DIR_READ, {
-        name: invalid
+        name: invalid,
       })
     ).rejects.toThrow(PhysicalProjectNotFoundError)
   })
@@ -78,7 +76,7 @@ describe('showPhysicalProject', () => {
     const invalid = 'invalid-project-dir-abc-xyz'
     await expect(
       showPhysicalProject(invalid, {
-        name: C.TAILS_PROJECT_DIR_READ
+        name: C.TAILS_PROJECT_DIR_READ,
       })
     ).rejects.toThrow(StorageReadError)
   })

@@ -5,7 +5,7 @@ this is meant to be a low level api (ex. it throws errors, that even if they cou
 ## exported items
 
 ```js
-import { PhysicalNamespace } from 'tails-fs';
+import { PhysicalNamespace } from 'tails-fs'
 ```
 
 ## related
@@ -14,7 +14,7 @@ you may also find useful
 
 ```js
 // see common.md
-import { TAILS_CONFIG_FILE, TAILS_ERROR } from 'tails-fs';
+import { TAILS_CONFIG_FILE, TAILS_ERROR } from 'tails-fs'
 ```
 
 ### `PhysicalNamespace`

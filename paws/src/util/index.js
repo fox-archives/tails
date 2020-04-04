@@ -10,26 +10,24 @@ export async function readProjectDirRaw(projectDir) {
   try {
     return await fs.promises.readdir(projectDir, {
       encoding: 'utf8',
-      withFileTypes: true
+      withFileTypes: true,
     })
   } catch (err) {
-    throw new StorageReadError(
-      `failed to read directory ${projectDir}`
-    )
+    throw new StorageReadError(`failed to read directory ${projectDir}`)
   }
 }
 
 export async function fsCreateNamespace(projectDir, namespace) {
   const namespaceFolder = path.join(projectDir, `${_}namespace`)
   await fs.promises.mkdir(namespaceFolder, {
-    mode: 0o755
+    mode: 0o755,
   })
 }
 
 export async function fsCreateProject(projectDir, projectName, namespace) {
   if (namespace === 'default') {
     await fs.promises.mkdir
-  } 
+  }
 }
 
 // cb is the cb argument received from grpc functions
@@ -38,7 +36,7 @@ export async function requireRuntimeConfigInit(cb) {
     cb({
       code: grpc.status.FAILED_PRECONDITION,
       details:
-        'runtime configuration not setup. ensure you first initiate grpc call to set config before making any other calls'
+        'runtime configuration not setup. ensure you first initiate grpc call to set config before making any other calls',
     })
     return true
   }
@@ -70,7 +68,7 @@ export async function gatherProjects(projectDir, shouldGather) {
           name: dirent.name,
           isDirectory: dirent.isDirectory(),
           isFile: dirent.isFile(),
-          isSymbolicLink: dirent.isSymbolicLink()
+          isSymbolicLink: dirent.isSymbolicLink(),
         })
     }
 
@@ -87,7 +85,7 @@ export async function gatherProjects(projectDir, shouldGather) {
           name: subDirent.name,
           isDirectory: subDirent.isDirectory(),
           isFile: subDirent.isFile(),
-          isSymbolicLink: subDirent.isSymbolicLink()
+          isSymbolicLink: subDirent.isSymbolicLink(),
         })
     }
   }
@@ -108,7 +106,7 @@ export async function pickProject(projectDir, shouldPick) {
           name: dirent.name,
           isDirectory: dirent.isDirectory(),
           isFile: dirent.isFile(),
-          isSymbolicLink: dirent.isSymbolicLink()
+          isSymbolicLink: dirent.isSymbolicLink(),
         }
     }
 
@@ -125,7 +123,7 @@ export async function pickProject(projectDir, shouldPick) {
           name: subDirent.name,
           isDirectory: subDirent.isDirectory(),
           isFile: subDirent.isFile(),
-          isSymbolicLink: subDirent.isSymbolicLink()
+          isSymbolicLink: subDirent.isSymbolicLink(),
         }
     }
   }

@@ -6,7 +6,6 @@ import * as helper from './namespace.helper'
 
 const TAILS_ROOT_DIR = 'TAILS_ROOT_DIR'
 
-
 export async function listPhysicalNamespaces() {
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
@@ -30,7 +29,6 @@ export async function listPhysicalNamespaces() {
   }
   return { namespaces }
 }
-
 
 export async function showPhysicalNamespace(namespace) {
   if (!namespace) throw new ERROR.InvalidArgumentError('namespace', namespace)
@@ -60,7 +58,6 @@ export async function showPhysicalNamespace(namespace) {
   throw new ERROR.DoesNotExistError('namespace', namespace)
 }
 
-
 export async function createPhysicalNamespace(namespace) {
   if (!namespace) throw new ERROR.InvalidArgumentError('namespace', namespace)
 
@@ -76,7 +73,6 @@ export async function createPhysicalNamespace(namespace) {
   }
 }
 
-
 export async function deletePhysicalNamespace(namespace) {
   if (!namespace) throw new ERROR.InvalidArgumentError('namespace', namespace)
 
@@ -91,7 +87,6 @@ export async function deletePhysicalNamespace(namespace) {
     throw new Error(err)
   }
 }
-
 
 export class PhysicalNamespace {
   static list() {

@@ -9,13 +9,13 @@ import {
   listNamespace,
   showNamespace,
   createNamespace,
-  deleteNamespace
+  deleteNamespace,
 } from '../../src/services/namespaceService'
 import {
   StorageReadError,
   InvalidArgumentError,
   NamespaceNotFoundError,
-  NamespaceAlreadyExistsError
+  NamespaceAlreadyExistsError,
 } from '../../src/util/errors'
 
 const CORRECT_NAMESPACE_DIR = 'project-grouping'
@@ -37,14 +37,14 @@ describe('listNamespace', () => {
           name: 'project-grouping',
           isDirectory: true,
           isFile: false,
-          isSymbolicLink: false
+          isSymbolicLink: false,
         },
         {
           name: 'project-grouping-2',
           isDirectory: true,
           isFile: false,
-          isSymbolicLink: false
-        }
+          isSymbolicLink: false,
+        },
       ]),
       'name'
     )
@@ -59,14 +59,14 @@ describe('listNamespace', () => {
 describe('showNamespace', () => {
   it('returns correct data with proper parameters', async () => {
     const namespace = await showNamespace(C.TAILS_PROJECT_DIR_READ, {
-      name: CORRECT_NAMESPACE_DIR
+      name: CORRECT_NAMESPACE_DIR,
     })
 
     expect(namespace).toStrictEqual({
       name: CORRECT_NAMESPACE_DIR,
       isDirectory: true,
       isFile: false,
-      isSymbolicLink: false
+      isSymbolicLink: false,
     })
   })
 
@@ -74,7 +74,7 @@ describe('showNamespace', () => {
     const invalid = 'non-existent-namespace-abc'
     await expect(
       showNamespace(C.TAILS_PROJECT_DIR_READ, {
-        name: invalid
+        name: invalid,
       })
     ).rejects.toThrow(NamespaceNotFoundError)
   })
@@ -84,7 +84,7 @@ describe('showNamespace', () => {
 
     await expect(
       showNamespace(invalid, {
-        name: CORRECT_NAMESPACE_DIR
+        name: CORRECT_NAMESPACE_DIR,
       })
     ).rejects.toThrow(StorageReadError)
   })
@@ -99,7 +99,7 @@ describe('createNamespace', () => {
 
     await expect(
       createNamespace(C.TAILS_PROJECT_DIR_WRITE, {
-        name: namespace
+        name: namespace,
       })
     ).resolves.not.toThrow()
   })
@@ -115,7 +115,7 @@ describe('createNamespace', () => {
 
     await expect(
       createNamespace(C.TAILS_PROJECT_DIR_WRITE, {
-        name: namespace
+        name: namespace,
       })
     ).rejects.toThrow(NamespaceAlreadyExistsError)
   })
@@ -130,7 +130,7 @@ describe('deleteNamespace', () => {
 
     await expect(
       deleteNamespace(C.TAILS_PROJECT_DIR_WRITE, {
-        name: namespace
+        name: namespace,
       })
     ).resolves.not.toThrow()
   })
@@ -146,7 +146,7 @@ describe('deleteNamespace', () => {
 
     await expect(
       deleteNamespace(C.TAILS_PROJECT_DIR_WRITE, {
-        name: invalid
+        name: invalid,
       })
     ).rejects.toThrow(NamespaceNotFoundError)
   })
