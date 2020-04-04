@@ -1,34 +1,35 @@
 import { PhysicalNamespace } from 'tails-fs'
 
-import { handleError } from '../util'
+import { handleError, printSuccess } from '../util'
 
 export const command = 'physicalNamespace <command>'
+export const aliases = ['pns']
 export const desc = 'show or edit physicalNamespace information'
 export const builder = function (yargs) {
   yargs.command('list', 'list all namespaces', async () => {
     try {
       let namespaces = await PhysicalNamespace.list()
-      console.log(namespaces)
+      printSuccess(namespaces)
     } catch (err) {
       handleError(err)
     }
   })
 
   yargs.command(
-    'show [namespace]',
+    'show <namespace>',
     'show a namespace',
     (yargs) => {
-      yargs.positional('name', {
+      yargs.positional('namespace', {
         type: 'string',
         describe: 'name of namespace',
       })
     },
     async (argv) => {
-      const name = argv.name
+      const namespace = argv.namespace
 
       try {
-        let namespace = await PhysicalNamespace.show(name)
-        console.log(namespace)
+        let namespaceObject = await PhysicalNamespace.show(namespace)
+        console.log(namespaceObject)
       } catch (err) {
         handleError(err, argv)
       }
@@ -36,20 +37,20 @@ export const builder = function (yargs) {
   )
 
   yargs.command(
-    'create [namespace]',
+    'create <namespace>',
     'create a namespace',
     (yargs) => {
-      yargs.positional('name', {
+      yargs.positional('namespace', {
         type: 'string',
         describe: 'name of namespace',
       })
     },
     async (argv) => {
-      const name = argv.name
+      const namespace = argv.namespace
 
       try {
-        await PhysicalNamespace.create(name)
-        console.log(`created namespace: ${name}`)
+        await PhysicalNamespace.create(namespace)
+        printSuccess(`created namespace '${namespace}'`)
       } catch (err) {
         handleError(err, argv)
       }
@@ -57,25 +58,28 @@ export const builder = function (yargs) {
   )
 
   yargs.command(
-    'delete [namespace]',
+    'delete <namespace>',
     'delete a namespace',
     (yargs) => {
-      yargs.positional('name', {
+      yargs.positional('namespace', {
         type: 'string',
         describe: 'name of namespace',
       })
     },
     async (argv) => {
-      const name = argv.name
+      const namespace = argv.namespace
 
       try {
-        await PhysicalNamespace.delete(name)
-        console.log(`deleted namespace: ${name}`)
+        await PhysicalNamespace.delete(namespace)
+        printSuccess(`deleted namespace '${namespace}'`)
       } catch (err) {
         handleError(err, argv)
       }
     }
   )
+
+  yargs.example('$0 physicalNamespace show myNamespace')
+  yargs.example('$0 physicalNamespace delete myNamespace')
 
   return yargs
 }

@@ -1,8 +1,9 @@
 import { PhysicalProject } from 'tails-fs'
 
-import { handleError } from '../util'
+import { handleError, printSuccess } from '../util'
 
 export const command = 'physicalProject <command>'
+export const aliases = ['pproj']
 export const desc = 'show or edit physicalProject information'
 export const builder = function (yargs) {
   yargs.command(
@@ -27,26 +28,28 @@ export const builder = function (yargs) {
   )
 
   yargs.command(
-    'show [project]',
+    'show <project>',
     'show a project',
     (yargs) => {
-      yargs.positional('name', {
+      yargs.positional('project', {
         type: 'string',
-        describe: 'project name',
+        describe: 'name of your project',
       })
 
-      yargs.positional('namespace', {
+      yargs.option('namespace', {
         type: 'string',
         describe: 'namespace project is in',
+        nargs: 1,
+        demand: false
       })
     },
     async (argv) => {
-      const name = argv.name
+      const project = argv.project
       const namespace = argv.namespace
 
       try {
-        let project = await PhysicalProject.show(name, namespace)
-        console.log(project)
+        let projectObject = await PhysicalProject.show(project, namespace)
+        console.log(projectObject)
       } catch (err) {
         handleError(err, argv)
       }
@@ -54,26 +57,33 @@ export const builder = function (yargs) {
   )
 
   yargs.command(
-    'create [project]',
+    'create <project>',
     'create a project',
     (yargs) => {
-      yargs.positional('name', {
+      yargs.positional('project', {
         type: 'string',
-        describe: 'project name',
+        describe: 'name of your project',
       })
 
-      yargs.positional('namespace', {
+      yargs.option('namespace', {
         type: 'string',
         describe: 'namespace project is in',
+        nargs: 1,
+        demand: false
       })
     },
     async (argv) => {
-      const name = argv.name
+      const project = argv.project
       const namespace = argv.namespace
 
       try {
-        await PhysicalProject.create(name, namespace)
-        console.log(`created project ${name}`)
+        await PhysicalProject.create(project, namespace)
+        if (!namespace) {
+          printSuccess(`created project '${project}'`)
+
+        } {
+           printSuccess(`created project '${project}' in namespace '${namespace}`)
+        }
       } catch (err) {
         handleError(err, argv)
       }
@@ -81,31 +91,43 @@ export const builder = function (yargs) {
   )
 
   yargs.command(
-    'delete [project]',
+    'delete <project>',
     'delete a project',
     (yargs) => {
-      yargs.positional('name', {
+      yargs.positional('project', {
         type: 'string',
-        describe: 'project name',
+        describe: 'name of your project',
       })
 
-      yargs.positional('namespace', {
+      yargs.option('namespace', {
         type: 'string',
         describe: 'namespace project is in',
+        nargs: 1,
+        demand: false
       })
     },
     async (argv) => {
-      const name = argv.name
+      const project = argv.project
       const namespace = argv.namespace
 
       try {
-        await PhysicalProject.delete(name, namespace)
-        console.log(`deleted project ${name}`)
+        await PhysicalProject.delete(project, namespace)
+        if (!namespace ) {
+          printSuccess(`deleted project '${project}'`)
+
+        } else {
+          printSuccess(`created project '${project}' in namespace '${namespace}`)
+
+        }
       } catch (err) {
         handleError(err, argv)
       }
     }
   )
 
+  yargs.example('$0 physicalProject show myProject')
+  yargs.example('$0 physicalProject create myProject --namespace myNamespace')
+  yargs.example('$0 physicalProject create myProject')
+  
   return yargs
 }

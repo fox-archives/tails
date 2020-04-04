@@ -1,14 +1,15 @@
 import { Config } from 'tails-fs'
 
-import { handleError } from '../util'
+import { handleError, printSuccess } from '../util'
 
 export const command = 'config <command>'
+export const aliases = ['cfg']
 export const desc = 'show or edit tails configuration items'
 export const builder = function (yargs) {
-  yargs.command('show', 'shows the whole config', async (argv) => {
+  yargs.command('show', 'show the whole config', async (argv) => {
     try {
       let config = await Config.show()
-      console.log(`config: ${JSON.stringify(config)}`)
+      console.log(config)
     } catch (err) {
       handleError(err, argv)
     }
@@ -17,7 +18,7 @@ export const builder = function (yargs) {
   yargs.command('create', 'create a blank config', async (argv) => {
     try {
       await Config.create()
-      console.log('config created')
+      printSuccess('config created')
     } catch (err) {
       handleError(err, argv)
     }
@@ -26,15 +27,15 @@ export const builder = function (yargs) {
   yargs.command('delete', 'delete the whole config', async (argv) => {
     try {
       await Config.delete()
-      console.log('config deleted')
+      printSuccess('config deleted')
     } catch (err) {
       handleError(err, argv)
     }
   })
 
   yargs.command(
-    'get',
-    'get key in config',
+    'get <key>',
+    'get a key from the config',
     (yargs) => {
       yargs.positional('key', {
         type: 'string',
@@ -46,7 +47,7 @@ export const builder = function (yargs) {
 
       try {
         const value = await Config.get(key)
-        console.log(`key '${key}' has value '${value}'`)
+        printSuccess(`key '${key}' has value '${value}'`)
       } catch (err) {
         handleError(err, argv)
       }
@@ -54,19 +55,20 @@ export const builder = function (yargs) {
   )
 
   yargs.command(
-    'set',
-    'set key in config',
+    'set <key>',
+    'set a key from the config',
     (yargs) => {
       yargs.positional('key', {
         type: 'string',
-        default: '',
         describe: 'key to set',
+        implies: 'value',
       })
 
-      yargs.positional('value', {
+      yargs.option('value', {
         type: 'string',
-        default: '',
         describe: 'value to set',
+        nargs: 1,
+        demand: true
       })
     },
     async (argv) => {
@@ -88,13 +90,16 @@ export const builder = function (yargs) {
     }
   )
 
-  yargs.command('find', 'find tails config file location', async (argv) => {
+  yargs.command('find', 'find the location of the config', async (argv) => {
     try {
       const location = await Config.find()
       console.log(location)
     } catch (err) {
-      console.log('err')
       handleError(err, argv)
     }
   })
+
+  yargs.example('$0 config get myKey')
+  yargs.example('$0 config set myKey --value myValue')
 }
+
