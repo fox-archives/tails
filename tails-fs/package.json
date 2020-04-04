@@ -6,7 +6,13 @@
   "scripts": {
     "serve": "nodemon -r esm src",
     "start": "node -r esm src",
-    "test": "jest --config .jestrc.json -i"
+    "test": "jest --config .jestrc.json -i",
+    "lint": "run-s lint:js lint:misc",
+    "lint:fix": "run-s lint:js:fix lint:misc:fix",
+    "lint:js": "eslint .",
+    "lint:js:fix": "eslint . --fix",
+    "lint:misc": "prettier --check .",
+    "lint:misc:fix": "prettier --write ."
   },
   "engines": {
     "node": ">= 12.10.0"
@@ -22,6 +28,7 @@
     "jest": "^25.2.4",
     "jest-cli": "^25.2.4",
     "prettier": "^2.0.2",
+    "prettier-plugin-toml": "^0.3.1",
     "toml": "^3.0.0"
   }
 }

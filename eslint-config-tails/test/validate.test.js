@@ -1,6 +1,6 @@
 import eslint from 'eslint'
 
-import config from '../index'
+import config from '../src'
 
 describe('basic tests', () => {
   test('basic properties', () => {
@@ -18,7 +18,7 @@ describe('basic tests', () => {
 
     let cli = new CLIEngine({
       useEslintrc: false,
-      configFile: '.eslintrc.json'
+      configFile: '.eslintrc.json',
     })
 
     const code = 'let foo = 1\nlet bar = function () {}\nbar(foo)\n'

@@ -5,7 +5,13 @@
   "license": "GPL-3.0",
   "scripts": {
     "build": "rollup --config rollup.config.js",
-    "test": "jest --config .jestrc.json"
+    "test": "jest --config .jestrc.json",
+    "lint": "run-s lint:js lint:misc",
+    "lint:fix": "run-s lint:js:fix lint:misc:fix",
+    "lint:js": "eslint .",
+    "lint:js:fix": "eslint . --fix",
+    "lint:misc": "prettier --check .",
+    "lint:misc:fix": "prettier --write ."
   },
   "dependencies": {
     "babel-eslint": "^10.1.0",
@@ -32,6 +38,7 @@
     "jest": "^25.2.4",
     "jest-extended": "^0.11.5",
     "prettier": "^2.0.2",
+    "prettier-plugin-toml": "^0.3.1",
     "rollup": "^2.3.2",
     "rollup-plugin-terser": "^5.3.0"
   }

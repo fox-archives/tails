@@ -6,7 +6,13 @@
   "scripts": {
     "serve": "nodemon -r esm src/index",
     "start": "node -r esm src/index",
-    "test": "jest"
+    "test": "jest",
+    "lint": "run-s lint:js lint:misc",
+    "lint:fix": "run-s lint:js:fix lint:misc:fix",
+    "lint:js": "eslint .",
+    "lint:js:fix": "eslint . --fix",
+    "lint:misc": "prettier --check .",
+    "lint:misc:fix": "prettier --write ."
   },
   "dependencies": {
     "@grpc/proto-loader": "^0.5.3",
@@ -17,11 +23,12 @@
     "toml": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.7",
+    "@babel/core": "^7.9.0",
     "@babel/plugin-transform-modules-commonjs": "^7.8.3",
     "eslint": "^6.8.0",
     "eslint-config-tails": "^0.1.0",
     "jest": "^25.1.0",
-    "prettier": "^2.0.2"
+    "prettier": "^2.0.2",
+    "prettier-plugin-toml": "^0.3.1"
   }
 }

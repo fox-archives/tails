@@ -4,12 +4,17 @@
   "private": true,
   "license": "GPL-3.0",
   "scripts": {
-    "lint:misc": "prettier --check \"**/*.{json,yaml,yml,vue,css,md,mdx,toml}\"",
-    "lint:misc:fix": "prettier --write \"**/*.{json,yaml,yml,vue,css,md,mdx,toml}\""
+    "lint": "run-s lerna run lint:js lint:misc",
+    "lint:fix": "run-s lint:js:fix lint:misc:fix",
+    "lint:js": "lerna run lint:js",
+    "lint:js:fix": "lerna run lint:js:fix",
+    "lint:misc": "lerna run lint:misc",
+    "lint:misc:fix": "lerna run lint:misc:fix"
   },
   "devDependencies": {
     "lerna": "^3.19.0",
     "lint-staged": "^10.1.1",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.0.2",
     "prettier-plugin-toml": "^0.3.1"
   }

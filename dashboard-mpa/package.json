@@ -6,7 +6,13 @@
   "main": "app.js",
   "scripts": {
     "serve": "nodemon --ignore 'tests/**/*.test.js' -r esm app",
-    "start": "node -r esm app"
+    "start": "node -r esm app",
+    "lint": "run-s lint:js lint:misc",
+    "lint:fix": "run-s lint:js:fix lint:misc:fix",
+    "lint:js": "eslint .",
+    "lint:js:fix": "eslint . --fix",
+    "lint:misc": "prettier --check .",
+    "lint:misc:fix": "prettier --write ."
   },
   "dependencies": {
     "ajv": "^6.10.2",
@@ -21,11 +27,13 @@
     "spectre.css": "^0.5.8"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.0",
     "@types/axios": "^0.14.0",
     "@types/node": "^12.12.14",
     "eslint": "^6.8.0",
     "eslint-config-tails": "^0.1.0",
     "nodemon": "^2.0.1",
-    "prettier": "^2.0.2"
+    "prettier": "^2.0.2",
+    "prettier-plugin-toml": "^0.3.1"
   }
 }
