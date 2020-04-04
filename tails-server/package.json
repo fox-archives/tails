@@ -1,10 +1,12 @@
 {
-  "name": "tails-storage",
+  "name": "tails-server",
   "version": "0.0.0",
   "main": "src/index.js",
   "license": "GPL-3.0",
   "scripts": {
-    "start": "cross-env NODE_ENV=development node -r esm src",
+    "serve": "nodemon -r esm src",
+    "start": "node -r esm src",
+    "test": "jest --config .jestrc.json -i",
     "lint": "run-s lint:js lint:misc",
     "lint:fix": "run-s lint:js:fix lint:misc:fix",
     "lint:js": "eslint .",
@@ -16,18 +18,7 @@
   "engines": {
     "node": ">= 12.10.0"
   },
-  "devDependencies": {
-    "eslint": "^6.8.0",
-    "esm": "^3.2.25",
-    "lint-staged": "^10.1.1",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.0.2",
-    "prettier-plugin-toml": "^0.3.1"
-  },
   "dependencies": {
-    "cross-env": "^7.0.2",
-    "eslint-config-tails": "^0.2.0",
-    "esm": "^3.2.25",
-    "tails-fs": "^0.1.0"
+    "esm": "^3.2.25"
   }
 }
