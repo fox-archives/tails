@@ -1,0 +1,19 @@
+{
+  "name": "tails-storage",
+  "version": "0.0.0",
+  "main": "src/index.js",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "esm": "^3.2.25",
+    "lint-staged": "^10.1.1",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.0.2",
+    "prettier-plugin-toml": "^0.3.1"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.2",
+    "eslint-config-tails": "^0.2.0",
+    "tails-fs": "^0.1.0"
+  }
+}

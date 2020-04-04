@@ -1,9 +1,7 @@
 {
-  "version": "0.0.0",
-  "useWorkspaces": false,
+  "useWorkspaces": true,
   "npmClient": "yarn",
-  "packages": ["dashboard-mpa", "eslint-config-tails", "tails-cli", "tails-fs"],
-  "bootstrap": {
-    "npmClientArgs": ["--no-package-lock"]
-  }
+  "packages": ["dashboard-mpa", "eslint-config-tails", "tails-*"],
+  "version": "0.0.0",
+  "bootstrap": {}
 }
