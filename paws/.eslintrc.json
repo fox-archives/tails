@@ -1,3 +1,12 @@
 {
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "impliedStrict": true,
+      "modules": true
+    }
+  },
   "extends": ["tails"]
 }

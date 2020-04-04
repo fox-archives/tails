@@ -4,19 +4,18 @@
     "ecmaVersion": 2020,
     "sourceType": "module",
     "ecmaFeatures": {
-      "impliedStrict": true
-    },
-    "env": {
-      "node": true,
-      "es2020": true,
-      "jest": true,
-      "jest/globals": true
+      "impliedStrict": true,
+      "modules": true
     }
   },
 
   "env": {
+    "node": true,
     "es6": true,
-    "node": true
+    "es2017": true,
+    "es2020": true,
+    "jest": true,
+    "jest/globals": true
   },
 
   "plugins": [
