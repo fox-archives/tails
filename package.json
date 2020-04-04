@@ -4,14 +4,15 @@
   "private": true,
   "license": "GPL-3.0",
   "scripts": {
-    "lint": "run-s lerna run lint:js lint:misc",
-    "lint:fix": "run-s lint:js:fix lint:misc:fix",
-    "lint:js": "lerna run lint:js",
-    "lint:js:fix": "lerna run lint:js:fix",
-    "lint:misc": "lerna run lint:misc",
-    "lint:misc:fix": "lerna run lint:misc:fix"
+    "lint": "run-s lerna run lint:js lint:misc --",
+    "lint:fix": "run-s lint:js:fix lint:misc:fix --",
+    "lint:js": "lerna run lint:js --",
+    "lint:js:fix": "lerna run lint:js:fix --",
+    "lint:misc": "lerna run lint:misc --",
+    "lint:misc:fix": "lerna run lint:misc:fix --"
   },
   "devDependencies": {
+    "husky": "^4.2.3",
     "lerna": "^3.19.0",
     "lint-staged": "^10.1.1",
     "npm-run-all": "^4.1.5",
