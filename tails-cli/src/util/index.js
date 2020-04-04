@@ -22,7 +22,9 @@ export function handleError(err, argv) {
       if (!namespace) {
         printError(`project '${project}' already exists`)
       } else {
-        printError(`project '${project}' already exists in namespace '${namespace}'`)
+        printError(
+          `project '${project}' already exists in namespace '${namespace}'`
+        )
       }
     } else if (err.category === 'namespace') {
       printError(`namespace '${namespace}' does not exist`)
@@ -36,10 +38,12 @@ export function handleError(err, argv) {
     if (err.category === 'config') {
       printError("config file. create one with 'tails config create'")
     } else if (err.category === 'project') {
-      if (!namespace) { 
+      if (!namespace) {
         printError(`project '${project}' does not exist`)
       } else {
-        printError(`project '${project}' does not exist in namespace '${namespace}'`)
+        printError(
+          `project '${project}' does not exist in namespace '${namespace}'`
+        )
       }
     } else if (err.category === 'namespace') {
       printError(`namespace '${namespace}' does not exist`)
@@ -52,7 +56,9 @@ export function handleError(err, argv) {
   }
 
   if (err instanceof TAILS_ERROR.InvalidArgumentError) {
-    printError('you somehow passed invalid arguments. this was not supposed to happen')
+    printError(
+      'you somehow passed invalid arguments. this was not supposed to happen'
+    )
     console.error(err)
     return
   }

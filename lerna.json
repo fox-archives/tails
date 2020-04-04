@@ -2,14 +2,7 @@
   "version": "0.0.0",
   "useWorkspaces": false,
   "npmClient": "yarn",
-  "packages": [
-    "coordinator",
-    "dashboard-mpa",
-    "eslint-config-tails",
-    "paws",
-    "tails-cli",
-    "tails-fs"
-  ],
+  "packages": ["dashboard-mpa", "eslint-config-tails", "tails-cli", "tails-fs"],
   "bootstrap": {
     "npmClientArgs": ["--no-package-lock"]
   }

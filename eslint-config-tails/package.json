@@ -11,7 +11,8 @@
     "lint:js": "eslint .",
     "lint:js:fix": "eslint . --fix",
     "lint:misc": "prettier --check .",
-    "lint:misc:fix": "prettier --write ."
+    "lint:misc:fix": "prettier --write .",
+    "lint:staged": "lint-staged"
   },
   "dependencies": {
     "babel-eslint": "^10.1.0",
@@ -36,6 +37,7 @@
     "eslint": "^6.8.0",
     "jest": "^25.2.4",
     "jest-extended": "^0.11.5",
+    "lint-staged": "^10.1.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.2",
     "prettier-plugin-toml": "^0.3.1",

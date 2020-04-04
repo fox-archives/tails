@@ -68,7 +68,7 @@ export const builder = function (yargs) {
         type: 'string',
         describe: 'value to set',
         nargs: 1,
-        demand: true
+        demand: true,
       })
     },
     async (argv) => {
@@ -102,4 +102,3 @@ export const builder = function (yargs) {
   yargs.example('$0 config get myKey')
   yargs.example('$0 config set myKey --value myValue')
 }
-

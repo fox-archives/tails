@@ -7,13 +7,7 @@ export function startCli() {
     .example('$0 project list')
     .example('$0 project show projectName')
 
-  yargs
-    .commandDir('yargs')
+  yargs.commandDir('yargs')
 
-  yargs
-    .demandCommand()
-    .wrap(100)
-    .strict()
-    .help()
-    .argv
+  yargs.demandCommand().wrap(100).strict().help().argv
 }

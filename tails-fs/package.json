@@ -12,7 +12,8 @@
     "lint:js": "eslint .",
     "lint:js:fix": "eslint . --fix",
     "lint:misc": "prettier --check .",
-    "lint:misc:fix": "prettier --write ."
+    "lint:misc:fix": "prettier --write .",
+    "lint:staged": "lint-staged"
   },
   "engines": {
     "node": ">= 12.10.0"
@@ -22,11 +23,12 @@
     "@babel/plugin-transform-modules-commonjs": "^7.9.0",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
-    "eslint-config-tails": "^0.1.0",
+    "eslint-config-tails": "^0.2.0",
     "esm": "^3.2.25",
     "fs-extra": "^9.0.0",
     "jest": "^25.2.4",
     "jest-cli": "^25.2.4",
+    "lint-staged": "^10.1.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.0.2",
     "prettier-plugin-toml": "^0.3.1",

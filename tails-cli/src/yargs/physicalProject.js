@@ -40,7 +40,7 @@ export const builder = function (yargs) {
         type: 'string',
         describe: 'namespace project is in',
         nargs: 1,
-        demand: false
+        demand: false,
       })
     },
     async (argv) => {
@@ -69,7 +69,7 @@ export const builder = function (yargs) {
         type: 'string',
         describe: 'namespace project is in',
         nargs: 1,
-        demand: false
+        demand: false,
       })
     },
     async (argv) => {
@@ -80,9 +80,11 @@ export const builder = function (yargs) {
         await PhysicalProject.create(project, namespace)
         if (!namespace) {
           printSuccess(`created project '${project}'`)
-
-        } {
-           printSuccess(`created project '${project}' in namespace '${namespace}`)
+        }
+        {
+          printSuccess(
+            `created project '${project}' in namespace '${namespace}`
+          )
         }
       } catch (err) {
         handleError(err, argv)
@@ -103,7 +105,7 @@ export const builder = function (yargs) {
         type: 'string',
         describe: 'namespace project is in',
         nargs: 1,
-        demand: false
+        demand: false,
       })
     },
     async (argv) => {
@@ -112,12 +114,12 @@ export const builder = function (yargs) {
 
       try {
         await PhysicalProject.delete(project, namespace)
-        if (!namespace ) {
+        if (!namespace) {
           printSuccess(`deleted project '${project}'`)
-
         } else {
-          printSuccess(`created project '${project}' in namespace '${namespace}'`)
-
+          printSuccess(
+            `created project '${project}' in namespace '${namespace}'`
+          )
         }
       } catch (err) {
         handleError(err, argv)
@@ -128,6 +130,6 @@ export const builder = function (yargs) {
   yargs.example('$0 physicalProject show myProject')
   yargs.example('$0 physicalProject create myProject --namespace myNamespace')
   yargs.example('$0 physicalProject create myProject')
-  
+
   return yargs
 }
