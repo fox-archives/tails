@@ -25,11 +25,11 @@ you try and perform an operation (ex. delete) on _something_ that belongs to a s
 ##### usage
 
 ```js
-new DoesNotExistError(category, something, reason);
-new DoesNotExistError('namespace', 'css-projects');
-new DoesNotExistError('project', 'react-es5-test');
-new DoesNotExistError('config', undefined, reason);
-new DoesNotExistError('config'); // ~/.config/tails/tails.json
+new DoesNotExistError(category, something, reason)
+new DoesNotExistError('namespace', 'css-projects')
+new DoesNotExistError('project', 'react-es5-test')
+new DoesNotExistError('config', undefined, reason)
+new DoesNotExistError('config') // ~/.config/tails/tails.json
 ```
 
 ##### properties
@@ -48,11 +48,11 @@ you try and perform an operation (ex. create) on _something_ that belongs to a s
 ##### usage
 
 ```js
-new AlreadyExistsError(category, something, reason);
-new AlreadyExistsError('namespace', 'css-projects');
-new AlreadyExistsError('project', 'react-es5-test');
-new AlreadyExistsError('config', undefined, reason);
-new AlreadyExistsError('config'); // ~/.config/tails/tails.json
+new AlreadyExistsError(category, something, reason)
+new AlreadyExistsError('namespace', 'css-projects')
+new AlreadyExistsError('project', 'react-es5-test')
+new AlreadyExistsError('config', undefined, reason)
+new AlreadyExistsError('config') // ~/.config/tails/tails.json
 ```
 
 ##### properties
@@ -71,8 +71,8 @@ you try and perform a method call, but if found a certain (necessary) _argument_
 #### usage
 
 ```js
-new InvalidArgumentError(argument, value);
-new InvalidArgumentError('project', '_my-project'); // projects cannot have leading underscore
+new InvalidArgumentError(argument, value)
+new InvalidArgumentError('project', '_my-project') // projects cannot have leading underscore
 ```
 
 ##### properties
@@ -81,19 +81,3 @@ new InvalidArgumentError('project', '_my-project'); // projects cannot have lead
 - `category`: category of error
 - `of`: same value as second parameter when instantiating error (_something_)
 - `reason`: optional argument to give more details
-
-#### `InvalidConfigError`
-
-### scenario
-
-you try (or indirectly) try to access the global config `~/.config/tails/tails.json`, but it is missing or corrupted, or invalid in some other way
-
-##### usage
-
-```js
-new InvalidConfigError();
-```
-
-##### properties
-
-- `name`: name of error

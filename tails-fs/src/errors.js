@@ -51,12 +51,3 @@ export class InvalidArgumentError extends Error {
     this.reason = reason
   }
 }
-
-// throws when there is no config, or cannot read config etc.
-export class InvalidConfigError extends Error {
-  constructor() {
-    const message = `you tried to perform an operation that required reading the global config, but there was an error while doing so`
-    super(message)
-    this.name = this.constructor.name
-  }
-}
