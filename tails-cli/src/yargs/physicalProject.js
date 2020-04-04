@@ -116,7 +116,7 @@ export const builder = function (yargs) {
           printSuccess(`deleted project '${project}'`)
 
         } else {
-          printSuccess(`created project '${project}' in namespace '${namespace}`)
+          printSuccess(`created project '${project}' in namespace '${namespace}'`)
 
         }
       } catch (err) {

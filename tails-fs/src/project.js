@@ -9,6 +9,10 @@ const TAILS_ROOT_DIR = 'TAILS_ROOT_DIR'
 export async function listPhysicalProject(namespace) {
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
+  if (namespace && !(await doesNamespaceExist(tailsRootDir, namespace))) {
+    throw new ERROR.DoesNotExistError('namespace', namespace)
+  }
+
   if (!namespace) return helper.gatherProjects(tailsRootDir, () => true)
 
   const namespaceFolder = getNamespaceFolder(tailsRootDir, namespace)
@@ -19,10 +23,18 @@ export async function showPhysicalProject(project, namespace) {
   if (!project) throw new ERROR.InvalidArgumentError('project', project)
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
+  let searchDirectory
+  if (namespace) {
+    if (!(await doesNamespaceExist(tailsRootDir, namespace))) {
+      throw new ERROR.DoesNotExistError('namespace', namespace)
+    }
+    searchDirectory = getNamespaceFolder(tailsRootDir, namespace)
+  } else {
+    searchDirectory = tailsRootDir
+  }
 
-  let projectObject = await helper.pickProject(tailsRootDir, (dirent) => {
-    return dirent.name === project
-  })
+  let projectObject = await helper.pickProject(searchDirectory, project)
+
   if (projectObject) return projectObject
 
   throw new ERROR.DoesNotExistError('project', project)
@@ -30,7 +42,7 @@ export async function showPhysicalProject(project, namespace) {
 
 export async function createPhysicalProject(project, namespace) {
   if (!project) throw new ERROR.InvalidArgumentError('project', project)
-  if (project.indexOf('_') === 0)
+  if (helper.isNamespace(project))
     throw new ERROR.InvalidArgumentError(
       'project',
       project,
@@ -61,6 +73,10 @@ export async function deletePhysicalProject(project, namespace) {
   if (!project) throw new ERROR.InvalidArgumentError('project', project)
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
+
+  if (namespace && !(await doesNamespaceExist(tailsRootDir, namespace))) {
+    throw new ERROR.DoesNotExistError('namespace', namespace)
+  }
 
   try {
     await helper.deletePhysicalProjectRaw(tailsRootDir, {

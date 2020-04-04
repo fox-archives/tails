@@ -14,6 +14,7 @@
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
 
+  "prettier.disableLanguages": ["javascript", "javascriptreact"],
   "prettier.configPath": ".prettierrc.json",
 
   // dbaeumer.vscode-eslint

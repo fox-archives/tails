@@ -19,7 +19,11 @@ export function handleError(err, argv) {
     if (err.category === 'config') {
       printError('config already exists')
     } else if (err.category === 'project') {
-      printError(`project '${project}' already exists`)
+      if (!namespace) {
+        printError(`project '${project}' already exists`)
+      } else {
+        printError(`project '${project}' already exists in namespace '${namespace}'`)
+      }
     } else if (err.category === 'namespace') {
       printError(`namespace '${namespace}' does not exist`)
     } else {
@@ -32,7 +36,11 @@ export function handleError(err, argv) {
     if (err.category === 'config') {
       printError("config file. create one with 'tails config create'")
     } else if (err.category === 'project') {
-      printError(`project '${project}' does not exist`)
+      if (!namespace) { 
+        printError(`project '${project}' does not exist`)
+      } else {
+        printError(`project '${project}' does not exist in namespace '${namespace}'`)
+      }
     } else if (err.category === 'namespace') {
       printError(`namespace '${namespace}' does not exist`)
     } else if (err.category === 'key') {

@@ -83,48 +83,30 @@ export async function gatherProjects(tailsRootDir, shouldGather) {
   return projects
 }
 
-export async function pickProject(tailsRootDir, shouldPick) {
+export function isNamespace(string) {
+  return string.indexOf('_') === 0
+}
+
+export async function pickProject(directoryBeingSearched, project) {
   let unfilteredProjectDirents
   try {
-    unfilteredProjectDirents = await readDirRaw(tailsRootDir)
+    unfilteredProjectDirents = await readDirRaw(directoryBeingSearched)
   } catch (err) {
-    throw new Error(`failed to read directory ${tailsRootDir}`)
+    throw new Error(`failed to read directory ${directoryBeingSearched}`)
   }
 
   for (const dirent of unfilteredProjectDirents) {
-    // ignore non-directories
+    // ignore non-directories and namespaces
     if (!dirent.isDirectory()) continue
+    if (isNamespace(dirent.name)) continue
 
-    // if project does not begin with underscore, test if the folder matches name
-    if (!(dirent.name.slice(0, 1) === '_')) {
-      if (shouldPick(dirent))
-        return {
-          name: dirent.name,
-          isDirectory: dirent.isDirectory(),
-          isFile: dirent.isFile(),
-          isSymbolicLink: dirent.isSymbolicLink(),
-        }
-    }
-
-    // projects with underscores hold other projects. test for those
-    const subdirPath = path.join(tailsRootDir, dirent.name)
-    let unfilteredSubProjectDirents
-    try {
-      unfilteredSubProjectDirents = await readDirRaw(subdirPath)
-    } catch (err) {
-      throw new Error(`failed to read directory ${subdirPath}`)
-    }
-    for (let subDirent of unfilteredSubProjectDirents) {
-      // ignore non-directories
-      if (!subDirent.isDirectory()) continue
-
-      if (shouldPick(subDirent))
-        return {
-          name: subDirent.name,
-          isDirectory: subDirent.isDirectory(),
-          isFile: subDirent.isFile(),
-          isSymbolicLink: subDirent.isSymbolicLink(),
-        }
+    if (dirent.name === project) {
+      return {
+        name: dirent.name,
+        isDirectory: dirent.isDirectory(),
+        isFile: dirent.isFile(),
+        isSymbolicLink: dirent.isSymbolicLink(),
+      }
     }
   }
 }

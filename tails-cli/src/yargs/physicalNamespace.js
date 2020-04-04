@@ -9,7 +9,7 @@ export const builder = function (yargs) {
   yargs.command('list', 'list all namespaces', async () => {
     try {
       let namespaces = await PhysicalNamespace.list()
-      printSuccess(namespaces)
+      console.log(namespaces)
     } catch (err) {
       handleError(err)
     }
