@@ -1,11 +1,11 @@
 {
   "name": "tails-server",
   "version": "0.0.0",
-  "main": "src/index.js",
+  "main": "src/server.js",
   "license": "GPL-3.0",
   "scripts": {
     "serve": "cross-env NODE_ENV=development nodemon -r esm src/server",
-    "start": "node -r esm src",
+    "start": "node -r esm src/server",
     "lint": "run-s lint:js lint:misc",
     "lint:fix": "run-s lint:js:fix lint:misc:fix",
     "lint:js": "eslint .",

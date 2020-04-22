@@ -12,7 +12,8 @@ export default class ProjectView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      loadStatus: 'notLoaded'
+      loadStatus: 'notLoaded',
+      projectData: null
     }
   }
 
@@ -29,14 +30,14 @@ export default class ProjectView extends React.Component {
       })
       if (res.statusText !== 'OK') return
       const json = await res.json()
-      console.log(json)
+      console.log(json.data)
       this.setState({
         projectData: json.data,
         loadStatus: 'loadSuccess'
       });
     } catch (err) {
       console.error(err)
-      this.setStat({
+      this.setState({
         loadStatus: 'loadError'
       })
     }
@@ -46,9 +47,11 @@ export default class ProjectView extends React.Component {
     return ( this.state.loadStatus === 'notLoaded' ? (
         <Box>loading please wait</Box>
       ) : (this.state.loadStatus === 'loadSuccess') ? (
-        <ProjectCard
-          name='some crap'>
-        </ProjectCard>
+           <> {this.state.projectData.projects.map(project => {
+             return <ProjectCard
+              name={project.name} key={project.name}>
+            </ProjectCard>
+          }) }</>
       ) : (
         'failed to load'
       )

@@ -17,6 +17,7 @@ export default class ProjectCard extends React.Component {
       display='inline'
       border='1px solid lightgray'
       borderRadius={4}
+      key={this.props.key}
     >
       { this.props.name }
     </Box>
