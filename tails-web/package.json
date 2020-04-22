@@ -1,0 +1,62 @@
+{
+  "name": "tails-web",
+  "version": "0.0.0",
+  "main": "src/index.js",
+  "license": "GPL-3.0",
+  "scripts": {
+    "serve": "cross-env NODE_ENV=development webpack-dev-server -r esm --config webpack.dev.js",
+    "build": "webpack -r esm --config webpack.prod.js",
+    "lint": "run-s lint:js lint:misc",
+    "lint:fix": "run-s lint:js:fix lint:misc:fix",
+    "lint:js": "eslint .",
+    "lint:js:fix": "eslint . --fix",
+    "lint:misc": "prettier --check .",
+    "lint:misc:fix": "prettier --write .",
+    "lint:staged": "lint-staged"
+  },
+  "engines": {
+    "node": ">= 12.10.0"
+  },
+  "dependencies": {
+    "bulma": "^0.8.1",
+    "eslint-config-tails": "^0.2.0",
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "babel-loader": "^8.1.0",
+    "cache-loader": "^4.1.0",
+    "case-sensitive-paths-webpack-plugin": "^2.3.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "compression-webpack-plugin": "^3.1.0",
+    "cross-env": "^7.0.2",
+    "css-loader": "^3.4.2",
+    "eslint": "^6.8.0",
+    "esm": "^3.2.25",
+    "file-loader": "^6.0.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "glob": "^7.1.6",
+    "html-webpack-plugin": "^4.0.4",
+    "mini-css-extract-plugin": "^0.9.0",
+    "obsolete-webpack-plugin": "^0.5.6",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "pnp-webpack-plugin": "^1.6.4",
+    "postcss": "^7.0.27",
+    "postcss-loader": "^3.0.0",
+    "preload-webpack-plugin": "^3.0.0-beta.4",
+    "purgecss-webpack-plugin": "^2.1.0",
+    "resource-hints-webpack-plugin": "^0.0.2",
+    "script-ext-html-webpack-plugin": "^2.1.4",
+    "terser-webpack-plugin": "^2.3.5",
+    "url-loader": "^4.0.0",
+    "vue-loader": "^15.9.1",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dashboard": "^3.2.0",
+    "webpack-dev-server": "^3.10.3",
+    "webpack-merge": "^4.2.2",
+    "webpack-nomodule-plugin": "^1.0.1",
+    "webpack-subresource-integrity": "^1.4.0"
+  }
+}
