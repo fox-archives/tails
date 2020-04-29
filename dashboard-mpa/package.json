@@ -11,8 +11,6 @@
     "lint:fix": "run-s lint:js:fix lint:misc:fix",
     "lint:js": "eslint .",
     "lint:js:fix": "eslint . --fix",
-    "lint:misc": "prettier --check .",
-    "lint:misc:fix": "prettier --write .",
     "lint:staged": "lint-staged"
   },
   "dependencies": {
@@ -35,7 +33,6 @@
     "eslint-config-tails": "^0.2.0",
     "lint-staged": "^10.1.1",
     "nodemon": "^2.0.1",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.0.2"
+    "npm-run-all": "^4.1.5"
   }
 }

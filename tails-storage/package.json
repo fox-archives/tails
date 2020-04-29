@@ -9,8 +9,6 @@
     "lint:fix": "run-s lint:js:fix lint:misc:fix",
     "lint:js": "eslint .",
     "lint:js:fix": "eslint . --fix",
-    "lint:misc": "prettier --check .",
-    "lint:misc:fix": "prettier --write .",
     "lint:staged": "lint-staged"
   },
   "engines": {
@@ -22,7 +20,6 @@
     "esm": "^3.2.25",
     "lint-staged": "^10.1.1",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.0.2",
     "prettier-plugin-toml": "^0.3.1"
   },
   "dependencies": {

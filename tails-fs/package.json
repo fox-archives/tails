@@ -11,8 +11,6 @@
     "lint:fix": "run-s lint:js:fix lint:misc:fix",
     "lint:js": "eslint .",
     "lint:js:fix": "eslint . --fix",
-    "lint:misc": "prettier --check .",
-    "lint:misc:fix": "prettier --write .",
     "lint:staged": "lint-staged"
   },
   "engines": {
@@ -27,8 +25,7 @@
     "jest": "^25.2.4",
     "jest-cli": "^25.2.4",
     "lint-staged": "^10.1.1",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.0.2"
+    "npm-run-all": "^4.1.5"
   },
   "dependencies": {
     "cross-env": "^7.0.2",
