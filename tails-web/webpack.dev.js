@@ -10,7 +10,7 @@ import DashboardPlugin from 'webpack-dashboard/plugin'
 import common from './webpack.common'
 
 export default merge.strategy({
-  'module.rules': 'prepend'
+  'module.rules': 'prepend',
 })(common, {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
@@ -23,12 +23,12 @@ export default merge.strategy({
             loader: 'vue-style-loader',
             options: {
               sourceMap: true,
-              shadowMode: false
-            }
-          }
-        ]
-      }
-    ]
+              shadowMode: false,
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -36,7 +36,7 @@ export default merge.strategy({
       // additionalTransformers: [friendlyErrorsAdditionalTransformers],
       // additionalFormatters: [friendlyErrorsAdditionalFormatters]
     }),
-    new DashboardPlugin()
+    new DashboardPlugin(),
   ],
   devServer: {
     open: false,
@@ -48,11 +48,11 @@ export default merge.strategy({
     proxy: {
       changeOrigin: true,
       '/graphql': {
-        target: 'http://localhost:9020'
+        target: 'http://localhost:9020',
       },
       '/api': {
-        target: 'http://localhost:9020'
-      }
-    }
-  }
+        target: 'http://localhost:9020',
+      },
+    },
+  },
 })

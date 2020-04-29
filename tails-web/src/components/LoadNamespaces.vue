@@ -21,12 +21,12 @@ export default {
   name: 'LoadNamespaces',
   components: {
     Card,
-    Grid
+    Grid,
   },
   data() {
     return {
       loadState2: 'isWaiting',
-      data2: null
+      data2: null,
     }
   },
   async created() {
@@ -36,20 +36,20 @@ export default {
       const res = await fetch('/graphql', {
         method: 'POST',
         headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
-        body: JSON.stringify({ query: query2 })
+        body: JSON.stringify({ query: query2 }),
       })
       if (res.statusText !== 'OK') return
       const json = await res.json()
       console.log(json.data)
-      this.data2 = json.data;
-      this.loadState2 = "hasData"
+      this.data2 = json.data
+      this.loadState2 = 'hasData'
     } catch (err) {
       console.error(err)
     }
-  }
+  },
 }
 </script>
 

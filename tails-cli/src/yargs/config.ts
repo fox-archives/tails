@@ -104,5 +104,8 @@ export const builder = function (yargs: yargs.Argv) {
   })
 
   yargs.example('$0 config get myKey', 'get the value of myKey')
-  yargs.example('$0 config set myKey --value myValue', 'set the value of myKey with myValue')
+  yargs.example(
+    '$0 config set myKey --value myValue',
+    'set the value of myKey with myValue'
+  )
 }

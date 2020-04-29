@@ -131,9 +131,18 @@ export const builder = function (yargs: yargs.Argv) {
     }
   )
 
-  yargs.example('$0 physicalProject show myProject', 'create the project myProject')
-  yargs.example('$0 physicalProject create myProject --namespace myNamespace', 'create the project myProject within myNamespace')
-  yargs.example('$0 physicalProject create myProject', 'create the project myProject inside no namespace')
+  yargs.example(
+    '$0 physicalProject show myProject',
+    'create the project myProject'
+  )
+  yargs.example(
+    '$0 physicalProject create myProject --namespace myNamespace',
+    'create the project myProject within myNamespace'
+  )
+  yargs.example(
+    '$0 physicalProject create myProject',
+    'create the project myProject inside no namespace'
+  )
 
   return yargs
 }

@@ -13,16 +13,16 @@ import PurgecssPlugin from 'purgecss-webpack-plugin'
 import common from './webpack.common'
 
 export default merge.strategy({
-  'module.rules': 'prepend'
+  'module.rules': 'prepend',
 })(common, {
   mode: 'production',
   module: {
     rules: [
       {
         test: /\.(css|postcss)$/,
-        use: [MiniCssExtractPlugin.loader]
-      }
-    ]
+        use: [MiniCssExtractPlugin.loader],
+      },
+    ],
   },
   optimization: {
     splitChunks: {
@@ -31,16 +31,16 @@ export default merge.strategy({
           name: 'chunk-vendors',
           test: /[\\/]node_modules[\\/]/,
           priority: -10,
-          chunks: 'initial'
+          chunks: 'initial',
         },
         common: {
           name: 'chunk-common',
           minChunks: 2,
           priority: -20,
           chunks: 'initial',
-          reuseExistingChunk: true
-        }
-      }
+          reuseExistingChunk: true,
+        },
+      },
     },
     minimizer: [
       new TerserPlugin({
@@ -68,33 +68,33 @@ export default merge.strategy({
             unused: true,
             conditionals: true,
             dead_code: true,
-            evaluate: true
+            evaluate: true,
           },
           mangle: {
-            safari10: true
-          }
+            safari10: true,
+          },
         },
         sourceMap: true,
         cache: true,
         parallel: true,
-        extractComments: false
+        extractComments: false,
       }),
       new OptimizeCssAssetsPlugin(),
-      new CompressionPlugin()
-    ]
+      new CompressionPlugin(),
+    ],
   },
   plugins: [
     new CleanWebpackPlugin({
-      cleanAfterEveryBuildPatterns: ['dist/**/*']
+      cleanAfterEveryBuildPatterns: ['dist/**/*'],
     }),
     new MiniCssExtractPlugin({
-      filename: 'bundle.css'
+      filename: 'bundle.css',
     }),
     new SriPlugin({
-      hashFuncNames: ['sha512']
+      hashFuncNames: ['sha512'],
     }),
     new PurgecssPlugin({
-      paths: glob.sync(`${path.join(__dirname, 'src')}/**/*`, { nodir: true })
-    })
-  ]
+      paths: glob.sync(`${path.join(__dirname, 'src')}/**/*`, { nodir: true }),
+    }),
+  ],
 })

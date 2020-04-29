@@ -13,10 +13,9 @@ export default {
   name: 'App',
   components: {
     Navbar,
-    LoadNamespaces
-  }
+    LoadNamespaces,
+  },
 }
 </script>
 
-<style lang="postcss" scoped>
-</style>
+<style lang="postcss" scoped></style>

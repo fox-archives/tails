@@ -82,8 +82,14 @@ export const builder = function (yargs: yargs.Argv) {
     }
   )
 
-  yargs.example('$0 physicalNamespace show myNamespace', 'show the physical namespace myNamespace')
-  yargs.example('$0 physicalNamespace delete myNamespace', 'delete the physicalNamespace myNamespace')
+  yargs.example(
+    '$0 physicalNamespace show myNamespace',
+    'show the physical namespace myNamespace'
+  )
+  yargs.example(
+    '$0 physicalNamespace delete myNamespace',
+    'delete the physicalNamespace myNamespace'
+  )
 
   return yargs
 }

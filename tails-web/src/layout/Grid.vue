@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'Grid'
+  name: 'Grid',
 }
 </script>
 

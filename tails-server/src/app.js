@@ -13,13 +13,18 @@ let app = new Koa()
 app.use(cors())
 app.use(helmet())
 
-app.use(mount('/graphql', graphqlHTTP({
-  schema: rootSchema,
-  graphiql: isDev,
-  pretty: true
-})))
+app.use(
+  mount(
+    '/graphql',
+    graphqlHTTP({
+      schema: rootSchema,
+      graphiql: isDev,
+      pretty: true,
+    })
+  )
+)
 
-app.use(ctx => {
+app.use((ctx) => {
   ctx.body = 'hello world'
 })
 

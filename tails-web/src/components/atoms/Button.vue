@@ -4,9 +4,8 @@
 
 <script>
 export default {
-  name: 'Button'
+  name: 'Button',
 }
 </script>
 
-<style>
-</style>
+<style></style>

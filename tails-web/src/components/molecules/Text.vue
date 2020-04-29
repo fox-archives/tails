@@ -9,11 +9,10 @@ export default {
   name: 'Text1',
   props: {
     size: {
-      default: 'md'
-    }
-  }
+      default: 'md',
+    },
+  },
 }
 </script>
 
-<style>
-</style>
+<style></style>

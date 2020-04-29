@@ -3,7 +3,7 @@
 // import register from '@babel/register'
 
 require('@babel/register')({
-  extensions: ['.mjs', '.js', '.ts']
+  extensions: ['.mjs', '.js', '.ts'],
 })
 
 require('./cli.ts')

@@ -13,7 +13,10 @@ export function printSuccess(text: string) {
 }
 
 // @ts-ignore
-export function handleError(err: Error | AlreadyExistsError | DoesNotExistError | InvalidArgumentsError, argv?) {
+export function handleError(
+  err: Error | AlreadyExistsError | DoesNotExistError | InvalidArgumentsError,
+  argv?
+) {
   const key = argv.key
   const project = argv.project
   const namespace = argv.namespace

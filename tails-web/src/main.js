@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import App from './App'
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 new Vue({
   el: '#app',
   mode: 'history',
-  render: h => h(App)
+  render: (h) => h(App),
 })
