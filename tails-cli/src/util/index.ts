@@ -1,16 +1,19 @@
+// @ts-ignore
 import c from 'ansi-colors'
 
+// @ts-ignore
 import { TAILS_ERROR } from 'tails-fs'
 
-function printError(text) {
+function printError(text: string) {
   console.error(c.red('error: ' + text))
 }
 
-export function printSuccess(text) {
+export function printSuccess(text: string) {
   console.log(c.green(text))
 }
 
-export function handleError(err, argv) {
+// @ts-ignore
+export function handleError(err: Error | AlreadyExistsError | DoesNotExistError | InvalidArgumentsError, argv?) {
   const key = argv.key
   const project = argv.project
   const namespace = argv.namespace
@@ -65,5 +68,3 @@ export function handleError(err, argv) {
 
   console.error(err)
 }
-
-export function handlePhysicalNamespaceError(err) {}

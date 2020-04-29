@@ -1,11 +1,15 @@
+// @ts-ignore
 import { PhysicalNamespace } from 'tails-fs'
+
+import yargs from 'yargs/index'
 
 import { handleError, printSuccess } from '../util'
 
 export const command = 'physicalNamespace <command>'
 export const aliases = ['pns']
 export const desc = 'show or edit physicalNamespace information'
-export const builder = function (yargs) {
+// @ts-ignore
+export const builder = function (yargs: yargs.Argv) {
   yargs.command('list', 'list all namespaces', async () => {
     try {
       let namespaces = await PhysicalNamespace.list()
@@ -78,8 +82,8 @@ export const builder = function (yargs) {
     }
   )
 
-  yargs.example('$0 physicalNamespace show myNamespace')
-  yargs.example('$0 physicalNamespace delete myNamespace')
+  yargs.example('$0 physicalNamespace show myNamespace', 'show the physical namespace myNamespace')
+  yargs.example('$0 physicalNamespace delete myNamespace', 'delete the physicalNamespace myNamespace')
 
   return yargs
 }

@@ -1,11 +1,15 @@
+// @ts-ignore
 import { Config } from 'tails-fs'
+
+import yargs from 'yargs/index'
 
 import { handleError, printSuccess } from '../util'
 
 export const command = 'config <command>'
 export const aliases = ['cfg']
 export const desc = 'show or edit tails configuration items'
-export const builder = function (yargs) {
+// @ts-ignore
+export const builder = function (yargs: yargs.Argv) {
   yargs.command('show', 'show the whole config', async (argv) => {
     try {
       let config = await Config.show()
@@ -99,6 +103,6 @@ export const builder = function (yargs) {
     }
   })
 
-  yargs.example('$0 config get myKey')
-  yargs.example('$0 config set myKey --value myValue')
+  yargs.example('$0 config get myKey', 'get the value of myKey')
+  yargs.example('$0 config set myKey --value myValue', 'set the value of myKey with myValue')
 }
