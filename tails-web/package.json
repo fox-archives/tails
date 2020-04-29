@@ -9,8 +9,7 @@
     "lint": "run-s lint:js lint:misc",
     "lint:fix": "run-s lint:js:fix lint:misc:fix",
     "lint:js": "eslint .",
-    "lint:js:fix": "eslint . --fix",
-    "lint:staged": "lint-staged"
+    "lint:js:fix": "eslint . --fix"
   },
   "engines": {
     "node": ">= 12.10.0"

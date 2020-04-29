@@ -8,8 +8,7 @@
     "lint": "run-s lint:js lint:misc",
     "lint:fix": "run-s lint:js:fix lint:misc:fix",
     "lint:js": "eslint .",
-    "lint:js:fix": "eslint . --fix",
-    "lint:staged": "lint-staged"
+    "lint:js:fix": "eslint . --fix"
   },
   "engines": {
     "node": ">= 12.10.0"
@@ -18,7 +17,6 @@
     "eslint": "^6.8.0",
     "eslint-config-tails": "^0.2.0",
     "esm": "^3.2.25",
-    "lint-staged": "^10.1.1",
     "npm-run-all": "^4.1.5",
     "prettier-plugin-toml": "^0.3.1"
   },

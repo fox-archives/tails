@@ -1,4 +1,0 @@
-{
-  "**/*.{json,yaml,yml,vue,css,md,mdx,toml}": ["yarn lint:misc:fix"],
-  "**/*.{js,ts}": ["yarn lint:js:fix"]
-}
