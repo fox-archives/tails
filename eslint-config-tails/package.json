@@ -5,9 +5,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "build": "rollup --config rollup.config.js",
-    "test": "jest --config .jestrc.json",
-    "lint": "run-s lint:js lint:misc",
-    "lint:fix": "run-s lint:js:fix lint:misc:fix"
+    "test": "jest --config .jestrc.json"
   },
   "dependencies": {
     "babel-eslint": "^10.1.0",
@@ -31,7 +29,6 @@
     "eslint": "^6.8.0",
     "jest": "^25.2.4",
     "jest-extended": "^0.11.5",
-    "npm-run-all": "^4.1.5",
     "rollup": "^2.3.2",
     "rollup-plugin-terser": "^5.3.0"
   }
