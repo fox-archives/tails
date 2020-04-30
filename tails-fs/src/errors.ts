@@ -1,7 +1,7 @@
 // throws when namespaces / project do / don't exist
 export class DoesNotExistError extends Error {
   /* ex. ('namespace', 'my-cool-css-projects') */
-  constructor(categoryOfThing, valueOfThing, reason) {
+  constructor(categoryOfThing: string, valueOfThing?: string, reason?: string) {
     let message
     if (valueOfThing) {
       message = `your operation on a '${categoryOfThing}', specifically, the '${valueOfThing}' ${categoryOfThing} failed because it does not exist`
@@ -20,7 +20,7 @@ export class DoesNotExistError extends Error {
 }
 
 export class AlreadyExistsError extends Error {
-  constructor(categoryOfThing, valueOfThing, reason) {
+  constructor(categoryOfThing: string, valueOfThing?: string, reason?: string) {
     let message
     if (valueOfThing) {
       message = `your operation on a '${categoryOfThing}, specifically the '${valueOfThing}' ${categoryOfThing} failed because it already exists`
@@ -40,8 +40,8 @@ export class AlreadyExistsError extends Error {
 // throws anytime invalid arguments or insufficient arguments are passed
 // into a functions
 export class InvalidArgumentError extends Error {
-  constructor(argumentName, argumentValue, reason) {
-    const message = `the argument could not be processed because the argument '${argumentName}' with value '${argumentValue}' is not valid`
+  constructor(argumentName: string, argumentValue?: string, reason?: string) {
+    let message = `the argument could not be processed because the argument '${argumentName}' with value '${argumentValue}' is not valid`
     if (reason) message += `. this is because ${reason}`
 
     super(message)

@@ -3,7 +3,7 @@ import fs from 'fs-extra'
 import * as TC from './testConstants'
 import { Config } from '../config'
 
-export async function setConfig(config) {
+export async function setConfig(config: object) {
   await Config.create()
   for (let property in config) {
     await Config.set(property, config[property])

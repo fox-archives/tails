@@ -27,13 +27,13 @@ async function deleteConfig() {
   if (!(await helper.storeExists())) throw new ERROR.DoesNotExistError('config')
 
   try {
-    return await helper.deleteConfig()
+    return await helper.deleteStore()
   } catch (err) {
     throw new Error(err)
   }
 }
 
-async function getConfigKey(key) {
+async function getConfigKey(key: string) {
   if (!(await helper.storeExists())) throw new ERROR.DoesNotExistError('config')
   if (!key) throw new ERROR.InvalidArgumentError('key', key)
 
@@ -49,7 +49,7 @@ async function getConfigKey(key) {
   return json[key]
 }
 
-async function setConfigKey(key, value, isForce) {
+async function setConfigKey(key: string, value: string, isForce: boolean) {
   if (!(await helper.storeExists())) throw new ERROR.DoesNotExistError('config')
   if (!value && !isForce) throw new ERROR.InvalidArgumentError('force', isForce)
 
@@ -76,27 +76,31 @@ async function findConfig() {
 
 export { TAILS_CONFIG_FILE }
 export class Config {
-  static show() {
+  // TODO: fix
+  static show(): Promise<void> {
     return showConfig()
   }
 
-  static create() {
+  static create(): Promise<void> {
     return createConfig()
   }
 
-  static delete() {
+  static delete(): Promise<void> {
     return deleteConfig()
   }
 
-  static get(key) {
+  // TODO: fix
+  static get(key: string): Promise<void> {
     return getConfigKey(key)
   }
 
-  static set(key, value, isForce) {
+  // TODO: fix?
+  static set(key: string, value: string, isForce: boolean): Promise<void> {
     return setConfigKey(key, value, isForce)
   }
 
-  static find() {
+  // TODO: fix
+  static find(): Promise<string> {
     return findConfig()
   }
 }

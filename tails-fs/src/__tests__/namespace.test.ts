@@ -5,6 +5,15 @@ import _ from 'lodash'
 import { fixNamespaceFixtures } from './testUtils'
 import * as TC from './testConstants'
 
+// TODO: fix
+import * as testUtilForType from './testUtils'
+import { PhysicalNamespace as PhysicalNameSpaceForType } from '../namespace'
+import { DoesNotExistError as DoesNotExistErrorForType, AlreadyExistsError as AlreadyExistsErrorForType, InvalidArgumentError as InvalidArgumentErrorForType } from '../errors'
+interface tailsErrorForType {
+  DoesNotExistError: DoesNotExistErrorForType,
+  AlreadyExistsError: AlreadyExistsErrorForType,
+  InvalidArgumentError: InvalidArgumentErrorForType
+}
 /*
   i would prefer to keep testUtil and TAILS_ERROR static imports, but
   testUtil has a side effect of indirectly importing '../config.helper'
@@ -13,9 +22,10 @@ import * as TC from './testConstants'
   (which, ex. causes expected DoesNotExistError does not match received
   DoesNotExistError)
 */
-let PhysicalNamespace
-let TAILS_ERROR
-let testUtil
+let PhysicalNamespace: PhysicalNameSpaceForType
+let TAILS_ERROR: tailsErrorForType
+let testUtil: typeof testUtilForType
+
 beforeEach(() => {
   jest.resetModules()
   jest.doMock('../config.helper')
@@ -46,8 +56,7 @@ describe('PhysicalNamespace.list()', () => {
           isFile: false,
           isSymbolicLink: false,
         },
-      ]),
-      'name'
+      ], 'name'),
     )
   })
 

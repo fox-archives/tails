@@ -1,7 +1,6 @@
 {
-  "env": {
-    "test": {
-      "plugins": ["@babel/transform-modules-commonjs"]
-    }
-  }
+  "presets": [
+    ["@babel/env", { "targets": { "node": "current" } }],
+    "@babel/typescript"
+  ]
 }

@@ -89,19 +89,19 @@ export async function deletePhysicalNamespace(namespace) {
 }
 
 export class PhysicalNamespace {
-  static list() {
+  public static list() {
     return listPhysicalNamespaces()
   }
 
-  static show(namespace) {
+  public static show(namespace: string) {
     return showPhysicalNamespace(namespace)
   }
 
-  static create(namespace) {
+  public static create(namespace: string) {
     return createPhysicalNamespace(namespace)
   }
 
-  static delete(namespace) {
+  public static delete(namespace: string) {
     return deletePhysicalNamespace(namespace)
   }
 }
