@@ -2,9 +2,10 @@
   "name": "eslint-config-tails",
   "version": "0.2.0",
   "main": "dist/index.js",
+  "type": "module",
   "license": "GPL-3.0",
   "scripts": {
-    "build": "rollup --config rollup.config.js",
+    "build": "rollup -c",
     "test": "jest"
   },
   "dependencies": {
@@ -19,17 +20,20 @@
     "eslint-plugin-simple-import-sort": "^5.0.2"
   },
   "peerDependencies": {
-    "@babel/core": "^7.9.0",
     "eslint": "^6.8.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-transform-modules-commonjs": "^7.9.0",
     "@rollup/plugin-json": "^4.0.2",
+    "@types/eslint": "^6.8.0",
+    "@types/jest": "^25.2.1",
     "eslint": "^6.8.0",
+    "esm": "^3.2.25",
     "jest": "^25.2.4",
     "jest-extended": "^0.11.5",
     "rollup": "^2.3.2",
-    "rollup-plugin-terser": "^5.3.0"
+    "rollup-plugin-cleaner": "^1.0.0",
+    "rollup-plugin-terser": "^5.3.0",
+    "ts-jest": "^25.4.0",
+    "typescript": "^3.8.3"
   }
 }
