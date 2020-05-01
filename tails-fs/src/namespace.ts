@@ -6,6 +6,18 @@ import * as helper from './namespace.helper'
 
 const TAILS_ROOT_DIR = 'TAILS_ROOT_DIR'
 
+/**
+ * this is meant to be a low level api (ex. it throws errors, that even if they could be dealt with on their own, aren't)
+ * ```js
+ * import { PhysicalNamespace } from 'tails-fs'
+ * ```
+ */
+
+/**
+ * list all project namespaces
+ * 
+ * @throw Error
+ */
 export async function listPhysicalNamespaces() {
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
@@ -30,6 +42,13 @@ export async function listPhysicalNamespaces() {
   return { namespaces }
 }
 
+/**
+ * show a project namespace
+ * 
+ * @throw InvalidArgumentError (err.category = namespace)
+ * @throw DoesNotExistError (err.category = namespace)
+ * @throw Error
+ */
 export async function showPhysicalNamespace(namespace?: string) {
   if (!namespace) throw new ERROR.InvalidArgumentError('namespace', namespace)
 
@@ -58,6 +77,13 @@ export async function showPhysicalNamespace(namespace?: string) {
   throw new ERROR.DoesNotExistError('namespace', namespace)
 }
 
+/**
+ * creates a project namespace
+ * 
+ * @throw InvalidArgumentError (err.category = namespace)
+ * @throw AlreadyExistsError (err.category = namespace)
+ * @throw Error
+ */
 export async function createPhysicalNamespace(namespace: string) {
   if (!namespace) throw new ERROR.InvalidArgumentError('namespace', namespace)
 
@@ -73,6 +99,12 @@ export async function createPhysicalNamespace(namespace: string) {
   }
 }
 
+/**
+ * deletes a project namespace
+ * 
+ * @throw InvalidArgumentError (err.category = namespace)
+ * @throw DoesNotExistError (err.category = namespace)
+ */
 export async function deletePhysicalNamespace(namespace: string) {
   if (!namespace) throw new ERROR.InvalidArgumentError('namespace', namespace)
 

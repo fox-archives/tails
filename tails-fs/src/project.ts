@@ -5,7 +5,20 @@ import * as helper from './project.helper'
 
 const TAILS_ROOT_DIR = 'TAILS_ROOT_DIR'
 
-/* if namespace is not present, list projects in *all* namespaces */
+/**
+ * this is meant to be a low level api (ex. it throws errors, that even if they could be dealt with on their own, aren't)
+ *
+ * ```js
+ * import { TAILS_CONFIG_FILE, TAILS_ERROR } from 'tails-fs'
+ * ```
+ */
+
+/**
+ * lists all physical projects. if namespace is not present, it lists the projects in _all_ namespaces
+ * @throws InvalidArgumentError (err.category = project)
+ * @throws DoesNotExistError (err.category as project)
+ * @throws Error
+ */
 export async function listPhysicalProject(namespace?: string) {
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
@@ -19,6 +32,13 @@ export async function listPhysicalProject(namespace?: string) {
   return helper.gatherProjects(namespaceFolder, () => true)
 }
 
+/**
+ * show a project
+ * 
+ * @throws InvalidArgumentError (err.category = project)
+ * @throws DoesNotExistError (err.category = project)
+ * @throws Error
+ */
 export async function showPhysicalProject(project: string, namespace?: string) {
   if (!project) throw new ERROR.InvalidArgumentError('project', project)
 
@@ -40,6 +60,14 @@ export async function showPhysicalProject(project: string, namespace?: string) {
   throw new ERROR.DoesNotExistError('project', project)
 }
 
+/**
+ * create a project
+ * 
+ * @throws InvalidArgumentError (err.category = project)
+ * @throws DoesNotExistError (err.category = namespace)
+ * @throws AlreadyExistsError (err.category = project)
+ * @throws Error
+ */
 export async function createPhysicalProject(project: string, namespace?: string) {
   if (!project) throw new ERROR.InvalidArgumentError('project', project)
   if (helper.isNamespace(project))
@@ -69,6 +97,13 @@ export async function createPhysicalProject(project: string, namespace?: string)
   }
 }
 
+/**
+ * delete a project folder
+ * 
+ * @throws InvalidArgumentError (err.category = project)
+ * @throws DoesNotExistError (err.category = project)
+ * @throws Error
+ */
 export async function deletePhysicalProject(project: string, namespace?: string) {
   if (!project) throw new ERROR.InvalidArgumentError('project', project)
 

@@ -1,7 +1,10 @@
 # build
 dist/
 
-# node
+# docs
+tails-fs/docs
+
+# modules
 node_modules/
 web_modules/
 
