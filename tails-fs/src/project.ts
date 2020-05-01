@@ -6,7 +6,7 @@ import * as helper from './project.helper'
 const TAILS_ROOT_DIR = 'TAILS_ROOT_DIR'
 
 /* if namespace is not present, list projects in *all* namespaces */
-export async function listPhysicalProject(namespace) {
+export async function listPhysicalProject(namespace?: string) {
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
 
   if (namespace && !(await doesNamespaceExist(tailsRootDir, namespace))) {
@@ -19,7 +19,7 @@ export async function listPhysicalProject(namespace) {
   return helper.gatherProjects(namespaceFolder, () => true)
 }
 
-export async function showPhysicalProject(project, namespace) {
+export async function showPhysicalProject(project: string, namespace?: string) {
   if (!project) throw new ERROR.InvalidArgumentError('project', project)
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
@@ -40,7 +40,7 @@ export async function showPhysicalProject(project, namespace) {
   throw new ERROR.DoesNotExistError('project', project)
 }
 
-export async function createPhysicalProject(project, namespace) {
+export async function createPhysicalProject(project: string, namespace?: string) {
   if (!project) throw new ERROR.InvalidArgumentError('project', project)
   if (helper.isNamespace(project))
     throw new ERROR.InvalidArgumentError(
@@ -69,7 +69,7 @@ export async function createPhysicalProject(project, namespace) {
   }
 }
 
-export async function deletePhysicalProject(project, namespace) {
+export async function deletePhysicalProject(project: string, namespace?: string) {
   if (!project) throw new ERROR.InvalidArgumentError('project', project)
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
@@ -91,20 +91,20 @@ export async function deletePhysicalProject(project, namespace) {
   }
 }
 
-export class PhysicalProject {
-  static list(namespace) {
-    return listPhysicalProject(namespace)
-  }
+// export class PhysicalProject {
+//   static list(namespace?: string) {
+//     return listPhysicalProject(namespace)
+//   }
 
-  static show(project, namespace) {
-    return showPhysicalProject(project, namespace)
-  }
+//   static show(project: string, namespace?: string) {
+//     return showPhysicalProject(project, namespace)
+//   }
 
-  static create(project, namespace) {
-    return createPhysicalProject(project, namespace)
-  }
+//   static create(project: string, namespace?: string) {
+//     return createPhysicalProject(project, namespace)
+//   }
 
-  static delete(project, namespace) {
-    return deletePhysicalProject(project, namespace)
-  }
-}
+//   static delete(project: string, namespace?: string) {
+//     return deletePhysicalProject(project, namespace)
+//   }
+// }

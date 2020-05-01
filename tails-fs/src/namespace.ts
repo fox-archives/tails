@@ -30,7 +30,7 @@ export async function listPhysicalNamespaces() {
   return { namespaces }
 }
 
-export async function showPhysicalNamespace(namespace) {
+export async function showPhysicalNamespace(namespace?: string) {
   if (!namespace) throw new ERROR.InvalidArgumentError('namespace', namespace)
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
@@ -43,7 +43,7 @@ export async function showPhysicalNamespace(namespace) {
   }
 
   for (let dirent of dirents) {
-    if (!dirent.name.slice(0, 1) === '_') continue
+    if (!(dirent.name.slice(0, 1) === '_')) continue
 
     if (dirent.name.slice(1) === namespace) {
       return {
@@ -58,7 +58,7 @@ export async function showPhysicalNamespace(namespace) {
   throw new ERROR.DoesNotExistError('namespace', namespace)
 }
 
-export async function createPhysicalNamespace(namespace) {
+export async function createPhysicalNamespace(namespace: string) {
   if (!namespace) throw new ERROR.InvalidArgumentError('namespace', namespace)
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
@@ -73,7 +73,7 @@ export async function createPhysicalNamespace(namespace) {
   }
 }
 
-export async function deletePhysicalNamespace(namespace) {
+export async function deletePhysicalNamespace(namespace: string) {
   if (!namespace) throw new ERROR.InvalidArgumentError('namespace', namespace)
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
@@ -88,20 +88,20 @@ export async function deletePhysicalNamespace(namespace) {
   }
 }
 
-export class PhysicalNamespace {
-  public static list() {
-    return listPhysicalNamespaces()
-  }
+// export class PhysicalNamespace {
+//   public static list() {
+//     return listPhysicalNamespaces()
+//   }
 
-  public static show(namespace: string) {
-    return showPhysicalNamespace(namespace)
-  }
+//   public static show(namespace: string) {
+//     return showPhysicalNamespace(namespace)
+//   }
 
-  public static create(namespace: string) {
-    return createPhysicalNamespace(namespace)
-  }
+//   public static create(namespace: string) {
+//     return createPhysicalNamespace(namespace)
+//   }
 
-  public static delete(namespace: string) {
-    return deletePhysicalNamespace(namespace)
-  }
-}
+//   public static delete(namespace: string) {
+//     return deletePhysicalNamespace(namespace)
+//   }
+// }

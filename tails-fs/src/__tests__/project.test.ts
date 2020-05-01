@@ -3,17 +3,30 @@ import _ from 'lodash'
 import { fixNamespaceFixtures } from './testUtils'
 import * as TC from './testConstants'
 
+// TODO: fix lame imports
+import * as testUtilForType from './testUtils'
+import * as projectMethods from '../project'
+// import { PhysicalNamespace as PhysicalNameSpaceForType } from '../namespace'
+import { DoesNotExistError as DoesNotExistErrorForType, AlreadyExistsError as AlreadyExistsErrorForType, InvalidArgumentError as InvalidArgumentErrorForType } from '../errors'
+interface tailsErrorForType {
+  DoesNotExistError: DoesNotExistErrorForType,
+  AlreadyExistsError: AlreadyExistsErrorForType,
+  InvalidArgumentError: InvalidArgumentErrorForType
+}
+
 /*
   see comment in
   namespace.test.js for details
 */
-let PhysicalProject
-let TAILS_ERROR
-let testUtil
+// let PhysicalProject: typeof projectMethods
+let Project: typeof projectMethods
+let TAILS_ERROR: tailsErrorForType
+let testUtil: typeof testUtilForType
 beforeEach(() => {
   jest.resetModules()
   jest.doMock('../config.helper')
-  ;({ PhysicalProject } = require('../project'))
+  // ;({ PhysicalProject } = require('../project'))
+  Project = require('../project')
   TAILS_ERROR = require('../errors')
   testUtil = require('./testUtils')
 })
@@ -24,7 +37,7 @@ describe('listProject', () => {
       TAILS_ROOT_DIR: TC.TEST_TAILS_ROOT_DIR_READ,
     })
 
-    let projects = await PhysicalProject.list()
+    let projects = await Project.listPhysicalProject()
 
     expect(_.sortBy(projects, 'name')).toStrictEqual(TC.PROJECTS_FIXTURE)
   })
@@ -34,7 +47,7 @@ describe('listProject', () => {
       TAILS_ROOT_DIR: 'invalid',
     })
 
-    await expect(PhysicalProject.list()).rejects.toThrow(Error)
+    await expect(Project.listPhysicalProject()).rejects.toThrow(Error)
   })
 })
 
@@ -45,7 +58,7 @@ describe('showPhysicalProject', () => {
     })
 
     let correct = 'project-three'
-    const project = await PhysicalProject.show(correct)
+    const project = await Project.showPhysicalProject(correct)
 
     expect(project).toStrictEqual({
       name: correct,
@@ -60,8 +73,8 @@ describe('showPhysicalProject', () => {
       TAILS_ROOT_DIR: TC.TEST_TAILS_ROOT_DIR_READ,
     })
 
-    let correct = 'project-bravo'
-    const project = await PhysicalProject.show(correct)
+    let correct = 'project-one'
+    const project = await Project.showPhysicalProject(correct)
 
     expect(project).toStrictEqual({
       name: correct,
@@ -77,7 +90,7 @@ describe('showPhysicalProject', () => {
     })
 
     const invalid = 'invalid-project-name-abc-xyz'
-    await expect(PhysicalProject.show(invalid)).rejects.toThrow(
+    await expect(Project.showPhysicalProject(invalid)).rejects.toThrow(
       TAILS_ERROR.DoesNotExistError
     )
   })
@@ -87,7 +100,8 @@ describe('showPhysicalProject', () => {
       TAILS_ROOT_DIR: 'invalid-project-dir-abc-xyz',
     })
 
-    await expect(PhysicalProject.show()).rejects.toThrow(Error)
+    // @ts-ignore
+    await expect(Project.showPhysicalProject()).rejects.toThrow(Error)
   })
 })
 
@@ -101,7 +115,7 @@ describe('createPhysicalProject', () => {
     })
 
     const correct = 'some-physical-project'
-    await expect(PhysicalProject.create(correct)).resolves.not.toThrow()
+    await expect(Project.createPhysicalProject(correct)).resolves.not.toThrow()
   })
 
   it('succeeds on correct parameters (with namespace)', async () => {
@@ -111,7 +125,7 @@ describe('createPhysicalProject', () => {
 
     const correct = 'name-does-not-matter'
     await expect(
-      PhysicalProject.create(correct, 'project-collection-2')
+      Project.createPhysicalProject(correct, 'project-collection')
     ).resolves.not.toThrow()
   })
 
@@ -123,7 +137,7 @@ describe('createPhysicalProject', () => {
     const invalidNamespace = 'project-collection-200'
     const correctProjectName = 'name-does-not-matter'
     await expect(
-      PhysicalProject.create(invalidNamespace, correctProjectName)
+      Project.createPhysicalProject(invalidNamespace, correctProjectName)
     ).rejects.toThrow(TAILS_ERROR.DoesNotExistError)
   })
 
@@ -132,7 +146,8 @@ describe('createPhysicalProject', () => {
       TAILS_ROOT_DIR: 'invalid-project-dir-abc-xyz',
     })
 
-    await expect(PhysicalProject.create()).rejects.toThrow(Error)
+    // @ts-ignore
+    await expect(Project.createPhysicalProject()).rejects.toThrow(Error)
   })
 })
 
@@ -146,7 +161,7 @@ describe('deletePhysicalProject', () => {
     })
 
     const correct = 'project-first'
-    await expect(PhysicalProject.delete(correct)).resolves.not.toThrow()
+    await expect(Project.deletePhysicalProject(correct)).resolves.not.toThrow()
   })
 
   it('fails on invalid TAILS_ROOT_DIR by throwing Error', async () => {
@@ -154,6 +169,7 @@ describe('deletePhysicalProject', () => {
       TAILS_ROOT_DIR: 'invalid-project-dir-abc-xyz',
     })
 
-    await expect(PhysicalProject.delete()).rejects.toThrow(Error)
+    // @ts-ignore
+    await expect(Project.deletePhysicalProject()).rejects.toThrow(Error)
   })
 })

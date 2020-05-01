@@ -13,8 +13,11 @@ export class DoesNotExistError extends Error {
 
     super(message)
     this.name = this.constructor.name
+    // @ts-ignore
     this.category = categoryOfThing
+    // @ts-ignore
     this.of = valueOfThing
+    // @ts-ignore
     this.reason = reason
   }
 }
@@ -31,8 +34,11 @@ export class AlreadyExistsError extends Error {
 
     super(message)
     this.name = this.constructor.name
+    // @ts-ignore
     this.category = categoryOfThing
+    // @ts-ignore
     this.of = valueOfThing
+    // @ts-ignore
     this.reason = reason
   }
 }
@@ -40,14 +46,17 @@ export class AlreadyExistsError extends Error {
 // throws anytime invalid arguments or insufficient arguments are passed
 // into a functions
 export class InvalidArgumentError extends Error {
-  constructor(argumentName: string, argumentValue?: string, reason?: string) {
+  constructor(argumentName: string, argumentValue?: string | boolean, reason?: string) {
     let message = `the argument could not be processed because the argument '${argumentName}' with value '${argumentValue}' is not valid`
     if (reason) message += `. this is because ${reason}`
 
     super(message)
     this.name = this.constructor.name
+    // @ts-ignore
     this.category = argumentName
+    // @ts-ignore
     this.of = argumentValue
+    // @ts-ignore
     this.reason = reason
   }
 }

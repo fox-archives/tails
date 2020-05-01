@@ -3,9 +3,14 @@ import fs from 'fs-extra'
 
 import { getNamespaceFolder, readDirRaw } from './util'
 
+interface namespaceProjectNameTemp {
+  namespace: string | undefined
+  projectName: string
+}
+
 export function createPhysicalProjectRaw(
-  tailsRootDir,
-  { namespace, projectName }
+  tailsRootDir: string,
+  { namespace, projectName }: namespaceProjectNameTemp
 ) {
   let actualProjectDir = tailsRootDir
   if (namespace) {
@@ -13,14 +18,14 @@ export function createPhysicalProjectRaw(
   }
 
   const finalProjectDir = path.join(actualProjectDir, projectName)
-  return fs.mkdir(finalProjectDir, {
+  return fs.promises.mkdir(finalProjectDir, {
     mode: 0o755,
   })
 }
 
 export async function deletePhysicalProjectRaw(
-  tailsRootDir,
-  { namespace, projectName }
+  tailsRootDir: string,
+  { namespace, projectName }: namespaceProjectNameTemp
 ) {
   let actualProjectDir = tailsRootDir
   if (namespace) {
@@ -34,7 +39,8 @@ export async function deletePhysicalProjectRaw(
   await fs.remove(projectFolder)
 }
 
-export async function gatherProjects(tailsRootDir, shouldGather) {
+// TODO: fix shouldGather: function
+export async function gatherProjects(tailsRootDir: string, shouldGather: Function) {
   let unfilteredProjectDirents
   try {
     unfilteredProjectDirents = await readDirRaw(tailsRootDir)
@@ -83,11 +89,13 @@ export async function gatherProjects(tailsRootDir, shouldGather) {
   return projects
 }
 
-export function isNamespace(string) {
+export function isNamespace(string: string) {
   return string.indexOf('_') === 0
 }
 
-export async function pickProject(directoryBeingSearched, project) {
+// TODO: fix
+// @ts-ignore
+export async function pickProject(directoryBeingSearched: string, project: string) {
   let unfilteredProjectDirents
   try {
     unfilteredProjectDirents = await readDirRaw(directoryBeingSearched)

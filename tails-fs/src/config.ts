@@ -49,7 +49,7 @@ async function getConfigKey(key: string) {
   return json[key]
 }
 
-async function setConfigKey(key: string, value: string, isForce: boolean) {
+async function setConfigKey(key: string, value: string, isForce?: boolean) {
   if (!(await helper.storeExists())) throw new ERROR.DoesNotExistError('config')
   if (!value && !isForce) throw new ERROR.InvalidArgumentError('force', isForce)
 
@@ -76,26 +76,26 @@ async function findConfig() {
 
 export { TAILS_CONFIG_FILE }
 export class Config {
-  // TODO: fix
-  static show(): Promise<void> {
+  // TODO: fix add types
+  static show() {
     return showConfig()
   }
 
-  static create(): Promise<void> {
+  static create() {
     return createConfig()
   }
 
-  static delete(): Promise<void> {
+  static delete() {
     return deleteConfig()
   }
 
   // TODO: fix
-  static get(key: string): Promise<void> {
+  static get(key: string) {
     return getConfigKey(key)
   }
 
   // TODO: fix?
-  static set(key: string, value: string, isForce: boolean): Promise<void> {
+  static set(key: string, value: string, isForce?: boolean) {
     return setConfigKey(key, value, isForce)
   }
 

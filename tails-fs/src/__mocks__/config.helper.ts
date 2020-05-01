@@ -2,7 +2,7 @@ import path from 'path'
 
 export const TAILS_CONFIG_FILE = resolveTailsConfigFile()
 
-let store = null
+let store: any = null
 
 function resolveTailsConfigFile() {
   return path.join(__dirname, '../__tests__/tails.json')
@@ -20,7 +20,7 @@ export async function readStore() {
   return store
 }
 
-export async function writeStore(obj) {
+export async function writeStore(obj: object) {
   store = obj
 }
 
