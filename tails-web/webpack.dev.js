@@ -28,6 +28,18 @@ export default merge.strategy({
           },
         ],
       },
+      {
+        test: /\.s(c|a)ss$/,
+        use: [
+          {
+            loader: 'vue-style-loader',
+            options: {
+              sourceMap: true,
+              shadowMode: false,
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [
@@ -41,7 +53,7 @@ export default merge.strategy({
   devServer: {
     open: false,
     hot: true,
-    port: 9010,
+    port: 9000,
     compress: true,
     historyApiFallback: true,
 

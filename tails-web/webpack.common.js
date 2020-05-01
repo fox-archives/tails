@@ -1,15 +1,18 @@
 import path from 'path'
 
+import sass from 'sass'
+import fibers from 'fibers'
 import webpack from 'webpack'
 import VueLoaderPlugin from 'vue-loader/lib/plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import PreloadWebpackPlugin from 'preload-webpack-plugin'
 import ResourceHintWebpackPlugin from 'resource-hints-webpack-plugin'
-import ObsoleteWebpackPlugin from 'obsolete-webpack-plugin'
+// import ObsoleteWebpackPlugin from 'obsolete-webpack-plugin'
 import ScriptExtHtmlWebpackPlugin from 'script-ext-html-webpack-plugin'
 import { WebpackNoModulePlugin } from 'webpack-nomodule-plugin'
 import PnpWebpackPlugin from 'pnp-webpack-plugin'
 import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin'
+import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
 
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -26,11 +29,14 @@ export default {
     crossOriginLoading: 'anonymous', // for SriPlugin
   },
   module: {
+    // TODO: investiage
+    exprContextCritical: false,
     noParse: /^(vue|vue-router|vuex|vuex-router-sync)$/,
     rules: [
       {
         test: /\.vue$/,
-        loader: [
+        exclude: /node_modules/,
+        use: [
           'cache-loader',
           {
             loader: 'vue-loader',
@@ -43,11 +49,42 @@ export default {
         ],
       },
       {
-        test: /\.js$/,
-        use: ['babel-loader'],
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              sourceMap: isDev,
+            },
+          },
+        ],
       },
       {
         test: /\.(css|postcss)$/,
+        use: [
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: isDev,
+              importLoaders: 2,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              config: {
+                path: path.join(__dirname, './postcss.config.js'),
+              },
+              ident: 'postcss',
+              sourceMap: isDev,
+              indentSyntax: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.s(c|a)ss$/,
         use: [
           {
             loader: 'css-loader',
@@ -58,9 +95,13 @@ export default {
             },
           },
           {
-            loader: 'postcss-loader',
+            loader: 'sass-loader',
             options: {
               sourceMap: isDev,
+              implementation: sass,
+              sassOptions: {
+                fiber: fibers,
+              },
             },
           },
         ],
@@ -115,12 +156,14 @@ export default {
     ],
   },
   resolve: {
-    extensions: ['.mjs', '.js', '.vue', '.json', '.wasm'],
+    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.vue', '.json', '.wasm'],
     alias: {
       '@': path.join(__dirname, 'src'),
       '~atoms': path.join(__dirname, 'src/components/atoms'),
       '~molecules': path.join(__dirname, 'src/components/molecules'),
       '~organisms': path.join(__dirname, 'src/components/organisms'),
+      // TODO: make this dev only, not necessary
+      'react-dom': '@hot-loader/react-dom',
       vue$: 'vue/dist/vue.esm.js',
     },
     plugins: [PnpWebpackPlugin],
@@ -130,6 +173,7 @@ export default {
   },
   plugins: [
     new CaseSensitivePathsPlugin(),
+    new VuetifyLoaderPlugin(),
     new VueLoaderPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
@@ -142,9 +186,9 @@ export default {
     }),
     new PreloadWebpackPlugin(),
     new ResourceHintWebpackPlugin(),
-    new ObsoleteWebpackPlugin({
-      name: 'obsolete',
-    }),
+    // new ObsoleteWebpackPlugin({
+    //   name: 'obsolete',
+    // }),
     new ScriptExtHtmlWebpackPlugin({
       defaultAttribute: 'defer',
       template: `<style></style><div>Your browser is not supported. <button id="obsoleteClose">&times;</button></div>`,
