@@ -5,7 +5,7 @@ import { TAILS_CONFIG_FILE } from './config.helper'
 
 /**
  * this is meant to be a low level api (ex. it throws errors, that even if they could be dealt with on their own, aren't)
- * 
+ *
  * ```js
  * import { Config } from 'tails-fs'
  * ```
@@ -13,7 +13,7 @@ import { TAILS_CONFIG_FILE } from './config.helper'
 
 /**
  * shows config in its entirety
- * 
+ *
  * @throws DoesNotExistError (err.category = config)
  * @throws Error
  */
@@ -29,7 +29,7 @@ async function showConfig() {
 
 /**
  * creates blank config
- * 
+ *
  * @throws AlreadyExistsError (err.category = config)
  * @throws Error
  */
@@ -45,7 +45,7 @@ async function createConfig() {
 
 /**
  * nuke config off the map
- * 
+ *
  * @throws DoesNotExistError (err.config = config)
  * @throws Error
  */
@@ -61,7 +61,7 @@ async function deleteConfig() {
 
 /**
  * gets key from config
- * 
+ *
  * @throws DoesNotExistError (err.category = config)
  * @throws InvalidArgumentError (err.category = key)
  * @throws Error
@@ -84,7 +84,7 @@ async function getConfigKey(key: string) {
 
 /**
  * set key in config
- * 
+ *
  * @throws DoesNotExistError (err.category = config | key)
  * @throws InvalidArgumentError (err.category = key | force)
  * @throws Error
@@ -116,13 +116,12 @@ async function findConfig() {
 
 /**
  * exported constant variable that gives location of tails config file. here is how it resolves:
- * 
+ *
  * 1. if `process.env.TAILS_CONFIG_DIR` is set, relative to that, it resolves to `./tails.json`
  * 2. if `process.env.XDG_CONFIG_HOME` is set, relative to that, it resolves to `./tails/tails.json`
  * 3. if `process.env.XDG_CONFIG_HOME` is not set, relative to `process.env.HOME|HOMEPATH|USERPROFILE`, it resolves to `./.config/tails/tails.json`
  */
 export { TAILS_CONFIG_FILE }
-
 
 export class Config {
   // TODO: fix add types

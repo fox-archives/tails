@@ -7,10 +7,14 @@ import * as TC from './testConstants'
 import * as testUtilForType from './testUtils'
 import * as projectMethods from '../project'
 // import { PhysicalNamespace as PhysicalNameSpaceForType } from '../namespace'
-import { DoesNotExistError as DoesNotExistErrorForType, AlreadyExistsError as AlreadyExistsErrorForType, InvalidArgumentError as InvalidArgumentErrorForType } from '../errors'
+import {
+  DoesNotExistError as DoesNotExistErrorForType,
+  AlreadyExistsError as AlreadyExistsErrorForType,
+  InvalidArgumentError as InvalidArgumentErrorForType,
+} from '../errors'
 interface tailsErrorForType {
-  DoesNotExistError: DoesNotExistErrorForType,
-  AlreadyExistsError: AlreadyExistsErrorForType,
+  DoesNotExistError: DoesNotExistErrorForType
+  AlreadyExistsError: AlreadyExistsErrorForType
   InvalidArgumentError: InvalidArgumentErrorForType
 }
 

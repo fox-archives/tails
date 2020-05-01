@@ -1,6 +1,16 @@
+# build
+dist/
+
+# docs
+tails-fs/docs
+
+# projects
 projects/
+
+# modules
 node_modules/
 web_modules/
-dist/
+
+# misc
 *.hbs
 

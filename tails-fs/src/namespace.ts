@@ -15,7 +15,7 @@ const TAILS_ROOT_DIR = 'TAILS_ROOT_DIR'
 
 /**
  * list all project namespaces
- * 
+ *
  * @throw Error
  */
 export async function listPhysicalNamespaces() {
@@ -44,7 +44,7 @@ export async function listPhysicalNamespaces() {
 
 /**
  * show a project namespace
- * 
+ *
  * @throw InvalidArgumentError (err.category = namespace)
  * @throw DoesNotExistError (err.category = namespace)
  * @throw Error
@@ -79,7 +79,7 @@ export async function showPhysicalNamespace(namespace?: string) {
 
 /**
  * creates a project namespace
- * 
+ *
  * @throw InvalidArgumentError (err.category = namespace)
  * @throw AlreadyExistsError (err.category = namespace)
  * @throw Error
@@ -101,7 +101,7 @@ export async function createPhysicalNamespace(namespace: string) {
 
 /**
  * deletes a project namespace
- * 
+ *
  * @throw InvalidArgumentError (err.category = namespace)
  * @throw DoesNotExistError (err.category = namespace)
  */

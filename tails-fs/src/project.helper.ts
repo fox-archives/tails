@@ -40,7 +40,10 @@ export async function deletePhysicalProjectRaw(
 }
 
 // TODO: fix shouldGather: function
-export async function gatherProjects(tailsRootDir: string, shouldGather: Function) {
+export async function gatherProjects(
+  tailsRootDir: string,
+  shouldGather: Function
+) {
   let unfilteredProjectDirents
   try {
     unfilteredProjectDirents = await readDirRaw(tailsRootDir)
@@ -95,7 +98,10 @@ export function isNamespace(string: string) {
 
 // TODO: fix
 // @ts-ignore
-export async function pickProject(directoryBeingSearched: string, project: string) {
+export async function pickProject(
+  directoryBeingSearched: string,
+  project: string
+) {
   let unfilteredProjectDirents
   try {
     unfilteredProjectDirents = await readDirRaw(directoryBeingSearched)

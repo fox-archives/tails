@@ -9,10 +9,14 @@ import * as TC from './testConstants'
 import * as testUtilForType from './testUtils'
 import * as namespaceMethods from '../namespace'
 // import { PhysicalNamespace as PhysicalNameSpaceForType } from '../namespace'
-import { DoesNotExistError as DoesNotExistErrorForType, AlreadyExistsError as AlreadyExistsErrorForType, InvalidArgumentError as InvalidArgumentErrorForType } from '../errors'
+import {
+  DoesNotExistError as DoesNotExistErrorForType,
+  AlreadyExistsError as AlreadyExistsErrorForType,
+  InvalidArgumentError as InvalidArgumentErrorForType,
+} from '../errors'
 interface tailsErrorForType {
-  DoesNotExistError: DoesNotExistErrorForType,
-  AlreadyExistsError: AlreadyExistsErrorForType,
+  DoesNotExistError: DoesNotExistErrorForType
+  AlreadyExistsError: AlreadyExistsErrorForType
   InvalidArgumentError: InvalidArgumentErrorForType
 }
 
@@ -62,8 +66,9 @@ describe('PhysicalNamespace.list()', () => {
           isFile: false,
           isSymbolicLink: false,
         },
-      ]),
-    ), 'name'
+      ])
+    ),
+      'name'
   })
 
   it('fails on invalid TAILS_ROOT_DIR by throwing Error', async () => {
@@ -130,7 +135,9 @@ describe('PhysicalNamespace.create()', () => {
     const namespace = 'namespace-foo'
 
     // await expect(PhysicalNamespace.create(namespace)).resolves.not.toThrow()
-    await expect(Namespace.createPhysicalNamespace(namespace)).resolves.not.toThrow()
+    await expect(
+      Namespace.createPhysicalNamespace(namespace)
+    ).resolves.not.toThrow()
   })
 
   it('fails on invalid arguments by throwing InvalidArgumentError', async () => {
@@ -164,7 +171,9 @@ describe('PhysicalNamespace.create()', () => {
       TAILS_ROOT_DIR: 'invalid-namespace-folder-abc-xyz',
     })
 
-    await expect(Namespace.createPhysicalNamespace('doesnnt-matter')).rejects.toThrow(Error)
+    await expect(
+      Namespace.createPhysicalNamespace('doesnnt-matter')
+    ).rejects.toThrow(Error)
   })
 })
 
@@ -179,7 +188,9 @@ describe('deletePhysicalNamespace', () => {
 
     const namespace = 'project-collection'
 
-    await expect(Namespace.deletePhysicalNamespace(namespace)).resolves.not.toThrow()
+    await expect(
+      Namespace.deletePhysicalNamespace(namespace)
+    ).resolves.not.toThrow()
   })
 
   it('fails on not enough arguments by throwing InvalidArgumentError', async () => {
@@ -210,6 +221,8 @@ describe('deletePhysicalNamespace', () => {
       TAILS_ROOT_DIR: 'invalid-namespace-folder-abc-xyz',
     })
 
-    await expect(Namespace.deletePhysicalNamespace('doesnt-matter')).rejects.toThrow(Error)
+    await expect(
+      Namespace.deletePhysicalNamespace('doesnt-matter')
+    ).rejects.toThrow(Error)
   })
 })

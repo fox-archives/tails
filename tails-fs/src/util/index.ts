@@ -5,7 +5,10 @@ export function getNamespaceFolder(tailsRootDir: string, namespace: string) {
   return path.join(tailsRootDir, `_${namespace}`)
 }
 
-export async function doesNamespaceExist(tailsRootDir: string, namespace: string) {
+export async function doesNamespaceExist(
+  tailsRootDir: string,
+  namespace: string
+) {
   const namespaceFolder = path.join(tailsRootDir, `_${namespace}`)
 
   try {

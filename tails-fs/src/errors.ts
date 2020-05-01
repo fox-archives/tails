@@ -39,7 +39,7 @@ export class DoesNotExistError extends Error {
 
 /**
  * you try and perform an operation (ex. create) on _something_ that belongs to a specific _category_, but the _something_ already exists
- * 
+ *
  * ```js
  * new AlreadyExistsError(category, something, reason)
  * new AlreadyExistsError('namespace', 'css-projects')
@@ -47,7 +47,7 @@ export class DoesNotExistError extends Error {
  * new AlreadyExistsError('config', undefined, reason)
  * new AlreadyExistsError('config') // ~/.config/tails/tails.json
  * ```
- * 
+ *
  * @property name
  * @property category
  * @property of
@@ -74,23 +74,26 @@ export class AlreadyExistsError extends Error {
   }
 }
 
-
 /**
  * you try and perform a method call, but if found a certain (necessary) _argument_ missing, or the argument's _value_ is somehow not valid
  * throws anytime invalid arguments or insufficient arguments are passed into a functions
- * 
+ *
  * ```js
  * new InvalidArgumentError(argument, value)
  * new InvalidArgumentError('project', '_my-project') // projects cannot have leading underscore
  * ```
- * 
+ *
  * @property name
  * @property category
  * @property of
  * @property reason
  */
 export class InvalidArgumentError extends Error {
-  constructor(argumentName: string, argumentValue?: string | boolean, reason?: string) {
+  constructor(
+    argumentName: string,
+    argumentValue?: string | boolean,
+    reason?: string
+  ) {
     let message = `the argument could not be processed because the argument '${argumentName}' with value '${argumentValue}' is not valid`
     if (reason) message += `. this is because ${reason}`
 

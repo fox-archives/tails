@@ -18,7 +18,9 @@ function resolveTailsConfigFile() {
     if (home) {
       TAILS_CONFIG_DIR = path.join(home, '.config/tails')
     } else {
-      throw new Error('cannot find home directory. environment variables HOME, HOMEPATH, USERPROFILE are not defined')
+      throw new Error(
+        'cannot find home directory. environment variables HOME, HOMEPATH, USERPROFILE are not defined'
+      )
     }
   }
 

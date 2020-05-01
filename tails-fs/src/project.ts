@@ -34,7 +34,7 @@ export async function listPhysicalProject(namespace?: string) {
 
 /**
  * show a project
- * 
+ *
  * @throws InvalidArgumentError (err.category = project)
  * @throws DoesNotExistError (err.category = project)
  * @throws Error
@@ -62,13 +62,16 @@ export async function showPhysicalProject(project: string, namespace?: string) {
 
 /**
  * create a project
- * 
+ *
  * @throws InvalidArgumentError (err.category = project)
  * @throws DoesNotExistError (err.category = namespace)
  * @throws AlreadyExistsError (err.category = project)
  * @throws Error
  */
-export async function createPhysicalProject(project: string, namespace?: string) {
+export async function createPhysicalProject(
+  project: string,
+  namespace?: string
+) {
   if (!project) throw new ERROR.InvalidArgumentError('project', project)
   if (helper.isNamespace(project))
     throw new ERROR.InvalidArgumentError(
@@ -99,12 +102,15 @@ export async function createPhysicalProject(project: string, namespace?: string)
 
 /**
  * delete a project folder
- * 
+ *
  * @throws InvalidArgumentError (err.category = project)
  * @throws DoesNotExistError (err.category = project)
  * @throws Error
  */
-export async function deletePhysicalProject(project: string, namespace?: string) {
+export async function deletePhysicalProject(
+  project: string,
+  namespace?: string
+) {
   if (!project) throw new ERROR.InvalidArgumentError('project', project)
 
   const tailsRootDir = await Config.get(TAILS_ROOT_DIR)
