@@ -5,7 +5,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "build": "rollup --config rollup.config.js",
-    "test": "jest --config .jestrc.json"
+    "test": "jest"
   },
   "dependencies": {
     "babel-eslint": "^10.1.0",
