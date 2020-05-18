@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useState, useEffect } from 'react'
 
 let query = `{ projects { name, isSymbolicLink } }`
 
@@ -13,18 +14,22 @@ let fetchData = async () => {
   })
 }
 
-class DisplayAllProjects extends React.Component {
-  state = {
-    current: 'thing'
-  }
+export default function() {
+  const [count, setCount] = useState(0);
 
-  render() {
+  useEffect(() => {
+    fetchData()
+  }, [count])
+
+
+  if(!count) {
     return (
-      <React.Suspense fallback="loading...">
-
-      </React.Suspense>
+      <h1>test</h1>
+    )
+  } else {
+    return (
+      { fetchData }
     )
   }
+  
 }
-
-export default DisplayAllProjects

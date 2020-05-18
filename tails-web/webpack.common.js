@@ -34,7 +34,7 @@ export default {
     noParse: /^(vue|vue-router|vuex|vuex-router-sync)$/,
     rules: [
       {
-        test: /\.vue$/,
+        test: /\.vue$/,w
         exclude: /node_modules/,
         use: [
           'cache-loader',
@@ -61,7 +61,7 @@ export default {
         ],
       },
       {
-        test: /\.(css|postcss)$/,
+        test: /\.(css)$/,
         use: [
           {
             loader: 'css-loader',
@@ -70,17 +70,14 @@ export default {
               importLoaders: 2,
             },
           },
-          {
-            loader: 'postcss-loader',
-            options: {
-              config: {
-                path: path.join(__dirname, './postcss.config.js'),
-              },
-              ident: 'postcss',
-              sourceMap: isDev,
-              indentSyntax: true,
-            },
-          },
+          // {
+          //   loader: 'postcss-loader',
+          //   options: {
+          //     ident: 'postcss',
+          //     sourceMap: isDev,
+          //     indentSyntax: true,
+          //   },
+          // },
         ],
       },
       {

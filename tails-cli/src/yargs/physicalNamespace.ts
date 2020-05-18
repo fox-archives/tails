@@ -1,4 +1,3 @@
-// @ts-ignore
 import { PhysicalNamespace } from 'tails-fs'
 
 import yargs from 'yargs/index'

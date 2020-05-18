@@ -1,4 +1,3 @@
-// @ts-ignore
 import { PhysicalProject } from 'tails-fs'
 
 import yargs from 'yargs/index'
@@ -8,7 +7,6 @@ import { handleError, printSuccess } from '../util'
 export const command = 'physicalProject <command>'
 export const aliases = ['pproj']
 export const desc = 'show or edit physicalProject information'
-// @ts-ignore
 export const builder = function (yargs: yargs.Argv) {
   yargs.command(
     'list',

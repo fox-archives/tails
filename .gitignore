@@ -4,6 +4,9 @@ dist/
 # docs
 tails-fs/docs
 
+# misc
+tails-quick/
+
 # modules
 node_modules/
 web_modules/
