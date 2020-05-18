@@ -1,18 +1,8 @@
 {
-  "compileOnSave": true,
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "sourceMap": true,
-    "target": "ES2017",
-    "module": "ESNext",
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "strict": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "forceConsistentCasingInFileNames": true,
-    "lib": ["ESNext"],
-    "types": ["jest", "node", "jest-extended"]
+    "rootDir": "src",
+    "outDir": "build"
   },
-  "exclude": ["dist", "**/*.spec.ts"]
+  "include": ["src/**/*"]
 }

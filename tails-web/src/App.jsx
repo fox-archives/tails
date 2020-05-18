@@ -2,20 +2,14 @@ import { hot } from 'react-hot-loader/root';
 import React from 'react';
 import { Rate } from 'antd';
 import Header from '@/components/Header'
+import DisplayAllProjects from '@/components/DisplayAllProjects'
 
 function App() {
-  // Declare a new state variable, which we'll call "count"
-  // const [count, setCount] = useState(0);
-
   return (
     <>
       <Header/>
+      <DisplayAllProjects/>
       <div>
-        {/* <p>You clicked {count} times</p>
-        <button onClick={() => setCount(count + 1)}>
-          Click me
-        </button> */}
-        informationdd
         <Rate allowHalf defaultValue={2.5} />
       </div>
     </>

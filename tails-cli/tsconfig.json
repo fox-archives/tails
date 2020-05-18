@@ -1,16 +1,16 @@
 {
-  "compileOnSave": true,
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "sourceMap": true,
-    "target": "ES2019",
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "strict": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "forceConsistentCasingInFileNames": true,
-    "lib": ["ESNext"]
+    "rootDir": "src",
+    "outDir": "build"
   },
-  "exclude": ["dist", "**/*.spec.ts"]
+  "include": ["src/**/*"],
+  "references": [
+    {
+      "path": "../eslint-config-tails"
+    },
+    {
+      "path": "../tails-fs"
+    }
+  ]
 }

@@ -1,0 +1,23 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "sourceMap": true,
+    "target": "ES2017",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "strict": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "forceConsistentCasingInFileNames": true,
+    "typeRoots": ["./node_modules/@types", "./@types"],
+    "types": ["node", "jest"],
+    "lib": ["ESNext"],
+    "composite": true,
+    // ensure this is on for composite and project references
+    "declaration": true,
+    "declarationMap": true,
+    "incremental": true
+  }
+}

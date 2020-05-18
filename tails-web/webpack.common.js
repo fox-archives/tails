@@ -23,9 +23,9 @@ export default {
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'js/[name].js',
+    filename: 'js/[name].[hash].bundle.js',
+    chunkFilename: 'js/[name].[hash].bundle.js',
     publicPath: '/',
-    chunkFilename: 'js/[name].js',
     crossOriginLoading: 'anonymous', // for SriPlugin
   },
   module: {
