@@ -1,0 +1,7 @@
+scripts:
+  start: deno run src/main.ts
+  test: deno test
+allow:
+  - env
+  - net
+  - read
