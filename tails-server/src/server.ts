@@ -1,5 +1,4 @@
-import * as path from "https://deno.land/std@v0.53.0/path/mod.ts";
-import { serve } from "https://deno.land/std@v0.53.0/http/server.ts";
+import * as http from "https://deno.land/std@v0.54.0/http/mod.ts";
 
 const fmt = (text: string) => new TextEncoder().encode(text);
 

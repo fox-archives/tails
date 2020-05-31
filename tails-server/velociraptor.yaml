@@ -1,7 +1,11 @@
 scripts:
   serve: denon serve
-  start: deno run src/server.ts
-  test: deno test
+  start:
+    cmd: deno run --unstable src/server.ts
+    imap: map.json
+  test:
+    cmd: deno test
+    imap: map.json
 allow:
   - env
   - net
