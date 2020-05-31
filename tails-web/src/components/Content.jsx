@@ -48,8 +48,8 @@ export default function Content() {
       <Row>
         {projects.map(project => {
           return (
-            <Col xs={24} sm={12} md={8} lg={6} xl={4}>
-              <Card key={project.name} title="Default size card" extra={<a href="#">More</a>}>
+            <Col key={project.name} xs={24} sm={12} md={8} lg={6} xl={4}>
+              <Card title="Default size card" extra={<a href="#">More</a>}>
                 <p>{project.name}</p>
               </Card>
             </Col>

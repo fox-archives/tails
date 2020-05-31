@@ -1,27 +1,31 @@
 import * as React from 'react'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Menu } from 'antd';
-import { MailOutlined, GithubOutlined, SettingOutlined, TableOutlined, AppstoreAddOutlined } from '@ant-design/icons';
+import { GithubOutlined, SettingOutlined, TableOutlined, AppstoreAddOutlined } from '@ant-design/icons';
 const { SubMenu } = Menu;
 
 
-const current = 'projects'
-
-const handleClick = e => {
-  console.log('click ', e);
-  this.setState({
-    current: e.key,
-  });
-}
-
 export default function Header() {
+  const [current, setCurrent] = useState(0)
+
+  const handleClick = e => {
+    console.log('click ', e);
+    setCurrent({
+      current: e.key,
+    });
+  }
+
   return (
     <Menu onClick={handleClick} theme="dark" selectedKeys={[current]} mode="horizontal" >
       <Menu.Item key="projects" icon={<TableOutlined />}>
-        Projects
-        </Menu.Item>
+        <span>Projects</span>
+        <Link to="/"></Link>
+      </Menu.Item>
       <Menu.Item key="settings" icon={<SettingOutlined />}>
-        Settings
-        </Menu.Item>
+        <span>Settings</span>
+        <Link to="/settings">dd</Link>
+      </Menu.Item>
       <SubMenu icon={<AppstoreAddOutlined />} title="Plugin Menus">
         <Menu.ItemGroup title="plugin 1">
           <Menu.Item key="plugin-1:1">main</Menu.Item>
@@ -39,5 +43,4 @@ export default function Header() {
       </Menu.Item>
     </Menu>
   )
-
 }
