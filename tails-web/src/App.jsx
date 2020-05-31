@@ -1,18 +1,23 @@
 import { hot } from 'react-hot-loader/root';
-import React from 'react';
-import { Rate } from 'antd';
+import * as React from 'react';
+import { Layout } from 'antd';
 import Header from '@/components/Header'
-import DisplayAllProjects from '@/components/DisplayAllProjects'
+import Content from '@/components/Content'
+import Footer from '@/components/Footer'
 
 function App() {
   return (
-    <>
-      <Header/>
-      <DisplayAllProjects/>
-      <div>
-        <Rate allowHalf defaultValue={2.5} />
-      </div>
-    </>
+    <Layout.Content>
+      <Layout.Header>
+        <Header />
+      </Layout.Header>
+      <Layout.Content>
+        <Content />
+      </Layout.Content>
+      <Layout.Footer>
+        <Footer />
+      </Layout.Footer>
+    </Layout.Content>
   );
 }
 

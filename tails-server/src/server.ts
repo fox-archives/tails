@@ -3,7 +3,7 @@ import { serve } from "https://deno.land/std@v0.53.0/http/server.ts";
 
 const fmt = (text: string) => new TextEncoder().encode(text);
 
-const port = Number(Deno.env.get("PORT")) || 9000;
+const port = Number(Deno.env.get("PORT")) || 9020;
 const s = serve({ port });
 console.info(`on port ${port}`);
 
@@ -43,7 +43,6 @@ for await (const req of s) {
     headers.set("x-content-type-options", "nosniff");
 
     req.respond({ body, headers, status: 200 });
-  } else if (req.url === "/api/projects") {
   } else {
     const body = fmt("Not Found");
 

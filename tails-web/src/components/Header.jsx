@@ -3,7 +3,7 @@ import { Menu } from 'antd';
 import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
 const { SubMenu } = Menu;
 
-class Header extends React.Component {
+export default class TailsHeader extends React.Component {
   state = {
     current: 'mail'
   }
@@ -17,7 +17,7 @@ class Header extends React.Component {
 
   render() {
     return (
-      <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
+      <Menu onClick={this.handleClick} theme="dark" selectedKeys={[this.state.current]} mode="horizontal">
         <Menu.Item key="mail" icon={<MailOutlined />}>
           Projects
         </Menu.Item>
@@ -43,5 +43,3 @@ class Header extends React.Component {
     );
   }
 }
-
-export default Header

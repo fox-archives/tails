@@ -34,7 +34,7 @@ export default {
     noParse: /^(vue|vue-router|vuex|vuex-router-sync)$/,
     rules: [
       {
-        test: /\.vue$/,w
+        test: /\.vue$/,
         exclude: /node_modules/,
         use: [
           'cache-loader',
@@ -169,6 +169,7 @@ export default {
     plugins: [PnpWebpackPlugin.moduleLoader(module)],
   },
   plugins: [
+    new webpack.ProgressPlugin(),
     new CaseSensitivePathsPlugin(),
     new VuetifyLoaderPlugin(),
     new VueLoaderPlugin(),

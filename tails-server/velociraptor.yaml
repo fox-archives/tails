@@ -1,5 +1,6 @@
 scripts:
-  start: deno run src/main.ts
+  serve: denon serve
+  start: deno run src/server.ts
   test: deno test
 allow:
   - env
