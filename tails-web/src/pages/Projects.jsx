@@ -22,7 +22,7 @@ let fetchData = async () => {
   return data.data;
 };
 
-export default function Content() {
+export default function Projects() {
   const [projects, setProjects] = useState(0);
   const [namespaces, setNamespaces] = useState(0);
 
