@@ -1,45 +1,43 @@
 import * as React from 'react'
 import { Menu } from 'antd';
-import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons';
+import { MailOutlined, GithubOutlined, SettingOutlined, TableOutlined, AppstoreAddOutlined } from '@ant-design/icons';
 const { SubMenu } = Menu;
 
-export default class TailsHeader extends React.Component {
-  state = {
-    current: 'mail'
-  }
 
-  handleClick = e => {
-    console.log('click ', e);
-    this.setState({
-      current: e.key,
-    });
-  }
+const current = 'projects'
 
-  render() {
-    return (
-      <Menu onClick={this.handleClick} theme="dark" selectedKeys={[this.state.current]} mode="horizontal">
-        <Menu.Item key="mail" icon={<MailOutlined />}>
-          Projects
+const handleClick = e => {
+  console.log('click ', e);
+  this.setState({
+    current: e.key,
+  });
+}
+
+export default function Header() {
+  return (
+    <Menu onClick={handleClick} theme="dark" selectedKeys={[current]} mode="horizontal" >
+      <Menu.Item key="projects" icon={<TableOutlined />}>
+        Projects
         </Menu.Item>
-        <Menu.Item key="app" disabled icon={<AppstoreOutlined />}>
-          Navigation Two
+      <Menu.Item key="settings" icon={<SettingOutlined />}>
+        Settings
         </Menu.Item>
-        <SubMenu icon={<SettingOutlined />} title="Navigation Three - Submenu">
-          <Menu.ItemGroup title="Item 1">
-            <Menu.Item key="setting:1">Option 1</Menu.Item>
-            <Menu.Item key="setting:2">Option 2</Menu.Item>
-          </Menu.ItemGroup>
-          <Menu.ItemGroup title="Item 2">
-            <Menu.Item key="setting:3">Option 3</Menu.Item>
-            <Menu.Item key="setting:4">Option 4</Menu.Item>
-          </Menu.ItemGroup>
-        </SubMenu>
-        <Menu.Item key="alipay">
-          <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-            Navigation Four - Link
+      <SubMenu icon={<AppstoreAddOutlined />} title="Plugin Menus">
+        <Menu.ItemGroup title="plugin 1">
+          <Menu.Item key="plugin-1:1">main</Menu.Item>
+          <Menu.Item key="plugin-1:2">settings</Menu.Item>
+        </Menu.ItemGroup>
+        <Menu.ItemGroup title="plugin 2">
+          <Menu.Item key="plugin-2:1">main</Menu.Item>
+          <Menu.Item key="plugin-2:2">settings</Menu.Item>
+        </Menu.ItemGroup>
+      </SubMenu>
+      <Menu.Item icon={<GithubOutlined />} key="github">
+        <a href="https://github.com/eankeen/tails" target="_blank" rel="noopener noreferrer">
+          GitHub
           </a>
-        </Menu.Item>
-      </Menu>
-    );
-  }
+      </Menu.Item>
+    </Menu>
+  )
+
 }

@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
+import { Card, Row, Col } from 'antd'
 
 let query = `{ projects { name, isSymbolicLink } }`
 
@@ -42,17 +43,21 @@ export default function Content() {
       <h1>test</h1>
     )
   } else {
-    console.log(projects)
+
     return (
-      <ul>
-        {
-          projects.map(project => {
-            return <li key={project.name}>{project.name}</li>
-          })
+      <Row>
+        {projects.map(project => {
+          return (
+            <Col xs={24} sm={12} md={8} lg={6} xl={4}>
+              <Card key={project.name} title="Default size card" extra={<a href="#">More</a>}>
+                <p>{project.name}</p>
+              </Card>
+            </Col>
+          )
+        })
         }
-      </ul>
+      </Row>
     )
-    // return <h1>foo</h1>
   }
 
 }
