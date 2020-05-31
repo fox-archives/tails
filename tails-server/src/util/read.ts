@@ -31,21 +31,49 @@ export async function readConfig(): Promise<TailsConfig> {
 }
 
 /**
- * 
+ * @todo optimize
  */
 export async function readAllProjects(): Promise<Array<Project>> {
-  const namespaces = await readAllNamespaces();
-
-  const promises: Array<Promise<ReadonlyArray<Project>>> = [];
-  for (const namespace of namespaces) {
-    const project = readProjects(namespace.location);
-    promises.push(project);
-  }
+  const config = await readConfig();
+  asserts.assert(
+    Array.isArray(config.tailsRoot) || typeof config.tailsRoot === "string",
+    "tailsRoot must be array or string",
+  );
 
   let totalProjects: Array<Project> = [];
-  const projectsArray = await Promise.all(promises);
-  for (const projectArray of projectsArray) {
-    totalProjects = totalProjects.concat(projectArray);
+
+  // projects not in a namespace
+  {
+    if (Array.isArray(config.tailsRoot)) {
+      const promises: Array<Promise<ReadonlyArray<Project>>> = [];
+      for (const tailsRoot of config.tailsRoot) {
+        const projectsPromise = readProjects(tailsRoot);
+        promises.push(projectsPromise);
+      }
+
+      const projectArrays = await Promise.all(promises);
+      for (const projectArray of projectArrays) {
+        totalProjects = totalProjects.concat(projectArray);
+      }
+    } else {
+      const projects = await readProjects(config.tailsRoot);
+      totalProjects = totalProjects.concat(projects);
+    }
+  }
+
+  // projects in a namespace
+  {
+    const namespaces = await readAllNamespaces();
+    const promises: Array<Promise<ReadonlyArray<Project>>> = [];
+    for (const namespace of namespaces) {
+      const projectsPromise = readProjects(namespace.location);
+      promises.push(projectsPromise);
+    }
+
+    const projectArrays = await Promise.all(promises);
+    for (const projectArray of projectArrays) {
+      totalProjects = totalProjects.concat(projectArray);
+    }
   }
 
   return totalProjects;

@@ -1,16 +1,10 @@
 import * as http from "std/http/mod.ts";
-import * as path from "std/path/mod.ts";
 import {
-  readProjects,
-  readNamespaces,
   readAllNamespaces,
   readAllProjects,
 } from "./util/read.ts";
 
 const fmt = (text: string) => new TextEncoder().encode(text);
-
-const ns = await readAllNamespaces();
-console.info("namespaces", ns);
 
 export async function app(req: http.ServerRequest) {
   if (req.url === "/") {
@@ -18,12 +12,10 @@ export async function app(req: http.ServerRequest) {
 
     req.respond({ body, status: 200 });
   } else if (req.url === "/api/data") {
-    const home = Deno.env.get("HOME");
-    // TODO: when throw expressions land in typescript
-    if (!home) throw new Error("home not defined in environment");
-
-    let namespaces = await readAllNamespaces();
-    let projects = await readAllProjects();
+    let [namespaces, projects] = await Promise.all([
+      readAllNamespaces(),
+      readAllProjects(),
+    ]);
 
     const body = fmt(JSON.stringify({
       data: {
