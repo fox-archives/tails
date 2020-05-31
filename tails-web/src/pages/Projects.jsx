@@ -1,10 +1,10 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { Card, Row, Col, PageHeader, Skeleton, Button } from "antd";
-
-let query = `{ projects { name, isSymbolicLink } }`;
+import { PageHeader, Skeleton, Tabs, Layout } from "antd";
+import ProjectsList from '@/components/ProjectsList'
 
 let fetchData = async () => {
+  let query = `{ projects { name, isSymbolicLink } }`;
   // await fetch('/graphql', {
   //   method: 'POST',
   //   headers: {
@@ -48,25 +48,18 @@ export default function Projects() {
     return (
       <>
         <PageHeader title="Projects" />
-        <Row gutter={[6, 6]}>
-          {projects.map((project) => {
-            return (
-              <Col
-                key={project.name}
-                xs={24}
-                sm={12}
-                md={8}
-                lg={6}
-                xl={4}
-                gutter="6"
-              >
-                <Card title={project.name} extra={<a href="#">More</a>}>
-                  <Button type="primary">code</Button>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
+        { /* TODO: cleaner method? */}
+        <Layout.Content style={{ marginInlineStart: "12px", marginInlineEnd: "12px" }}>
+          <Tabs defaultActiveKey="1">
+            <Tabs.TabPane tab="One" key="1">
+              <ProjectsList projects={projects} />
+            </Tabs.TabPane>
+            <Tabs.TabPane tab="Two" key="2">
+              <h1>two</h1>
+            </Tabs.TabPane>
+          </Tabs>
+        </Layout.Content>
+
       </>
     );
   }
