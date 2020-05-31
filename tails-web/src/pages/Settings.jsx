@@ -1,7 +1,8 @@
 import * as React from "react";
+import { PageHeader } from "antd";
 
 export default function Settings() {
   return (
-    <h1>Settings</h1>
-  )
+    <PageHeader title="Settings" />
+  );
 }
