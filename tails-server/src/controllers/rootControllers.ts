@@ -1,8 +1,8 @@
 import * as http from "std/http/mod.ts";
 import * as path from "std/path/mod.ts";
 import {
-  readWorksapcePacks,
-  readWorkspaceProjects,
+  readAllWorkspacePacks,
+  readAllWorkspaceProjects,
 } from "../util/read.ts";
 import {
   graphql,
@@ -41,8 +41,8 @@ export function rootController(req: http.ServerRequest) {
 
 export async function apiDataController(req: http.ServerRequest) {
   let [namespaces, projects] = await Promise.all([
-    readWorksapcePacks(),
-    readWorkspaceProjects(),
+    readAllWorkspacePacks(),
+    readAllWorkspaceProjects(),
   ]);
 
   const body = encode(JSON.stringify({

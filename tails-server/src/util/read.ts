@@ -2,8 +2,12 @@ import * as fs from "std/fs/mod.ts";
 import * as path from "std/path/mod.ts";
 import * as asserts from "std/testing/asserts.ts";
 
+/**
+ * look into Array.prototype.flat(), and use it if it performs better
+ */
+
 interface TailsConfig {
-  workspaces: string | Array<string>;
+  workspaces: Array<string>;
 }
 
 interface Pack extends Deno.DirEntry {
@@ -33,21 +37,62 @@ export async function readConfig(): Promise<TailsConfig> {
   return await fs.readJson(configPath) as TailsConfig;
 }
 
-/**
- * @description reads all projects in a workspace
- */
-export async function readWorkspaceProjects(): Promise<Project[]> {
-  const config = await readConfig();
+export async function readAllWorkspaceProjects(): Promise<Project[]> {
+ const config = await readConfig();
+ const workspaces = config.workspaces
+
   asserts.assert(
-    Array.isArray(config.workspaces), "tailsRoot must be an array",
+    Array.isArray(workspaces), "tailsRoot must be an array",
   );
 
-  let totalProjects: Array<Project> = [];
+  const promises: Promise<Project[]>[] = []
+  for (const workspace of workspaces) {
+    const projectsPromise = readWorkspaceProjects(workspace)
+    promises.push(projectsPromise)
+  }
+
+  let totalProjects: Project[] = []
+  const projectsArray = await Promise.all(promises)
+  for(const projectArray of projectsArray) {
+    totalProjects = totalProjects.concat(projectArray)
+  }
+
+  return totalProjects
+}
+
+export async function readAllWorkspacePacks(): Promise<Pack[]> {
+  const config = await readConfig();
+  const workspaces = config.workspaces
+
+  asserts.assert(
+    Array.isArray(workspaces), "tailsRoot must be an array",
+  );
+
+  const promises: Promise<Pack[]>[] = []
+  for (const workspace of workspaces) {
+    const packsPromise = readWorkspacePacks(workspace)
+    promises.push(packsPromise)
+  }
+
+  let totalPacks: Pack[] = []
+  const packsArray = await Promise.all(promises)
+  for (const packArray of packsArray) {
+    totalPacks = totalPacks.concat(packArray)
+  }
+
+  return totalPacks
+}
+
+/**
+ * @description reads all projects in a workspace
+ * @param {string} workspaceDir - absolute path to workspace
+ */
+export async function readWorkspaceProjects(workspaceDir: string): Promise<Project[]> {
+  let totalProjects: Project[] = [];
   // projects not in a pack
   {
-    const workspaces = config.workspaces
     const promises: Promise<readonly Project[]>[] = [];
-    for (const workspace of workspaces) {
+    for (const workspace of [ workspaceDir ]) {
       const projectsPromise = readProjects(workspace);
       promises.push(projectsPromise);
     }
@@ -60,7 +105,7 @@ export async function readWorkspaceProjects(): Promise<Project[]> {
 
   // projects in a pack
   {
-    const packs = await readWorksapcePacks();
+    const packs = await readWorkspacePacks(workspaceDir);
     const promises: Promise<readonly Project[]>[] = [];
     for (const pack of packs) {
       const projectsPromise = readProjects(pack.location);
@@ -78,9 +123,9 @@ export async function readWorkspaceProjects(): Promise<Project[]> {
 
 /**
  * @description reads all packs in a worksapce
- * @todo pass in workspace path as parameter
+ * @param {string} workspaceDir - absolute path to workspace
  */
-export async function readWorksapcePacks(): Promise<Pack[]> {
+export async function readWorkspacePacks(workspaceDir: string): Promise<Pack[]> {
   const config = await readConfig();
   asserts.assert(
     Array.isArray(config.workspaces), "tailsRoot must be array or string",
@@ -117,6 +162,7 @@ function isParentDirectoryAPack(dir: string): boolean {
  * @description - reads all the projects of a folder. this assumes we are
  * reading a `workspace` _or_ a `pack` directory
  * @param {string} dir - absolute path of directory to read
+ * @private
  */
 export async function readProjects(dir: string): Promise<Project[]> {
   asserts.assert(path.isAbsolute(dir), "dir is not absolute");
@@ -146,6 +192,7 @@ export async function readProjects(dir: string): Promise<Project[]> {
 /**
  * @description - reads all the `packs` of a `workspace` directory
  * @param {string} dir - absolute path of directory to read
+ * @private
  */
 export async function readPacks(workspaceDir: string): Promise<Pack[]> {
   asserts.assert(path.isAbsolute(workspaceDir), "dir is not absolute");
