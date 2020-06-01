@@ -1,12 +1,12 @@
-import * as http from "https://deno.land/std@v0.54.0/http/mod.ts";
-
-import { app } from "./app.ts";
+import * as http from "std/http/mod.ts"
+// import { app } from "./app.ts";
+import { app } from './router.ts'
 
 const port = Number(Deno.env.get("PORT")) || 9020;
 
+console.info(`listening on port ${port}`)
+// await app.listen({ port });
 const server = http.serve({ port });
-console.info(`on port ${port}`);
-
 for await (const req of server) {
   app(req);
 }

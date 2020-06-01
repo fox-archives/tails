@@ -125,18 +125,16 @@ export async function readProjects(dir: string): Promise<Array<Project>> {
     if (dirEntry.name.startsWith("_")) continue;
     if (!dirEntry.isDirectory) continue;
 
-    const location = path.join(dir, dirEntry.name)
+    const location = path.join(dir, dirEntry.name);
     // a project's parent directory can be a 'namespace' (folder that starts
     // with an underscore, or a regular folder)
     const resolveNamespace = (namespace: string) =>
-      namespace.startsWith("_")
-      ? namespace.slice("_".length)
-      : namespace
+      namespace.startsWith("_") ? namespace.slice("_".length) : namespace;
 
     const project: Project = {
       ...dirEntry,
       location,
-      namespace: resolveNamespace(path.basename(path.dirname(location)))
+      namespace: resolveNamespace(path.basename(path.dirname(location))),
     };
 
     projects.push(project);

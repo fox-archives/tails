@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="assets/prism.js"></script>
+  <link rel="stylesheet" href="assets/prism.css">
+  <title>Graphiql</title>
+  <style>
+  
+  </style>
+  <style>
+    *,  *::before, *::after {
+      margin: 0;
+      padding: 0;
+      border: 0 none;
+      color: #f1f3f5;
+      font-family: monospace;
+    }
+
+    body {
+      padding: 5px;
+      background: #343a40;
+      font-size: 16px;
+    }
+
+    main {
+      display: grid;
+      gap: 5px;
+      grid-template-columns: 0.5fr 1fr;
+      height: calc(100vh - 10px);
+    }
+
+    #input, #output {
+      padding: 5px;
+      border-radius: 5px;
+      background: #212529;
+      min-width: 200px;
+    }
+
+    #input {
+      resize: none;
+      font-size: 16px;
+    }
+
+    #input:focus {
+      outline: none;
+    }
+    
+    #output {
+      white-space: pre-wrap
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <textarea name="query" id="input">{&#13  hello&#13}</textarea>
+    <pre id="output"><code id="output-inner" class="language-json"></code></pre>
+  </main>
+  <script>
+    const input = document.getElementById('input')
+    const output = document.getElementById('output') 
+
+    function query(graphQLParams) {
+      return fetch('/graphql', {
+        method: 'post',
+        headers: {
+          'accept': 'application/json',
+          'content-type': 'application/json'
+        },
+        body: graphQLParams,
+        credentials: 'include',
+      }).then(response => {
+        return response.json();
+      })
+    }
+
+    async function load(ev) {
+      try {
+        const response = await query(input.value)
+        output.innerHTML = JSON.stringify(response, null, 2)
+      } catch (err) { 
+        output.innerHTML = JSON.stringify(err, null, 2)
+      } finally {
+        globalThis.Prism.highlightElement(output)
+      }
+    }
+
+    input.addEventListener('keyup', load)
+    load()
+  </script>
+</body>
+</html>
