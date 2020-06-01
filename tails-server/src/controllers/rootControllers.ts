@@ -12,7 +12,10 @@ import {
 } from "https://cdn.pika.dev/graphql@^15.0.0";
 
 
-const schema = new GraphQLSchema({
+// TODO: fix ignores
+// @ts-ignore
+const schema: any = new GraphQLSchema({
+  // @ts-ignore
   query: new GraphQLObjectType({
     name: "RootQueryType",
     fields: {

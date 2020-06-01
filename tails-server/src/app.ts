@@ -1,6 +1,6 @@
-import type * as http from "std/http/mod.ts";
-import { Application } from "./util/Application.ts";
+import type { ServerRequest } from "std/http/mod.ts";
 
+import { Application } from "./util/Application.ts";
 import {
   rootController,
   apiDataController,
@@ -10,7 +10,7 @@ import {
   fourOhFourController,
 } from "./controllers/rootControllers.ts";
 
-async function main(req: http.ServerRequest) {
+async function fn(req: ServerRequest) {
   if (req.url === "/") {
     await rootController(req);
   } else if (req.url === "/api/data" && req.method === "GET") {
@@ -28,6 +28,6 @@ async function main(req: http.ServerRequest) {
   }
 }
 
-const app = new Application(main);
+const app = new Application(fn);
 
 export { app };
