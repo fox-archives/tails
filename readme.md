@@ -22,10 +22,6 @@
 - a framework, utility, and ide agnostic tool
 - something super extensible, allowing you to easily add a plugin to extend the feature set for how _you_ want it to be
 
-here is what it looked like several months ago. since then everything has been refactored and the end goal / architecture is totally different
-
-![tails preview](./tails.png)
-
 ## goals
 
 to be a hub for all your projects, and be super extensible via plugins to modify projects however you like. some examples
@@ -38,6 +34,8 @@ to be a hub for all your projects, and be super extensible via plugins to modify
 - plugin that gives you integrated dns (so nice urls) during development
 - browse through, label, sort, and manage all your projects within the web interface
 - leverage the tools that some with your ide as much as possible
+- show projects from `repl.it`, `codepen`, `codesandbox`, etc. as separate `workspaces`
+- plugin security (server side code runs on separate Deno instance)
 - avoid reinventing the wheel
 
 ## details
@@ -63,6 +61,41 @@ some or most of these should be plugins that come bundled by default
   - size of codebase gzipped, minified, etc.
 - misc
   - open any mount of subprojecs at once without conflicts
+
+# terminology
+
+a `project` is a folder that contains a programming project
+- ex. folder that contains a `package.json`
+- ex. folder that is the root of a monorepo
+
+a `pack` is a folder that contains `projects`
+- starts with underscore `_`
+- purpose to make `workspace` folder less flat and generic categorization
+- does _not_ nest
+
+a `workspace` is a folder that contains `projects` and `packs`
+- specified `~/.config/tails/config.json`
+- usually only one is needed
+
+the following is an example of a worksapce called `programming-projects`
+
+```js
+> programming-projects (workspace folder)
+  > _30-day-js-challenge
+    > day-1
+    > day-2
+    > day-3
+    > ...
+  > _throwaway
+    > mongodb-test
+    > grpc-node-go-experiment
+    > create-react-app-test
+    > vue-3-alpha-composition-api
+  > chat-app
+  > custom-database
+  > cool-react-app
+```
+
 
 ## usage
 
