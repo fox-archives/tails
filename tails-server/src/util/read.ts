@@ -10,9 +10,15 @@ interface Namespace extends Deno.DirEntry {
   location: string;
 }
 
+interface Pack extends Deno.DirEntry {
+  location: string;
+  workspace: string
+}
+
 interface Project extends Deno.DirEntry {
   location: string;
-  namespace: string;
+  workspace: string,
+  pack: string | null;
 }
 
 /**
@@ -32,9 +38,9 @@ export async function readConfig(): Promise<TailsConfig> {
 }
 
 /**
- * @todo optimize
+ * @description reads all projects in a workspace
  */
-export async function readAllProjects(): Promise<Array<Project>> {
+export async function readWorkspaceProjects(): Promise<Project[]> {
   const config = await readConfig();
   asserts.assert(
     Array.isArray(config.tailsRoot) || typeof config.tailsRoot === "string",
@@ -42,13 +48,13 @@ export async function readAllProjects(): Promise<Array<Project>> {
   );
 
   let totalProjects: Array<Project> = [];
-
-  // projects not in a namespace
+  // projects not in a pack
   {
     if (Array.isArray(config.tailsRoot)) {
-      const promises: Array<Promise<ReadonlyArray<Project>>> = [];
-      for (const tailsRoot of config.tailsRoot) {
-        const projectsPromise = readProjects(tailsRoot);
+      const workspaces = config.tailsRoot
+      const promises: Promise<readonly Project[]>[] = [];
+      for (const workspace of workspaces) {
+        const projectsPromise = readProjects(workspace);
         promises.push(projectsPromise);
       }
 
@@ -62,12 +68,12 @@ export async function readAllProjects(): Promise<Array<Project>> {
     }
   }
 
-  // projects in a namespace
+  // projects in a pack
   {
-    const namespaces = await readAllNamespaces();
-    const promises: Array<Promise<ReadonlyArray<Project>>> = [];
-    for (const namespace of namespaces) {
-      const projectsPromise = readProjects(namespace.location);
+    const packs = await readWorksapcePacks();
+    const promises: Promise<readonly Project[]>[] = [];
+    for (const pack of packs) {
+      const projectsPromise = readProjects(pack.location);
       promises.push(projectsPromise);
     }
 
@@ -81,60 +87,70 @@ export async function readAllProjects(): Promise<Array<Project>> {
 }
 
 /**
- * @description - reads all the namespaces of all `tailsRoots` 
+ * @description reads all packs in a worksapce
+ * @todo pass in workspace path as parameter
  */
-export async function readAllNamespaces(): Promise<Array<Namespace>> {
+export async function readWorksapcePacks(): Promise<Pack[]> {
   const config = await readConfig();
   asserts.assert(
     Array.isArray(config.tailsRoot) || typeof config.tailsRoot === "string",
     "tailsRoot must be array or string",
   );
 
-  let totalNamespaces: Array<Namespace> = [];
+  let totalPacks: Pack[] = [];
   if (Array.isArray(config.tailsRoot)) {
-    const promises: Array<Promise<ReadonlyArray<Namespace>>> = [];
+    const workspaces = config.tailsRoot
+    const promises: Promise<readonly Pack[]>[] = [];
 
-    for (const tailsRoot of config.tailsRoot) {
-      const namespaces = readNamespaces(tailsRoot);
-      promises.push(namespaces);
+    for (const workspace of workspaces) {
+      const packs = readPacks(workspace);
+      promises.push(packs);
     }
 
-    const namespacesArray: Array<ReadonlyArray<Namespace>> = await Promise.all(
+    const packsArray: Array<readonly Pack[]> = await Promise.all(
       promises,
     );
-    for (const namespaceArray of namespacesArray) {
-      totalNamespaces = totalNamespaces.concat(namespaceArray);
+    for (const packArray of packsArray) {
+      totalPacks = totalPacks.concat(packArray);
     }
   } else {
-    const namespaces = await readNamespaces(config.tailsRoot);
-    totalNamespaces = totalNamespaces.concat(namespaces);
+    const namespaces = await readPacks(config.tailsRoot);
+    totalPacks = totalPacks.concat(namespaces);
   }
 
-  return totalNamespaces;
+  return totalPacks;
+}
+
+function isParentDirectoryAPack(dir: string): boolean {
+  const parentDirName = path.basename(dir)
+  if (parentDirName.startsWith("_")) { 
+    return true
+  }
+  return false
 }
 
 /**
- * @description - reads all the projects of a particular `namespace`
+ * @description - reads all the projects of a folder. this assumes we are
+ * reading a `workspace` _or_ a `pack` directory
  * @param {string} dir - absolute path of directory to read
  */
-export async function readProjects(dir: string): Promise<Array<Project>> {
+export async function readProjects(dir: string): Promise<Project[]> {
   asserts.assert(path.isAbsolute(dir), "dir is not absolute");
 
-  const projects: Array<Project> = [];
+  const projects: Project[] = [];
   for await (const dirEntry of Deno.readDir(dir)) {
     if (dirEntry.name.startsWith("_")) continue;
     if (!dirEntry.isDirectory) continue;
 
-    const location = path.join(dir, dirEntry.name);
-    // a project's parent directory can be a 'namespace' (folder that starts
-    // with an underscore, or a regular folder)
-    const resolveNamespace = (namespace: string) =>
-      namespace.startsWith("_") ? namespace.slice("_".length) : namespace;
-
-    const project: Project = {
+    const project: Project = { 
       ...dirEntry,
-      location,
-      namespace: resolveNamespace(path.basename(path.dirname(location))),
+      location: path.join(dir, dirEntry.name),
+      workspace: isParentDirectoryAPack(dir)
+        ? path.basename(path.dirname(dir))
+        : path.basename(dir),
+      pack: isParentDirectoryAPack(dir)
+        ? path.basename(dir).slice("_".length)
+        : null
     };
 
     projects.push(project);
@@ -144,25 +160,26 @@ export async function readProjects(dir: string): Promise<Array<Project>> {
 }
 
 /**
- * @description - reads all the namespaces of a particular `tailsRoot`
+ * @description - reads all the `packs` of a `workspace` directory
  * @param {string} dir - absolute path of directory to read
  */
-export async function readNamespaces(dir: string): Promise<Array<Namespace>> {
-  asserts.assert(path.isAbsolute(dir), "dir is not absolute");
+export async function readPacks(workspaceDir: string): Promise<Pack[]> {
+  asserts.assert(path.isAbsolute(workspaceDir), "dir is not absolute");
 
-  const namespaces: Array<Namespace> = [];
-  for await (const dirEntry of Deno.readDir(dir)) {
+  const packs: Pack[] = [];
+  for await (const dirEntry of Deno.readDir(workspaceDir)) {
     if (!dirEntry.name.startsWith("_")) continue;
     if (!dirEntry.isDirectory) continue;
 
-    const namespace: Namespace = {
+    const namespace: Pack = {
       ...dirEntry,
       name: dirEntry.name.slice("_".length),
-      location: path.join(dir, dirEntry.name),
+      location: path.join(workspaceDir, dirEntry.name),
+      workspace: path.basename(workspaceDir)
     };
 
-    namespaces.push(namespace);
+    packs.push(namespace);
   }
 
-  return namespaces;
+  return packs;
 }
