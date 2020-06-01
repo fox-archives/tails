@@ -3,11 +3,7 @@ import * as path from "std/path/mod.ts";
 import * as asserts from "std/testing/asserts.ts";
 
 interface TailsConfig {
-  tailsRoot: string | Array<string>;
-}
-
-interface Namespace extends Deno.DirEntry {
-  location: string;
+  workspaces: string | Array<string>;
 }
 
 interface Pack extends Deno.DirEntry {
@@ -43,28 +39,22 @@ export async function readConfig(): Promise<TailsConfig> {
 export async function readWorkspaceProjects(): Promise<Project[]> {
   const config = await readConfig();
   asserts.assert(
-    Array.isArray(config.tailsRoot) || typeof config.tailsRoot === "string",
-    "tailsRoot must be array or string",
+    Array.isArray(config.workspaces), "tailsRoot must be an array",
   );
 
   let totalProjects: Array<Project> = [];
   // projects not in a pack
   {
-    if (Array.isArray(config.tailsRoot)) {
-      const workspaces = config.tailsRoot
-      const promises: Promise<readonly Project[]>[] = [];
-      for (const workspace of workspaces) {
-        const projectsPromise = readProjects(workspace);
-        promises.push(projectsPromise);
-      }
+    const workspaces = config.workspaces
+    const promises: Promise<readonly Project[]>[] = [];
+    for (const workspace of workspaces) {
+      const projectsPromise = readProjects(workspace);
+      promises.push(projectsPromise);
+    }
 
-      const projectArrays = await Promise.all(promises);
-      for (const projectArray of projectArrays) {
-        totalProjects = totalProjects.concat(projectArray);
-      }
-    } else {
-      const projects = await readProjects(config.tailsRoot);
-      totalProjects = totalProjects.concat(projects);
+    const projectArrays = await Promise.all(promises);
+    for (const projectArray of projectArrays) {
+      totalProjects = totalProjects.concat(projectArray);
     }
   }
 
@@ -93,29 +83,23 @@ export async function readWorkspaceProjects(): Promise<Project[]> {
 export async function readWorksapcePacks(): Promise<Pack[]> {
   const config = await readConfig();
   asserts.assert(
-    Array.isArray(config.tailsRoot) || typeof config.tailsRoot === "string",
-    "tailsRoot must be array or string",
+    Array.isArray(config.workspaces), "tailsRoot must be array or string",
   );
 
   let totalPacks: Pack[] = [];
-  if (Array.isArray(config.tailsRoot)) {
-    const workspaces = config.tailsRoot
-    const promises: Promise<readonly Pack[]>[] = [];
+  const workspaces = config.workspaces
+  const promises: Promise<readonly Pack[]>[] = [];
 
-    for (const workspace of workspaces) {
-      const packs = readPacks(workspace);
-      promises.push(packs);
-    }
+  for (const workspace of workspaces) {
+    const packs = readPacks(workspace);
+    promises.push(packs);
+  }
 
-    const packsArray: Array<readonly Pack[]> = await Promise.all(
-      promises,
-    );
-    for (const packArray of packsArray) {
-      totalPacks = totalPacks.concat(packArray);
-    }
-  } else {
-    const namespaces = await readPacks(config.tailsRoot);
-    totalPacks = totalPacks.concat(namespaces);
+  const packsArray: Array<readonly Pack[]> = await Promise.all(
+    promises,
+  );
+  for (const packArray of packsArray) {
+    totalPacks = totalPacks.concat(packArray);
   }
 
   return totalPacks;
